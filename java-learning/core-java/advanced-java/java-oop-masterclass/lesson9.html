@@ -1,0 +1,1049 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 9 - Types of Inheritance | JavaLearn</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 18px 6%;
+            background: rgba(8, 11, 20, 0.82);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #ff8a3d;
+        }
+
+        .lesson-pill {
+            padding: 9px 16px;
+            border-radius: 30px;
+            background: rgba(255,138,61,0.12);
+            border: 1px solid rgba(255,138,61,0.3);
+            color: #ffb078;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        main {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 55px 0 70px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 45px;
+            align-items: center;
+            margin-bottom: 45px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            background: rgba(255,77,109,0.12);
+            color: #ff7892;
+            border: 1px solid rgba(255,77,109,0.25);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: clamp(38px, 6vw, 66px);
+            line-height: 1.05;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            color: #aeb7ca;
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        .hero-visual {
+            width: 220px;
+            height: 220px;
+            margin: auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 0 45px rgba(255,138,61,0.25),
+                0 0 90px rgba(255,77,109,0.12);
+            position: relative;
+        }
+
+        .hero-visual::before {
+            content: "";
+            position: absolute;
+            inset: 14px;
+            border-radius: 50%;
+            background: #0d111d;
+        }
+
+        .inheritance-tree {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            font-family: Consolas, monospace;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .inheritance-tree .top {
+            color: #ff8a3d;
+        }
+
+        .inheritance-tree .bottom {
+            color: #79c0ff;
+        }
+
+        .progress-section {
+            margin-bottom: 40px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            color: #aeb7ca;
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 30%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff8a3d, #ff4d6d);
+            border-radius: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.055);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 18px;
+            padding: 28px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 18px 45px rgba(0,0,0,0.18);
+        }
+
+        .card.full {
+            grid-column: 1 / -1;
+        }
+
+        h2 {
+            font-size: 25px;
+            margin-bottom: 17px;
+        }
+
+        h2::before {
+            content: "// ";
+            color: #ff8a3d;
+        }
+
+        h3 {
+            color: #ffb078;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            color: #b9c1d1;
+            line-height: 1.75;
+        }
+
+        ul {
+            padding-left: 22px;
+            color: #b9c1d1;
+            line-height: 1.9;
+        }
+
+        li::marker {
+            color: #ff8a3d;
+        }
+
+        .code-box {
+            margin-top: 18px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: #0b0f18;
+        }
+
+        .code-header {
+            padding: 11px 15px;
+            background: #111722;
+            color: #8b949e;
+            font-size: 13px;
+            font-family: Consolas, monospace;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            background: #ff4d6d;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        pre {
+            padding: 20px;
+            overflow-x: auto;
+            color: #d8dee9;
+            line-height: 1.65;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 14px;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .variable {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .number {
+            color: #ffa657;
+        }
+
+        .function {
+            color: #d2a8ff;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+        .output {
+            margin-top: 15px;
+            padding: 15px 18px;
+            background: #090d15;
+            border-left: 4px solid #ff4d6d;
+            border-radius: 8px;
+            color: #d8dee9;
+            font-family: Consolas, monospace;
+            white-space: pre-line;
+        }
+
+        .info {
+            margin-top: 18px;
+            padding: 17px;
+            border-left: 4px solid #ff8a3d;
+            background: rgba(255,138,61,0.07);
+            border-radius: 8px;
+            color: #c8cfdd;
+            line-height: 1.7;
+        }
+
+        .diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+            font-family: Consolas, monospace;
+        }
+
+        .diagram-box {
+            padding: 13px 22px;
+            border: 1px solid rgba(255,138,61,0.4);
+            background: rgba(255,138,61,0.08);
+            border-radius: 10px;
+            color: #ffb078;
+        }
+
+        .arrow {
+            color: #ff4d6d;
+            font-size: 25px;
+        }
+
+        .tree {
+            text-align: center;
+            font-family: Consolas, monospace;
+            color: #d8dee9;
+            line-height: 2;
+            margin: 20px 0;
+        }
+
+        .tree .main {
+            color: #ff8a3d;
+        }
+
+        .tree .child {
+            color: #79c0ff;
+        }
+
+        .comparison {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .comparison th,
+        .comparison td {
+            padding: 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+            text-align: left;
+        }
+
+        .comparison th {
+            color: #ffb078;
+            background: rgba(255,138,61,0.08);
+        }
+
+        .comparison td {
+            color: #b9c1d1;
+        }
+
+        .question {
+            padding: 14px 17px;
+            margin: 10px 0;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #c8cfdd;
+        }
+
+        .challenge {
+            border: 1px solid rgba(255,77,109,0.25);
+            background: rgba(255,77,109,0.055);
+        }
+
+        .challenge h2::before {
+            color: #ff4d6d;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 21px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            font-weight: 700;
+            transition: 0.25s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255,77,109,0.2);
+        }
+
+        .btn.secondary {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #70798c;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        @media (max-width: 800px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                width: 190px;
+                height: 190px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card.full {
+                grid-column: auto;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">
+        <span>Java</span>Learn
+    </div>
+
+    <div class="lesson-pill">
+        Java OOP Masterclass • Lesson 09 / 30
+    </div>
+</nav>
+
+<main>
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <div>
+            <div class="badge">INHERITANCE • LESSON 09</div>
+
+            <h1>
+                Types of <span>Inheritance</span>
+            </h1>
+
+            <p>
+                Learn the different types of inheritance in Java and understand
+                how classes can build relationships through single, multilevel,
+                and hierarchical inheritance.
+            </p>
+        </div>
+
+        <div class="hero-visual">
+            <div class="inheritance-tree">
+                <div class="top">Parent</div>
+                <div>↓</div>
+                <div class="bottom">Child</div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- PROGRESS -->
+    <section class="progress-section">
+
+        <div class="progress-info">
+            <span>Lesson 9 of 30</span>
+            <span>30% Complete</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+    </section>
+
+    <section class="grid">
+
+        <!-- WHAT ARE TYPES -->
+        <article class="card full">
+
+            <h2>What Are Types of Inheritance?</h2>
+
+            <p>
+                Inheritance describes how one class gets properties and
+                behaviors from another class. Java supports different
+                inheritance structures depending on how the parent and child
+                classes are connected.
+            </p>
+
+            <div class="diagram">
+
+                <div class="diagram-box">Parent Class</div>
+
+                <div class="arrow">→</div>
+
+                <div class="diagram-box">Child Class</div>
+
+            </div>
+
+            <p>
+                The main inheritance types you should know are
+                <strong>Single, Multilevel, Hierarchical, Multiple,</strong>
+                and <strong>Hybrid</strong> inheritance.
+            </p>
+
+        </article>
+
+        <!-- SINGLE -->
+        <article class="card">
+
+            <h2>Single Inheritance</h2>
+
+            <p>
+                In single inheritance, one child class inherits from one
+                parent class.
+            </p>
+
+            <div class="diagram">
+                <div class="diagram-box">Animal</div>
+                <div class="arrow">→</div>
+                <div class="diagram-box">Dog</div>
+            </div>
+
+            <div class="code-box">
+
+                <div class="code-header">
+                    <span class="dot"></span>SingleInheritance.java
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="function">eat</span>() {
+        System.out.println(<span class="string">"Animal is eating"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="function">bark</span>() {
+        System.out.println(<span class="string">"Dog is barking"</span>);
+    }
+}</pre>
+
+            </div>
+
+            <div class="output">Animal is eating
+Dog is barking</div>
+
+        </article>
+
+        <!-- MULTILEVEL -->
+        <article class="card">
+
+            <h2>Multilevel Inheritance</h2>
+
+            <p>
+                In multilevel inheritance, a class inherits from another class,
+                and a third class inherits from the second class.
+            </p>
+
+            <div class="diagram">
+                <div class="diagram-box">Animal</div>
+                <div class="arrow">→</div>
+                <div class="diagram-box">Dog</div>
+                <div class="arrow">→</div>
+                <div class="diagram-box">Puppy</div>
+            </div>
+
+            <div class="code-box">
+
+                <div class="code-header">
+                    <span class="dot"></span>MultilevelInheritance.java
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="function">eat</span>() {
+        System.out.println(<span class="string">"Eating"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="function">bark</span>() {
+        System.out.println(<span class="string">"Barking"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Puppy</span> <span class="keyword">extends</span> <span class="type">Dog</span> {
+
+    <span class="keyword">void</span> <span class="function">play</span>() {
+        System.out.println(<span class="string">"Playing"</span>);
+    }
+}</pre>
+
+            </div>
+
+            <div class="info">
+                Puppy can access methods from both Dog and Animal because
+                inheritance passes through multiple levels.
+            </div>
+
+        </article>
+
+        <!-- HIERARCHICAL -->
+        <article class="card full">
+
+            <h2>Hierarchical Inheritance</h2>
+
+            <p>
+                In hierarchical inheritance, multiple child classes inherit
+                from the same parent class.
+            </p>
+
+            <div class="tree">
+                <div class="main">Animal</div>
+                <div>↙ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↘</div>
+                <div>
+                    <span class="child">Dog</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="child">Cat</span>
+                </div>
+            </div>
+
+            <div class="code-box">
+
+                <div class="code-header">
+                    <span class="dot"></span>HierarchicalInheritance.java
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="function">eat</span>() {
+        System.out.println(<span class="string">"Eating"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="function">bark</span>() {
+        System.out.println(<span class="string">"Barking"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Cat</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="function">meow</span>() {
+        System.out.println(<span class="string">"Meowing"</span>);
+    }
+}</pre>
+
+            </div>
+
+            <div class="info">
+                Dog and Cat both inherit the <strong>eat()</strong> method
+                from Animal, but each class can also have its own behavior.
+            </div>
+
+        </article>
+
+        <!-- MULTIPLE -->
+        <article class="card">
+
+            <h2>Multiple Inheritance</h2>
+
+            <p>
+                Multiple inheritance means a class tries to inherit from
+                more than one parent class.
+            </p>
+
+            <div class="diagram">
+                <div class="diagram-box">Class A</div>
+                <div class="diagram-box">Class B</div>
+                <div class="arrow">→</div>
+                <div class="diagram-box">Class C</div>
+            </div>
+
+            <p>
+                Java does not support multiple inheritance using classes.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+                    <span class="dot"></span>Invalid Java Example
+                </div>
+
+<pre><span class="comment">// This is NOT allowed in Java</span>
+
+<span class="keyword">class</span> <span class="type">A</span> {
+}
+
+<span class="keyword">class</span> <span class="type">B</span> {
+}
+
+<span class="comment">// Compilation error</span>
+<span class="keyword">class</span> <span class="type">C</span> <span class="keyword">extends</span> <span class="type">A</span>, <span class="type">B</span> {
+}</pre>
+
+            </div>
+
+            <div class="info">
+                Java avoids this problem because multiple parent classes can
+                create ambiguity when they contain methods with the same name.
+                Java uses <strong>interfaces</strong> to provide multiple
+                inheritance of type and behavior.
+            </div>
+
+        </article>
+
+        <!-- HYBRID -->
+        <article class="card">
+
+            <h2>Hybrid Inheritance</h2>
+
+            <p>
+                Hybrid inheritance is a combination of two or more types of
+                inheritance.
+            </p>
+
+            <div class="tree">
+                <div class="main">A</div>
+                <div>↓</div>
+                <div class="child">B</div>
+                <div>↙ &nbsp;&nbsp;&nbsp;&nbsp; ↘</div>
+                <div>
+                    <span class="child">C</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="child">D</span>
+                </div>
+            </div>
+
+            <p>
+                Java does not directly support hybrid inheritance through
+                classes because it could involve multiple inheritance.
+            </p>
+
+            <div class="info">
+                Complex inheritance structures can be designed using
+                <strong>interfaces</strong>. We will study interfaces in
+                later lessons.
+            </div>
+
+        </article>
+
+        <!-- COMPARISON -->
+        <article class="card full">
+
+            <h2>Inheritance Types Comparison</h2>
+
+            <table class="comparison">
+
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Structure</th>
+                        <th>Class Support</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Single</td>
+                        <td>A → B</td>
+                        <td>Supported</td>
+                        <td>Vehicle → Car</td>
+                    </tr>
+
+                    <tr>
+                        <td>Multilevel</td>
+                        <td>A → B → C</td>
+                        <td>Supported</td>
+                        <td>Vehicle → Car → ElectricCar</td>
+                    </tr>
+
+                    <tr>
+                        <td>Hierarchical</td>
+                        <td>A → B and A → C</td>
+                        <td>Supported</td>
+                        <td>Vehicle → Car, Bike</td>
+                    </tr>
+
+                    <tr>
+                        <td>Multiple</td>
+                        <td>A + B → C</td>
+                        <td>Not supported with classes</td>
+                        <td>Use interfaces</td>
+                    </tr>
+
+                    <tr>
+                        <td>Hybrid</td>
+                        <td>Combination</td>
+                        <td>Not directly supported with classes</td>
+                        <td>Can use interfaces</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </article>
+
+        <!-- REAL WORLD -->
+        <article class="card full">
+
+            <h2>Real-World Examples</h2>
+
+            <h3>1. Single Inheritance</h3>
+
+            <p>
+                A general Vehicle class can be inherited by a Car class.
+            </p>
+
+            <div class="diagram">
+                <div class="diagram-box">Vehicle</div>
+                <div class="arrow">→</div>
+                <div class="diagram-box">Car</div>
+            </div>
+
+            <h3>2. Multilevel Inheritance</h3>
+
+            <p>
+                A Vehicle can be inherited by Car, and Car can be inherited
+                by ElectricCar.
+            </p>
+
+            <div class="diagram">
+                <div class="diagram-box">Vehicle</div>
+                <div class="arrow">→</div>
+                <div class="diagram-box">Car</div>
+                <div class="arrow">→</div>
+                <div class="diagram-box">ElectricCar</div>
+            </div>
+
+            <h3>3. Hierarchical Inheritance</h3>
+
+            <p>
+                A Vehicle can have multiple child classes such as Car and Bike.
+            </p>
+
+            <div class="tree">
+                <div class="main">Vehicle</div>
+                <div>↙ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↘</div>
+                <div>
+                    <span class="child">Car</span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="child">Bike</span>
+                </div>
+            </div>
+
+        </article>
+
+        <!-- IMPORTANT POINTS -->
+        <article class="card">
+
+            <h2>Important Points</h2>
+
+            <ul>
+                <li>Single inheritance has one parent and one child.</li>
+                <li>Multilevel inheritance has multiple levels.</li>
+                <li>Hierarchical inheritance has multiple children from one parent.</li>
+                <li>Java does not support multiple inheritance using classes.</li>
+                <li>Java does not directly support hybrid inheritance using classes.</li>
+                <li>The <strong>extends</strong> keyword is used for class inheritance.</li>
+                <li>Interfaces can help achieve multiple inheritance of type and behavior.</li>
+            </ul>
+
+        </article>
+
+        <!-- PRACTICE -->
+        <article class="card">
+
+            <h2>Practice Questions</h2>
+
+            <div class="question">
+                <strong>1.</strong> What is single inheritance?
+            </div>
+
+            <div class="question">
+                <strong>2.</strong> What is the difference between single and multilevel inheritance?
+            </div>
+
+            <div class="question">
+                <strong>3.</strong> Explain hierarchical inheritance with an example.
+            </div>
+
+            <div class="question">
+                <strong>4.</strong> Does Java support multiple inheritance using classes?
+            </div>
+
+            <div class="question">
+                <strong>5.</strong> How can interfaces help with multiple inheritance?
+            </div>
+
+        </article>
+
+        <!-- CHALLENGE -->
+        <article class="card full challenge">
+
+            <h2>Mini Challenge</h2>
+
+            <p>
+                Create a Java program that demonstrates
+                <strong>hierarchical inheritance</strong>.
+            </p>
+
+            <h3>Requirements</h3>
+
+            <ul>
+                <li>Create a parent class called <strong>Vehicle</strong>.</li>
+                <li>Add a method <strong>start()</strong> to Vehicle.</li>
+                <li>Create a child class called <strong>Car</strong>.</li>
+                <li>Add a method <strong>drive()</strong> to Car.</li>
+                <li>Create another child class called <strong>Bike</strong>.</li>
+                <li>Add a method <strong>ride()</strong> to Bike.</li>
+                <li>Create objects of both Car and Bike.</li>
+                <li>Call the inherited and child methods.</li>
+            </ul>
+
+            <div class="code-box">
+
+                <div class="code-header">
+                    <span class="dot"></span>Try It Yourself
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Vehicle</span> {
+
+    <span class="keyword">void</span> <span class="function">start</span>() {
+        System.out.println(<span class="string">"Vehicle starts"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Car</span> <span class="keyword">extends</span> <span class="type">Vehicle</span> {
+
+    <span class="keyword">void</span> <span class="function">drive</span>() {
+        System.out.println(<span class="string">"Car is driving"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Bike</span> <span class="keyword">extends</span> <span class="type">Vehicle</span> {
+
+    <span class="keyword">void</span> <span class="function">ride</span>() {
+        System.out.println(<span class="string">"Bike is riding"</span>);
+    }
+}
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span> <span class="function">main</span>(String[] args) {
+
+        <span class="type">Car</span> car = <span class="keyword">new</span> <span class="type">Car</span>();
+        car.start();
+        car.drive();
+
+        <span class="type">Bike</span> bike = <span class="keyword">new</span> <span class="type">Bike</span>();
+        bike.start();
+        bike.ride();
+    }
+}</pre>
+
+            </div>
+
+        </article>
+
+        <!-- SUMMARY -->
+        <article class="card full">
+
+            <h2>Lesson Summary</h2>
+
+            <p>
+                In this lesson, you learned that inheritance can be organized
+                into different structures. Java supports
+                <strong>single, multilevel, and hierarchical inheritance</strong>
+                using classes. Multiple and hybrid inheritance are not directly
+                supported through classes, but interfaces can be used to create
+                more flexible designs.
+            </p>
+
+            <div class="info">
+                <strong>Remember:</strong>
+                <br>
+                Single → One parent, one child
+                <br>
+                Multilevel → Parent → Child → Grandchild
+                <br>
+                Hierarchical → One parent, multiple children
+                <br>
+                Multiple → Not supported with classes
+            </div>
+
+        </article>
+
+    </section>
+
+    <!-- NAVIGATION -->
+    <div class="navigation">
+
+        <a href="lesson8.html" class="btn secondary">
+            ← Previous Lesson
+        </a>
+
+        <a href="lesson10.html" class="btn">
+            Next Lesson →
+        </a>
+
+    </div>
+
+</main>
+
+<footer>
+    ☕ JavaLearn • Java OOP Masterclass
+</footer>
+
+</body>
+</html>
+```

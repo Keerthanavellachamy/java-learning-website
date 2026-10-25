@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaLearn | Core Java - Lesson 7</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8, 11, 20, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-container {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ff8a3d;
+        }
+
+        .lesson-pill {
+            background: rgba(255, 138, 61, 0.12);
+            border: 1px solid rgba(255, 138, 61, 0.4);
+            color: #ffb17d;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .container {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 55px 0;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 55px;
+        }
+
+        .tag {
+            display: inline-block;
+            color: #ff8a3d;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            color: #b8bfd3;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .hero-visual {
+            width: 220px;
+            height: 220px;
+            margin: auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow:
+                0 0 40px rgba(255, 138, 61, 0.3),
+                0 0 80px rgba(255, 77, 109, 0.15);
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .hero-visual div {
+            background: rgba(8, 11, 20, 0.88);
+            width: 175px;
+            height: 175px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.8;
+        }
+
+        .progress-box {
+            margin-bottom: 45px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #c8ccda;
+        }
+
+        .progress-bar {
+            height: 9px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 87.5%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff8a3d, #ff4d6d);
+            border-radius: 20px;
+        }
+
+        section {
+            margin-bottom: 55px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        h2::before {
+            content: "// ";
+            color: #ff8a3d;
+        }
+
+        h3 {
+            font-size: 21px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .text {
+            color: #b8bfd3;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,138,61,0.4);
+        }
+
+        .card-number {
+            color: #ff8a3d;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #aeb5ca;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: rgba(255,255,255,0.05);
+            border-left: 4px solid #ff8a3d;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #c4c9d8;
+            line-height: 1.7;
+        }
+
+        .code-editor {
+            background: #0d1117;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .editor-header {
+            height: 40px;
+            background: #161b22;
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #555;
+        }
+
+        pre {
+            padding: 22px;
+            overflow-x: auto;
+            color: #e6edf3;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .variable {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .number {
+            color: #ffa657;
+        }
+
+        .operator {
+            color: #ff9d5c;
+            font-weight: bold;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+        .output {
+            background: #111827;
+            border-left: 4px solid #ff4d6d;
+            padding: 18px 20px;
+            border-radius: 8px;
+            color: #a5d6ff;
+            font-family: Consolas, monospace;
+            margin-top: 15px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        th {
+            background: rgba(255,138,61,0.12);
+            color: #ffb17d;
+        }
+
+        td {
+            color: #c0c6d7;
+        }
+
+        .practice {
+            display: grid;
+            gap: 15px;
+        }
+
+        .question {
+            padding: 18px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .question strong {
+            color: #ff8a3d;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            border-color: #ff8a3d;
+            color: #ff8a3d;
+        }
+
+        .btn.next {
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            border: none;
+        }
+
+        .btn.next:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777f94;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        @media (max-width: 800px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                width: 190px;
+                height: 190px;
+            }
+
+            .hero-visual div {
+                width: 150px;
+                height: 150px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-container">
+
+            <div class="logo">
+                <span>Java</span>Learn
+            </div>
+
+            <div class="lesson-pill">
+                Core Java • Lesson 07 / 08
+            </div>
+
+        </div>
+    </nav>
+
+
+    <main class="container">
+
+        <!-- HERO -->
+        <div class="hero">
+
+            <div>
+
+                <div class="tag">☕ CORE JAVA</div>
+
+                <h1>
+                    <span>Encapsulation</span>
+                </h1>
+
+                <p>
+                    Learn how encapsulation protects data by combining
+                    variables and methods inside a class and controlling
+                    how that data can be accessed.
+                </p>
+
+            </div>
+
+            <div class="hero-visual">
+
+                <div>
+                    🔒
+                    <br>
+                    Data
+                    <br>
+                    +
+                    <br>
+                    Methods
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+        <div class="progress-box">
+
+            <div class="progress-info">
+                <span>Core Java Progress</span>
+                <span>7 / 8 Lessons • 87.5%</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+
+        </div>
+
+
+        <!-- WHAT YOU WILL LEARN -->
+        <section>
+
+            <h2>What You'll Learn</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-number">01</div>
+                    <h3>What is Encapsulation?</h3>
+                    <p>
+                        Understand encapsulation using a simple
+                        real-world example.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">02</div>
+                    <h3>Data Hiding</h3>
+                    <p>
+                        Learn how to protect data from direct access.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">03</div>
+                    <h3>Private Variables</h3>
+                    <p>
+                        Learn why private variables are commonly
+                        used in encapsulation.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">04</div>
+                    <h3>Getters</h3>
+                    <p>
+                        Learn how getter methods read private data.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">05</div>
+                    <h3>Setters</h3>
+                    <p>
+                        Learn how setter methods modify private data.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">06</div>
+                    <h3>Practice</h3>
+                    <p>
+                        Practice encapsulation using simple
+                        Java programs.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- WHAT IS ENCAPSULATION -->
+        <section>
+
+            <h2>What is Encapsulation?</h2>
+
+            <p class="text">
+                Encapsulation is the process of wrapping data
+                and methods together inside a single class.
+            </p>
+
+            <div class="info-box">
+
+                <strong>Simple Meaning:</strong><br><br>
+
+                Encapsulation means
+                <strong>"protect the data and control how it is accessed."</strong>
+
+            </div>
+
+            <p class="text">
+                In Java, encapsulation is commonly achieved by
+                declaring variables as <strong>private</strong>
+                and providing <strong>public getter and setter
+                methods</strong>.
+            </p>
+
+        </section>
+
+
+        <!-- REAL WORLD EXAMPLE -->
+        <section>
+
+            <h2>Real-World Example</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>🏧 ATM</h3>
+                    <p>
+                        Your bank balance is protected. You cannot
+                        directly change the balance. You use
+                        controlled operations such as deposit
+                        and withdrawal.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>📱 Mobile</h3>
+                    <p>
+                        Internal components are protected.
+                        Users interact with the mobile through
+                        controlled buttons and applications.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🏦 Bank Account</h3>
+                    <p>
+                        Account information can be kept private
+                        and accessed through specific methods.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DATA HIDING -->
+        <section>
+
+            <h2>Data Hiding</h2>
+
+            <p class="text">
+                Data hiding means preventing direct access to
+                important variables from outside the class.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Student</span> {
+
+    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">marks</span>;
+
+}</pre>
+
+            </div>
+
+            <div class="info-box">
+                Because <strong>marks</strong> is private,
+                it cannot be directly accessed from outside
+                the <strong>Student</strong> class.
+            </div>
+
+        </section>
+
+
+        <!-- GETTER -->
+        <section>
+
+            <h2>Getter Method</h2>
+
+            <p class="text">
+                A getter method is used to read the value of
+                a private variable.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">public</span> <span class="type">int</span> <span class="variable">getMarks</span>() {
+
+    <span class="keyword">return</span> marks;
+
+}</pre>
+
+            </div>
+
+            <div class="info-box">
+                The method starts with <strong>get</strong>
+                followed by the variable name.
+            </div>
+
+        </section>
+
+
+        <!-- SETTER -->
+        <section>
+
+            <h2>Setter Method</h2>
+
+            <p class="text">
+                A setter method is used to change the value
+                of a private variable.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">public void</span> <span class="variable">setMarks</span>(<span class="type">int</span> marks) {
+
+    <span class="keyword">this</span>.marks <span class="operator">=</span> marks;
+
+}</pre>
+
+            </div>
+
+            <div class="info-box">
+                The <strong>this</strong> keyword refers to
+                the current object's variable.
+            </div>
+
+        </section>
+
+
+        <!-- COMPLETE EXAMPLE -->
+        <section>
+
+            <h2>Complete Encapsulation Example</h2>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Student</span> {
+
+    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">marks</span>;
+
+    <span class="keyword">public void</span> <span class="variable">setMarks</span>(<span class="type">int</span> marks) {
+        <span class="keyword">this</span>.marks <span class="operator">=</span> marks;
+    }
+
+    <span class="keyword">public int</span> <span class="variable">getMarks</span>() {
+        <span class="keyword">return</span> marks;
+    }
+}
+
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span> <span class="variable">main</span>(<span class="type">String</span>[] args) {
+
+        <span class="type">Student</span> student <span class="operator">=</span> <span class="keyword">new</span> <span class="type">Student</span>();
+
+        student.setMarks(<span class="number">85</span>);
+
+        System.out.println(student.getMarks());
+    }
+}</pre>
+
+            </div>
+
+            <div class="output">
+                85
+            </div>
+
+        </section>
+
+
+        <!-- HOW IT WORKS -->
+        <section>
+
+            <h2>How Encapsulation Works</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-number">STEP 01</div>
+                    <h3>Private Data</h3>
+                    <p>
+                        Declare important variables as private.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">STEP 02</div>
+                    <h3>Getter</h3>
+                    <p>
+                        Use a getter method to read the data.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">STEP 03</div>
+                    <h3>Setter</h3>
+                    <p>
+                        Use a setter method to update the data.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- VALIDATION -->
+        <section>
+
+            <h2>Encapsulation with Validation</h2>
+
+            <p class="text">
+                One important benefit of setters is that we can
+                validate data before storing it.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Student</span> {
+
+    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">marks</span>;
+
+    <span class="keyword">public void</span> <span class="variable">setMarks</span>(<span class="type">int</span> marks) {
+
+        <span class="keyword">if</span> (marks <span class="operator">&gt;=</span> <span class="number">0</span> <span class="operator">&amp;&amp;</span> marks <span class="operator">&lt;=</span> <span class="number">100</span>) {
+            <span class="keyword">this</span>.marks <span class="operator">=</span> marks;
+        }
+    }
+
+    <span class="keyword">public int</span> <span class="variable">getMarks</span>() {
+        <span class="keyword">return</span> marks;
+    }
+}</pre>
+
+            </div>
+
+            <div class="info-box">
+                Here, marks can only be stored when the value
+                is between 0 and 100.
+            </div>
+
+        </section>
+
+
+        <!-- ACCESS MODIFIERS -->
+        <section>
+
+            <h2>Access Modifiers</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+                        <th>Modifier</th>
+                        <th>Access</th>
+                    </tr>
+
+                    <tr>
+                        <td>private</td>
+                        <td>
+                            Accessible only inside the same class.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>default</td>
+                        <td>
+                            Accessible within the same package.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>protected</td>
+                        <td>
+                            Accessible in the same package and subclasses.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>public</td>
+                        <td>
+                            Accessible from anywhere.
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- BENEFITS -->
+        <section>
+
+            <h2>Benefits of Encapsulation</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>🔒 Data Security</h3>
+                    <p>
+                        Prevents direct modification of important data.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>✅ Validation</h3>
+                    <p>
+                        Allows validation before changing values.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🛠️ Maintainability</h3>
+                    <p>
+                        Makes programs easier to modify and maintain.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🎯 Controlled Access</h3>
+                    <p>
+                        Controls how data is read and changed.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>📦 Organization</h3>
+                    <p>
+                        Keeps data and related methods together.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🧩 Flexibility</h3>
+                    <p>
+                        Internal implementation can be changed
+                        without affecting outside code.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ENCAPSULATION VS ABSTRACTION -->
+        <section>
+
+            <h2>Encapsulation vs Abstraction</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+                        <th>Encapsulation</th>
+                        <th>Abstraction</th>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Protects and controls data access.
+                        </td>
+
+                        <td>
+                            Hides unnecessary implementation details.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Focuses on how data is protected.
+                        </td>
+
+                        <td>
+                            Focuses on what should be exposed.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Commonly uses private variables,
+                            getters and setters.
+                        </td>
+
+                        <td>
+                            Commonly uses abstract classes
+                            and interfaces.
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- IMPORTANT RULES -->
+        <section>
+
+            <h2>Important Rules</h2>
+
+            <div class="info-box">
+
+                <strong>1.</strong> Keep important variables private.
+
+                <br><br>
+
+                <strong>2.</strong> Use getter methods to read values.
+
+                <br><br>
+
+                <strong>3.</strong> Use setter methods to modify values.
+
+                <br><br>
+
+                <strong>4.</strong> Validation can be added inside setters.
+
+                <br><br>
+
+                <strong>5.</strong> Encapsulation provides controlled access
+                to class data.
+
+            </div>
+
+        </section>
+
+
+        <!-- PRACTICE -->
+        <section>
+
+            <h2>Practice Questions</h2>
+
+            <div class="practice">
+
+                <div class="question">
+                    <strong>Q1.</strong>
+                    What is encapsulation?
+                </div>
+
+                <div class="question">
+                    <strong>Q2.</strong>
+                    Why are variables declared private?
+                </div>
+
+                <div class="question">
+                    <strong>Q3.</strong>
+                    What is a getter method?
+                </div>
+
+                <div class="question">
+                    <strong>Q4.</strong>
+                    What is a setter method?
+                </div>
+
+                <div class="question">
+                    <strong>Q5.</strong>
+                    What is the use of the this keyword?
+                </div>
+
+                <div class="question">
+                    <strong>Q6.</strong>
+                    What is the difference between encapsulation
+                    and abstraction?
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MINI CHALLENGE -->
+        <section>
+
+            <h2>Mini Challenge</h2>
+
+            <div class="info-box">
+
+                Create a class called <strong>BankAccount</strong>.
+
+                <br><br>
+
+                Add private variables:
+
+                <br><br>
+
+                • accountNumber<br>
+                • accountHolder<br>
+                • balance
+
+                <br><br>
+
+                Create getter and setter methods for the
+                required variables.
+
+                <br><br>
+
+                Add validation so that the balance cannot
+                be negative.
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+        <section>
+
+            <h2>Lesson Summary</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Encapsulation</h3>
+                    <p>
+                        Wraps data and methods inside a class.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Private</h3>
+                    <p>
+                        Protects variables from direct outside access.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Getter</h3>
+                    <p>
+                        Used to read private data.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Setter</h3>
+                    <p>
+                        Used to modify private data.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+        <div class="navigation">
+
+            <a href="lesson6.html" class="btn">
+                ← Previous Lesson
+            </a>
+
+            <a href="lesson8.html" class="btn next">
+                Next Lesson →
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+        ☕ JavaLearn • Learn Java Step by Step
+    </footer>
+
+</body>
+</html>

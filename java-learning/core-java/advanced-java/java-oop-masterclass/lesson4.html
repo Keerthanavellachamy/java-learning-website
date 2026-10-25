@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Java OOP Masterclass - Lesson 4</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background: rgba(8, 11, 20, 0.85);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .java {
+            color: #ff8a3d;
+        }
+
+        .learn {
+            color: white;
+        }
+
+        .lesson-number {
+            padding: 8px 16px;
+
+            border-radius: 20px;
+
+            background: rgba(255,138,61,0.12);
+
+            border: 1px solid rgba(255,138,61,0.3);
+
+            color: #ff9d5c;
+
+            font-size: 13px;
+        }
+
+
+        /* MAIN */
+
+        main {
+            width: 88%;
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 55px 0 70px;
+        }
+
+
+        /* HERO */
+
+        .hero {
+            display: grid;
+
+            grid-template-columns: 1.3fr 0.7fr;
+
+            gap: 40px;
+
+            align-items: center;
+
+            margin-bottom: 50px;
+        }
+
+        .tag {
+            display: inline-block;
+
+            padding: 7px 15px;
+
+            border-radius: 20px;
+
+            background: rgba(255,77,109,0.12);
+
+            border: 1px solid rgba(255,77,109,0.25);
+
+            color: #ff8098;
+
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: 46px;
+
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+        }
+
+        h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            color: #aeb5ca;
+
+            line-height: 1.7;
+
+            font-size: 17px;
+        }
+
+
+        /* VISUAL */
+
+        .visual {
+            width: 220px;
+            height: 220px;
+
+            margin: auto;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(135deg, #ff8a3d, #ff4d6d);
+
+            box-shadow:
+                0 0 70px rgba(255,77,109,0.35);
+
+            text-align: center;
+        }
+
+        .visual span {
+            font-size: 43px;
+            font-weight: 800;
+        }
+
+
+        /* PROGRESS */
+
+        .progress-box {
+            margin-bottom: 40px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+
+            color: #aeb5ca;
+
+            font-size: 14px;
+        }
+
+        .progress {
+            height: 8px;
+
+            background: rgba(255,255,255,0.08);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 13.33%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(90deg, #ff8a3d, #ff4d6d);
+        }
+
+
+        /* CARDS */
+
+        .card {
+            padding: 28px;
+
+            margin-bottom: 25px;
+
+            border-radius: 18px;
+
+            background: rgba(255,255,255,0.06);
+
+            border: 1px solid rgba(255,255,255,0.11);
+
+            backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            font-size: 27px;
+
+            margin-bottom: 18px;
+        }
+
+        h2::before {
+            content: "// ";
+
+            color: #ff8a3d;
+        }
+
+        .card p {
+            color: #b8bfd2;
+
+            line-height: 1.8;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* GRID */
+
+        .grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 18px;
+
+            margin-top: 20px;
+        }
+
+        .box {
+            padding: 20px;
+
+            border-radius: 14px;
+
+            background: rgba(255,255,255,0.04);
+
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .box strong {
+            display: block;
+
+            color: #ff8a3d;
+
+            margin-bottom: 8px;
+        }
+
+        .box p {
+            font-size: 14px;
+
+            margin: 0;
+        }
+
+
+        /* CODE */
+
+        .code-box {
+            margin-top: 20px;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            background: #0d1117;
+
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .code-header {
+            padding: 10px 15px;
+
+            background: #161b22;
+
+            color: #8b949e;
+
+            font-size: 13px;
+        }
+
+        .dot {
+            display: inline-block;
+
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            background: #ff4d6d;
+
+            margin-right: 5px;
+        }
+
+        pre {
+            padding: 22px;
+
+            overflow-x: auto;
+
+            color: #c9d1d9;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .number {
+            color: #ffa657;
+        }
+
+        .function {
+            color: #d2a8ff;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+
+        /* OUTPUT */
+
+        .output {
+            margin-top: 18px;
+
+            padding: 18px;
+
+            border-left: 4px solid #ff4d6d;
+
+            background: rgba(255,77,109,0.07);
+
+            border-radius: 8px;
+
+            font-family: monospace;
+
+            color: #e6edf3;
+        }
+
+
+        /* INFO */
+
+        .info {
+            padding: 20px;
+
+            margin-top: 20px;
+
+            border-left: 4px solid #ff8a3d;
+
+            background: rgba(255,138,61,0.07);
+
+            border-radius: 10px;
+
+            color: #cbd2e1;
+
+            line-height: 1.7;
+        }
+
+
+        /* TABLE */
+
+        .table-wrapper {
+            overflow-x: auto;
+
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 600px;
+        }
+
+        th,
+        td {
+            padding: 14px;
+
+            text-align: left;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        th {
+            color: #ff9d5c;
+
+            background: rgba(255,138,61,0.07);
+        }
+
+        td {
+            color: #b8bfd2;
+        }
+
+
+        /* LIST */
+
+        ul,
+        ol {
+            margin-left: 22px;
+
+            color: #b8bfd2;
+
+            line-height: 2;
+        }
+
+
+        /* NAVIGATION */
+
+        .navigation {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: white;
+
+            font-weight: 600;
+
+            background:
+                linear-gradient(135deg, #ff8a3d, #ff4d6d);
+
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 25px rgba(255,77,109,0.25);
+        }
+
+        .btn.secondary {
+            background: rgba(255,255,255,0.07);
+
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+
+            padding: 25px;
+
+            color: #777f96;
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+
+        /* RESPONSIVE */
+
+        @media(max-width:800px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .visual {
+                width: 180px;
+                height: 180px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            <span class="java">Java</span><span class="learn">Learn</span>
+        </div>
+
+        <div class="lesson-number">
+            Java OOP Masterclass • Lesson 04 / 30
+        </div>
+
+    </nav>
+
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div>
+
+                <div class="tag">
+                    JAVA OOP MASTERCLASS
+                </div>
+
+                <h1>
+                    Understanding
+                    <span>Constructors</span>
+                </h1>
+
+                <p>
+                    Learn how constructors initialize objects when
+                    they are created and understand default,
+                    parameterized and overloaded constructors.
+                </p>
+
+            </div>
+
+
+            <div class="visual">
+                <span>new<br>Object()</span>
+            </div>
+
+        </section>
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress-box">
+
+            <div class="progress-info">
+
+                <span>
+                    Lesson 4 of 30
+                </span>
+
+                <span>
+                    13.33% Complete
+                </span>
+
+            </div>
+
+            <div class="progress">
+
+                <div class="progress-bar"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WHAT IS CONSTRUCTOR -->
+
+        <section class="card">
+
+            <h2>What is a Constructor?</h2>
+
+            <p>
+                A constructor is a special member of a class that
+                is automatically called when an object is created.
+            </p>
+
+            <p>
+                Constructors are mainly used to initialize the
+                fields of an object.
+            </p>
+
+            <div class="info">
+
+                <strong>Simple idea:</strong>
+
+                <br><br>
+
+                When you create an object:
+
+                <br><br>
+
+                <strong>new Student()</strong>
+
+                <br><br>
+
+                Java calls the constructor of the
+                <strong>Student</strong> class.
+
+            </div>
+
+        </section>
+
+
+        <!-- RULES -->
+
+        <section class="card">
+
+            <h2>Rules of a Constructor</h2>
+
+            <div class="grid">
+
+                <div class="box">
+
+                    <strong>1. Same Name</strong>
+
+                    <p>
+                        A constructor must have the same name
+                        as its class.
+                    </p>
+
+                </div>
+
+                <div class="box">
+
+                    <strong>2. No Return Type</strong>
+
+                    <p>
+                        A constructor does not have a return type,
+                        not even void.
+                    </p>
+
+                </div>
+
+                <div class="box">
+
+                    <strong>3. Called Automatically</strong>
+
+                    <p>
+                        Java automatically calls it when an object
+                        is created.
+                    </p>
+
+                </div>
+
+                <div class="box">
+
+                    <strong>4. Initializes Objects</strong>
+
+                    <p>
+                        It is commonly used to initialize
+                        object fields.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- BASIC CONSTRUCTOR -->
+
+        <section class="card">
+
+            <h2>Creating a Constructor</h2>
+
+            <p>
+                Here is a simple Student class with a constructor.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Student.java
+
+                </div>
+
+<pre>
+<span class="keyword">class</span> <span class="type">Student</span> {
+
+    String name;
+
+    <span class="comment">// Constructor</span>
+
+    Student() {
+
+        name = <span class="string">"Keerthana"</span>;
+    }
+}
+</pre>
+
+            </div>
+
+            <p style="margin-top:20px;">
+                When the object is created, the constructor
+                automatically assigns the value to
+                <strong>name</strong>.
+            </p>
+
+        </section>
+
+
+        <!-- CALLING CONSTRUCTOR -->
+
+        <section class="card">
+
+            <h2>Calling the Constructor</h2>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Main.java
+
+                </div>
+
+<pre>
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span>
+    <span class="function">main</span>(String[] args) {
+
+        Student student =
+            <span class="keyword">new</span> Student();
+
+        System.out.println(
+            student.name
+        );
+    }
+}
+</pre>
+
+            </div>
+
+            <div class="output">
+
+                Output:
+
+                <br><br>
+
+                Keerthana
+
+            </div>
+
+        </section>
+
+
+        <!-- DEFAULT CONSTRUCTOR -->
+
+        <section class="card">
+
+            <h2>Default Constructor</h2>
+
+            <p>
+                If you do not write any constructor in your class,
+                Java can provide a default constructor automatically.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Student.java
+
+                </div>
+
+<pre>
+<span class="keyword">class</span> <span class="type">Student</span> {
+
+    String name;
+
+    <span class="keyword">int</span> age;
+}
+</pre>
+
+            </div>
+
+            <p style="margin-top:20px;">
+                Java provides a no-argument constructor behind
+                the scenes because no constructor has been declared.
+            </p>
+
+            <div class="info">
+
+                ⚠️ Important:
+
+                <br><br>
+
+                If you create your own constructor, Java does
+                <strong>not</strong> automatically add the
+                no-argument constructor.
+
+            </div>
+
+        </section>
+
+
+        <!-- PARAMETERIZED -->
+
+        <section class="card">
+
+            <h2>Parameterized Constructor</h2>
+
+            <p>
+                A parameterized constructor accepts values when
+                the object is created.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Student.java
+
+                </div>
+
+<pre>
+<span class="keyword">class</span> <span class="type">Student</span> {
+
+    String name;
+
+    <span class="keyword">int</span> age;
+
+    Student(String studentName, <span class="keyword">int</span> studentAge) {
+
+        name = studentName;
+
+        age = studentAge;
+    }
+}
+</pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- PARAMETERIZED OBJECT -->
+
+        <section class="card">
+
+            <h2>Using a Parameterized Constructor</h2>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Main.java
+
+                </div>
+
+<pre>
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span>
+    <span class="function">main</span>(String[] args) {
+
+        Student student =
+            <span class="keyword">new</span> Student(
+                <span class="string">"Keerthana"</span>,
+                <span class="number">20</span>
+            );
+
+        System.out.println(student.name);
+
+        System.out.println(student.age);
+    }
+}
+</pre>
+
+            </div>
+
+            <div class="output">
+
+                Output:
+
+                <br><br>
+
+                Keerthana
+                <br>
+                20
+
+            </div>
+
+        </section>
+
+
+        <!-- MULTIPLE OBJECTS -->
+
+        <section class="card">
+
+            <h2>Constructor with Multiple Objects</h2>
+
+            <p>
+                A parameterized constructor allows us to create
+                different objects with different values.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Main.java
+
+                </div>
+
+<pre>
+Student student1 =
+    <span class="keyword">new</span> Student(
+        <span class="string">"Keerthana"</span>,
+        <span class="number">20</span>
+    );
+
+Student student2 =
+    <span class="keyword">new</span> Student(
+        <span class="string">"Amirtha"</span>,
+        <span class="number">21</span>
+    );
+
+System.out.println(student1.name);
+
+System.out.println(student2.name);
+</pre>
+
+            </div>
+
+            <div class="output">
+
+                Output:
+
+                <br><br>
+
+                Keerthana
+                <br>
+                Amirtha
+
+            </div>
+
+        </section>
+
+
+        <!-- CONSTRUCTOR OVERLOADING -->
+
+        <section class="card">
+
+            <h2>Constructor Overloading</h2>
+
+            <p>
+                A class can have more than one constructor as long
+                as their parameter lists are different.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Student.java
+
+                </div>
+
+<pre>
+<span class="keyword">class</span> <span class="type">Student</span> {
+
+    String name;
+
+    <span class="keyword">int</span> age;
+
+
+    <span class="comment">// Constructor 1</span>
+
+    Student() {
+
+        name = <span class="string">"Unknown"</span>;
+
+        age = <span class="number">0</span>;
+    }
+
+
+    <span class="comment">// Constructor 2</span>
+
+    Student(String name) {
+
+        <span class="keyword">this</span>.name = name;
+
+        age = <span class="number">0</span>;
+    }
+
+
+    <span class="comment">// Constructor 3</span>
+
+    Student(String name, <span class="keyword">int</span> age) {
+
+        <span class="keyword">this</span>.name = name;
+
+        <span class="keyword">this</span>.age = age;
+    }
+}
+</pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONSTRUCTOR VS METHOD -->
+
+        <section class="card">
+
+            <h2>Constructor vs Method</h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+                        <th>Constructor</th>
+                        <th>Method</th>
+                    </tr>
+
+                    <tr>
+                        <td>Initializes an object</td>
+                        <td>Performs an operation</td>
+                    </tr>
+
+                    <tr>
+                        <td>Same name as class</td>
+                        <td>Can have any valid name</td>
+                    </tr>
+
+                    <tr>
+                        <td>No return type</td>
+                        <td>Can have a return type</td>
+                    </tr>
+
+                    <tr>
+                        <td>Called when object is created</td>
+                        <td>Called explicitly</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- IMPORTANT -->
+
+        <section class="card">
+
+            <h2>Important Points</h2>
+
+            <ul>
+
+                <li>
+                    A constructor has the same name as its class.
+                </li>
+
+                <li>
+                    A constructor has no return type.
+                </li>
+
+                <li>
+                    Constructors initialize objects.
+                </li>
+
+                <li>
+                    Java can provide a default constructor if
+                    no constructor is declared.
+                </li>
+
+                <li>
+                    Parameterized constructors accept values.
+                </li>
+
+                <li>
+                    Multiple constructors are possible through
+                    constructor overloading.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- PRACTICE -->
+
+        <section class="card">
+
+            <h2>Practice Questions</h2>
+
+            <ol>
+
+                <li>What is a constructor?</li>
+
+                <li>Why do we use constructors?</li>
+
+                <li>Can a constructor have a return type?</li>
+
+                <li>What is a default constructor?</li>
+
+                <li>What is a parameterized constructor?</li>
+
+                <li>What is constructor overloading?</li>
+
+                <li>When is a constructor called?</li>
+
+                <li>What happens if we create a constructor ourselves?</li>
+
+            </ol>
+
+        </section>
+
+
+        <!-- MINI CHALLENGE -->
+
+        <section class="card">
+
+            <h2>Mini Challenge</h2>
+
+            <p>
+                Create a class called <strong>Employee</strong>.
+            </p>
+
+            <p>
+                Add these fields:
+            </p>
+
+            <ul>
+
+                <li>name</li>
+
+                <li>employeeId</li>
+
+                <li>salary</li>
+
+            </ul>
+
+            <p>
+                Create a parameterized constructor that initializes
+                all three fields.
+            </p>
+
+            <div class="info">
+
+                💡 Bonus Challenge:
+
+                <br><br>
+
+                Create two Employee objects using the constructor
+                with different employee details.
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+
+        <section class="card">
+
+            <h2>Lesson Summary</h2>
+
+            <ul>
+
+                <li>
+                    Constructors initialize objects.
+                </li>
+
+                <li>
+                    They have the same name as the class.
+                </li>
+
+                <li>
+                    Constructors do not have a return type.
+                </li>
+
+                <li>
+                    Default constructors require no arguments.
+                </li>
+
+                <li>
+                    Parameterized constructors accept arguments.
+                </li>
+
+                <li>
+                    Constructor overloading allows multiple
+                    constructors in one class.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+
+        <div class="navigation">
+
+            <a href="lesson3.html" class="btn secondary">
+                ← Previous Lesson
+            </a>
+
+            <a href="lesson5.html" class="btn">
+                Next Lesson →
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        ☕ JavaLearn • Java OOP Masterclass
+
+    </footer>
+
+</body>
+
+</html>

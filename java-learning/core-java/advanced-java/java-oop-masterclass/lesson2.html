@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Java OOP Masterclass - Lesson 2</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background: rgba(8, 11, 20, 0.85);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .java {
+            color: #ff8a3d;
+        }
+
+        .learn {
+            color: white;
+        }
+
+        .lesson-number {
+            padding: 8px 16px;
+
+            border-radius: 20px;
+
+            background: rgba(255,138,61,0.12);
+
+            border: 1px solid rgba(255,138,61,0.3);
+
+            color: #ff9d5c;
+
+            font-size: 13px;
+        }
+
+
+        /* MAIN */
+
+        main {
+            width: 88%;
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 55px 0 70px;
+        }
+
+
+        /* HERO */
+
+        .hero {
+            display: grid;
+
+            grid-template-columns: 1.3fr 0.7fr;
+
+            gap: 40px;
+
+            align-items: center;
+
+            margin-bottom: 50px;
+        }
+
+        .tag {
+            display: inline-block;
+
+            padding: 7px 15px;
+
+            border-radius: 20px;
+
+            background: rgba(255,77,109,0.12);
+
+            border: 1px solid rgba(255,77,109,0.25);
+
+            color: #ff8098;
+
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: 46px;
+
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+        }
+
+        h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            color: #aeb5ca;
+
+            line-height: 1.7;
+
+            font-size: 17px;
+        }
+
+
+        /* VISUAL */
+
+        .visual {
+            width: 220px;
+            height: 220px;
+
+            margin: auto;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(135deg, #ff8a3d, #ff4d6d);
+
+            box-shadow:
+                0 0 70px rgba(255,77,109,0.35);
+
+            text-align: center;
+        }
+
+        .visual span {
+            font-size: 45px;
+            font-weight: 800;
+        }
+
+
+        /* PROGRESS */
+
+        .progress-box {
+            margin-bottom: 40px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+
+            color: #aeb5ca;
+
+            font-size: 14px;
+        }
+
+        .progress {
+            height: 8px;
+
+            background: rgba(255,255,255,0.08);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 6.66%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(90deg, #ff8a3d, #ff4d6d);
+        }
+
+
+        /* CARDS */
+
+        .card {
+            padding: 28px;
+
+            margin-bottom: 25px;
+
+            border-radius: 18px;
+
+            background: rgba(255,255,255,0.06);
+
+            border: 1px solid rgba(255,255,255,0.11);
+
+            backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            font-size: 27px;
+
+            margin-bottom: 18px;
+        }
+
+        h2::before {
+            content: "// ";
+
+            color: #ff8a3d;
+        }
+
+        h3 {
+            margin-top: 20px;
+
+            margin-bottom: 10px;
+
+            color: #ff9d5c;
+        }
+
+        .card p {
+            color: #b8bfd2;
+
+            line-height: 1.8;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* CONCEPT GRID */
+
+        .concept-grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 18px;
+
+            margin-top: 20px;
+        }
+
+        .concept {
+            padding: 20px;
+
+            border-radius: 14px;
+
+            background: rgba(255,255,255,0.04);
+
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .concept strong {
+            display: block;
+
+            color: #ff8a3d;
+
+            margin-bottom: 8px;
+
+            font-size: 17px;
+        }
+
+        .concept p {
+            font-size: 14px;
+
+            margin: 0;
+        }
+
+
+        /* CODE */
+
+        .code-box {
+            margin-top: 20px;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            background: #0d1117;
+
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .code-header {
+            padding: 10px 15px;
+
+            background: #161b22;
+
+            color: #8b949e;
+
+            font-size: 13px;
+        }
+
+        .dot {
+            display: inline-block;
+
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            background: #ff4d6d;
+
+            margin-right: 5px;
+        }
+
+        pre {
+            padding: 22px;
+
+            overflow-x: auto;
+
+            color: #c9d1d9;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .variable {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .function {
+            color: #d2a8ff;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+
+        /* OUTPUT */
+
+        .output {
+            margin-top: 18px;
+
+            padding: 18px;
+
+            border-left: 4px solid #ff4d6d;
+
+            background: rgba(255,77,109,0.07);
+
+            border-radius: 8px;
+
+            font-family: monospace;
+
+            color: #e6edf3;
+        }
+
+
+        /* INFO */
+
+        .info {
+            padding: 20px;
+
+            margin-top: 20px;
+
+            border-left: 4px solid #ff8a3d;
+
+            background: rgba(255,138,61,0.07);
+
+            border-radius: 10px;
+
+            color: #cbd2e1;
+
+            line-height: 1.7;
+        }
+
+
+        /* TABLE */
+
+        .table-wrapper {
+            overflow-x: auto;
+
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 600px;
+        }
+
+        th,
+        td {
+            padding: 14px;
+
+            text-align: left;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        th {
+            color: #ff9d5c;
+
+            background: rgba(255,138,61,0.07);
+        }
+
+        td {
+            color: #b8bfd2;
+        }
+
+
+        /* LIST */
+
+        ul,
+        ol {
+            margin-left: 22px;
+
+            color: #b8bfd2;
+
+            line-height: 2;
+        }
+
+
+        /* NAVIGATION */
+
+        .navigation {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: white;
+
+            font-weight: 600;
+
+            background:
+                linear-gradient(135deg, #ff8a3d, #ff4d6d);
+
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 25px rgba(255,77,109,0.25);
+        }
+
+        .btn.secondary {
+            background: rgba(255,255,255,0.07);
+
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+
+            padding: 25px;
+
+            color: #777f96;
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+
+        /* RESPONSIVE */
+
+        @media(max-width:800px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .visual {
+                width: 180px;
+                height: 180px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            <span class="java">Java</span><span class="learn">Learn</span>
+        </div>
+
+        <div class="lesson-number">
+            Java OOP Masterclass • Lesson 02 / 30
+        </div>
+
+    </nav>
+
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div>
+
+                <div class="tag">
+                    JAVA OOP MASTERCLASS
+                </div>
+
+                <h1>
+                    Classes and
+                    <span>Objects</span>
+                </h1>
+
+                <p>
+                    Understand the most important building blocks
+                    of Java OOP: classes and objects.
+                    Learn how to create a class, define its data
+                    and behavior, and create objects from it.
+                </p>
+
+            </div>
+
+
+            <div class="visual">
+                <span>Class<br>&<br>Object</span>
+            </div>
+
+        </section>
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress-box">
+
+            <div class="progress-info">
+
+                <span>
+                    Lesson 2 of 30
+                </span>
+
+                <span>
+                    6.66% Complete
+                </span>
+
+            </div>
+
+            <div class="progress">
+
+                <div class="progress-bar"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WHAT IS CLASS -->
+
+        <section class="card">
+
+            <h2>What is a Class?</h2>
+
+            <p>
+                A class is a blueprint or template used to create
+                objects.
+            </p>
+
+            <p>
+                A class defines what data an object will have and
+                what actions the object can perform.
+            </p>
+
+            <div class="info">
+
+                <strong>Real-world example:</strong>
+
+                Think about a house blueprint.
+
+                <br><br>
+
+                The blueprint is like a
+                <strong>class</strong>.
+
+                <br>
+
+                The actual houses built from that blueprint are
+                <strong>objects</strong>.
+
+            </div>
+
+        </section>
+
+
+        <!-- WHAT IS OBJECT -->
+
+        <section class="card">
+
+            <h2>What is an Object?</h2>
+
+            <p>
+                An object is an actual instance of a class.
+            </p>
+
+            <p>
+                When we create an object using the
+                <strong>new</strong> keyword, Java allocates memory
+                for that object.
+            </p>
+
+            <div class="concept-grid">
+
+                <div class="concept">
+
+                    <strong>Class</strong>
+
+                    <p>
+                        Blueprint or template.
+                    </p>
+
+                </div>
+
+                <div class="concept">
+
+                    <strong>Object</strong>
+
+                    <p>
+                        Actual instance created from the class.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- BASIC CLASS -->
+
+        <section class="card">
+
+            <h2>Creating a Class</h2>
+
+            <p>
+                Let's create a simple class called
+                <strong>Student</strong>.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Student.java
+
+                </div>
+
+<pre>
+<span class="keyword">class</span> <span class="type">Student</span> {
+
+    String name;
+
+    <span class="keyword">int</span> age;
+
+}
+</pre>
+
+            </div>
+
+            <p style="margin-top:20px;">
+                Here, <strong>Student</strong> is the class.
+                It contains two variables:
+                <strong>name</strong> and <strong>age</strong>.
+            </p>
+
+        </section>
+
+
+        <!-- CREATE OBJECT -->
+
+        <section class="card">
+
+            <h2>Creating an Object</h2>
+
+            <p>
+                We can create an object from the Student class
+                using the <strong>new</strong> keyword.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Main.java
+
+                </div>
+
+<pre>
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span>
+    <span class="function">main</span>(String[] args) {
+
+        Student student =
+            <span class="keyword">new</span> Student();
+
+        student.name = <span class="string">"Keerthana"</span>;
+
+        student.age = <span class="string">20</span>;
+
+        System.out.println(student.name);
+
+        System.out.println(student.age);
+    }
+}
+</pre>
+
+            </div>
+
+            <div class="output">
+
+                Output:
+
+                <br><br>
+
+                Keerthana
+                <br>
+                20
+
+            </div>
+
+        </section>
+
+
+        <!-- CLASS COMPONENTS -->
+
+        <section class="card">
+
+            <h2>Parts of a Class</h2>
+
+            <p>
+                A Java class can contain different types of
+                members.
+            </p>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+                        <th>Member</th>
+                        <th>Purpose</th>
+                        <th>Example</th>
+                    </tr>
+
+                    <tr>
+                        <td>Field</td>
+                        <td>Stores data</td>
+                        <td>String name;</td>
+                    </tr>
+
+                    <tr>
+                        <td>Method</td>
+                        <td>Performs an action</td>
+                        <td>display();</td>
+                    </tr>
+
+                    <tr>
+                        <td>Constructor</td>
+                        <td>Initializes an object</td>
+                        <td>Student()</td>
+                    </tr>
+
+                    <tr>
+                        <td>Class</td>
+                        <td>Defines the object structure</td>
+                        <td>class Student</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- CLASS WITH METHOD -->
+
+        <section class="card">
+
+            <h2>Class with a Method</h2>
+
+            <p>
+                A class can contain methods that define the behavior
+                of its objects.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Student.java
+
+                </div>
+
+<pre>
+<span class="keyword">class</span> <span class="type">Student</span> {
+
+    String name;
+
+    <span class="keyword">void</span> <span class="function">displayDetails</span>() {
+
+        System.out.println(
+            <span class="string">"Student: "</span> + name
+        );
+    }
+}
+</pre>
+
+            </div>
+
+            <p style="margin-top:20px;">
+                Now we can call the method using an object.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Main.java
+
+                </div>
+
+<pre>
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span>
+    <span class="function">main</span>(String[] args) {
+
+        Student student =
+            <span class="keyword">new</span> Student();
+
+        student.name = <span class="string">"Keerthana"</span>;
+
+        student.displayDetails();
+    }
+}
+</pre>
+
+            </div>
+
+            <div class="output">
+
+                Output:
+
+                <br><br>
+
+                Student: Keerthana
+
+            </div>
+
+        </section>
+
+
+        <!-- MULTIPLE OBJECTS -->
+
+        <section class="card">
+
+            <h2>Creating Multiple Objects</h2>
+
+            <p>
+                One class can be used to create many different
+                objects.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Main.java
+
+                </div>
+
+<pre>
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span>
+    <span class="function">main</span>(String[] args) {
+
+        Student student1 =
+            <span class="keyword">new</span> Student();
+
+        Student student2 =
+            <span class="keyword">new</span> Student();
+
+        student1.name = <span class="string">"Keerthana"</span>;
+
+        student2.name = <span class="string">"Amirtha"</span>;
+
+        student1.displayDetails();
+
+        student2.displayDetails();
+    }
+}
+</pre>
+
+            </div>
+
+            <div class="output">
+
+                Output:
+
+                <br><br>
+
+                Student: Keerthana
+                <br>
+                Student: Amirtha
+
+            </div>
+
+        </section>
+
+
+        <!-- CLASS VS OBJECT -->
+
+        <section class="card">
+
+            <h2>Class vs Object</h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+                        <th>Class</th>
+                        <th>Object</th>
+                    </tr>
+
+                    <tr>
+                        <td>Blueprint</td>
+                        <td>Actual instance</td>
+                    </tr>
+
+                    <tr>
+                        <td>Does not represent one specific entity</td>
+                        <td>Represents a specific entity</td>
+                    </tr>
+
+                    <tr>
+                        <td>Defines structure</td>
+                        <td>Contains actual values</td>
+                    </tr>
+
+                    <tr>
+                        <td>Example: Student</td>
+                        <td>Example: student1</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- NEW KEYWORD -->
+
+        <section class="card">
+
+            <h2>The new Keyword</h2>
+
+            <p>
+                The <strong>new</strong> keyword is used to create
+                an object of a class.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Example
+
+                </div>
+
+<pre>
+Student student =
+    <span class="keyword">new</span> Student();
+</pre>
+
+            </div>
+
+            <div class="info">
+
+                <strong>Remember:</strong>
+
+                <br><br>
+
+                <strong>Student</strong> → class type
+
+                <br>
+
+                <strong>student</strong> → reference variable
+
+                <br>
+
+                <strong>new Student()</strong> → creates the object
+
+            </div>
+
+        </section>
+
+
+        <!-- PRACTICE -->
+
+        <section class="card">
+
+            <h2>Practice Questions</h2>
+
+            <ol>
+
+                <li>What is a class?</li>
+
+                <li>What is an object?</li>
+
+                <li>What keyword is used to create an object?</li>
+
+                <li>Can one class create multiple objects?</li>
+
+                <li>What is the difference between a class and an object?</li>
+
+                <li>What is a field in a Java class?</li>
+
+                <li>What is a method?</li>
+
+            </ol>
+
+        </section>
+
+
+        <!-- MINI CHALLENGE -->
+
+        <section class="card">
+
+            <h2>Mini Challenge</h2>
+
+            <p>
+                Create a class called <strong>Car</strong>.
+            </p>
+
+            <p>
+                Add the following fields:
+            </p>
+
+            <ul>
+
+                <li>brand</li>
+
+                <li>color</li>
+
+                <li>price</li>
+
+            </ul>
+
+            <p>
+                Create a method called
+                <strong>displayCarDetails()</strong>
+                and print all the information.
+            </p>
+
+            <div class="info">
+
+                💡 Bonus Challenge:
+                Create two Car objects with different values
+                and display both.
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+
+        <section class="card">
+
+            <h2>Lesson Summary</h2>
+
+            <ul>
+
+                <li>
+                    A class is a blueprint for creating objects.
+                </li>
+
+                <li>
+                    An object is an instance of a class.
+                </li>
+
+                <li>
+                    The <strong>new</strong> keyword creates objects.
+                </li>
+
+                <li>
+                    Classes can contain fields and methods.
+                </li>
+
+                <li>
+                    One class can create many objects.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+
+        <div class="navigation">
+
+            <a href="lesson1.html" class="btn secondary">
+                ← Previous Lesson
+            </a>
+
+            <a href="lesson3.html" class="btn">
+                Next Lesson →
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        ☕ JavaLearn • Java OOP Masterclass
+
+    </footer>
+
+</body>
+
+</html>

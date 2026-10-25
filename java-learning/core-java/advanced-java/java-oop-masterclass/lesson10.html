@@ -1,0 +1,928 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson 10 - Method Overriding | JavaLearn</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 18px 6%;
+            background: rgba(8, 11, 20, 0.85);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #ff8a3d;
+        }
+
+        .lesson-pill {
+            padding: 9px 16px;
+            border-radius: 30px;
+            background: rgba(255,138,61,0.12);
+            border: 1px solid rgba(255,138,61,0.3);
+            color: #ffb078;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        main {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 55px 0 70px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 45px;
+            align-items: center;
+            margin-bottom: 45px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            background: rgba(255,77,109,0.12);
+            color: #ff7892;
+            border: 1px solid rgba(255,77,109,0.25);
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: clamp(38px, 6vw, 66px);
+            line-height: 1.05;
+            margin-bottom: 20px;
+            letter-spacing: -2px;
+        }
+
+        h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            color: #aeb7ca;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .hero-visual {
+            width: 220px;
+            height: 220px;
+            margin: auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                0 0 45px rgba(255,138,61,0.25),
+                0 0 90px rgba(255,77,109,0.12);
+        }
+
+        .visual-inner {
+            width: 185px;
+            height: 185px;
+            border-radius: 50%;
+            background: #0d111d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-family: Consolas, monospace;
+            line-height: 1.8;
+        }
+
+        .parent {
+            color: #79c0ff;
+        }
+
+        .override {
+            color: #ff8a3d;
+            font-size: 22px;
+        }
+
+        .child {
+            color: #d2a8ff;
+        }
+
+        .progress-section {
+            margin-bottom: 40px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            color: #aeb7ca;
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 33.33%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff8a3d, #ff4d6d);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.055);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 18px;
+            padding: 28px;
+            backdrop-filter: blur(14px);
+            box-shadow: 0 18px 45px rgba(0,0,0,0.18);
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        h2 {
+            font-size: 25px;
+            margin-bottom: 17px;
+        }
+
+        h2::before {
+            content: "// ";
+            color: #ff8a3d;
+        }
+
+        h3 {
+            color: #ffb078;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            color: #b9c1d1;
+            line-height: 1.75;
+        }
+
+        ul {
+            padding-left: 22px;
+            color: #b9c1d1;
+            line-height: 1.9;
+        }
+
+        li::marker {
+            color: #ff8a3d;
+        }
+
+        .diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+            font-family: Consolas, monospace;
+        }
+
+        .diagram-box {
+            padding: 13px 22px;
+            border: 1px solid rgba(255,138,61,0.4);
+            background: rgba(255,138,61,0.08);
+            border-radius: 10px;
+            color: #ffb078;
+        }
+
+        .arrow {
+            color: #ff4d6d;
+            font-size: 25px;
+        }
+
+        .code-box {
+            margin-top: 18px;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: #0b0f18;
+        }
+
+        .code-header {
+            padding: 11px 15px;
+            background: #111722;
+            color: #8b949e;
+            font-size: 13px;
+            font-family: Consolas, monospace;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 9px;
+            height: 9px;
+            background: #ff4d6d;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        pre {
+            padding: 20px;
+            overflow-x: auto;
+            color: #d8dee9;
+            line-height: 1.65;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 14px;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .variable {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .number {
+            color: #ffa657;
+        }
+
+        .function {
+            color: #d2a8ff;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+        .output {
+            margin-top: 15px;
+            padding: 15px 18px;
+            background: #090d15;
+            border-left: 4px solid #ff4d6d;
+            border-radius: 8px;
+            color: #d8dee9;
+            font-family: Consolas, monospace;
+            white-space: pre-line;
+        }
+
+        .info {
+            margin-top: 18px;
+            padding: 17px;
+            border-left: 4px solid #ff8a3d;
+            background: rgba(255,138,61,0.07);
+            border-radius: 8px;
+            color: #c8cfdd;
+            line-height: 1.7;
+        }
+
+        .comparison {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .comparison th,
+        .comparison td {
+            padding: 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+            text-align: left;
+        }
+
+        .comparison th {
+            color: #ffb078;
+            background: rgba(255,138,61,0.08);
+        }
+
+        .comparison td {
+            color: #b9c1d1;
+        }
+
+        .question {
+            padding: 14px 17px;
+            margin: 10px 0;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.035);
+            border: 1px solid rgba(255,255,255,0.06);
+            color: #c8cfdd;
+        }
+
+        .challenge {
+            border: 1px solid rgba(255,77,109,0.25);
+            background: rgba(255,77,109,0.055);
+        }
+
+        .challenge h2::before {
+            color: #ff4d6d;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 13px 21px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            font-weight: 700;
+        }
+
+        .btn.secondary {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #70798c;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        @media (max-width: 800px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">
+        <span>Java</span>Learn
+    </div>
+
+    <div class="lesson-pill">
+        Java OOP Masterclass • Lesson 10 / 30
+    </div>
+</nav>
+
+<main>
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <div>
+            <div class="badge">POLYMORPHISM • LESSON 10</div>
+
+            <h1>
+                Method <span>Overriding</span>
+            </h1>
+
+            <p>
+                Learn how a child class can provide its own implementation
+                of a method inherited from its parent class.
+            </p>
+        </div>
+
+        <div class="hero-visual">
+            <div class="visual-inner">
+                <div>
+                    <div class="parent">Parent</div>
+                    <div class="override">↓</div>
+                    <div class="child">Override()</div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- PROGRESS -->
+    <section class="progress-section">
+
+        <div class="progress-info">
+            <span>Lesson 10 of 30</span>
+            <span>33.33% Complete</span>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+
+    </section>
+
+    <section class="grid">
+
+        <!-- INTRODUCTION -->
+        <article class="card full">
+
+            <h2>What is Method Overriding?</h2>
+
+            <p>
+                Method overriding happens when a child class provides its
+                own version of a method that already exists in the parent
+                class.
+            </p>
+
+            <p style="margin-top:15px;">
+                The method in the child class must have the same method name,
+                parameters, and compatible return type as the parent method.
+            </p>
+
+            <div class="diagram">
+
+                <div class="diagram-box">
+                    Parent Method
+                </div>
+
+                <div class="arrow">→</div>
+
+                <div class="diagram-box">
+                    Child Method
+                </div>
+
+            </div>
+
+            <div class="info">
+                Method overriding is mainly used to achieve
+                <strong>runtime polymorphism</strong> in Java.
+            </div>
+
+        </article>
+
+        <!-- BASIC EXAMPLE -->
+        <article class="card">
+
+            <h2>Basic Example</h2>
+
+            <p>
+                Suppose an Animal has a method called
+                <strong>sound()</strong>. A Dog can override that method
+                and provide its own implementation.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+                    <span class="dot"></span>Animal.java
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="function">sound</span>() {
+        System.out.println(<span class="string">"Animal makes a sound"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="function">sound</span>() {
+        System.out.println(<span class="string">"Dog barks"</span>);
+    }
+}</pre>
+
+            </div>
+
+        </article>
+
+        <!-- @OVERRIDE -->
+        <article class="card">
+
+            <h2>@Override Annotation</h2>
+
+            <p>
+                Java provides the <strong>@Override</strong> annotation
+                to clearly indicate that a method is being overridden.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+                    <span class="dot"></span>Using @Override
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="function">sound</span>() {
+        System.out.println(<span class="string">"Animal sound"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+
+    <span class="keyword">@Override</span>
+    <span class="keyword">void</span> <span class="function">sound</span>() {
+        System.out.println(<span class="string">"Dog barks"</span>);
+    }
+}</pre>
+
+            </div>
+
+            <div class="info">
+                The compiler checks whether the child method correctly
+                overrides a method from the parent class.
+            </div>
+
+        </article>
+
+        <!-- COMPLETE PROGRAM -->
+        <article class="card full">
+
+            <h2>Complete Method Overriding Program</h2>
+
+            <div class="code-box">
+
+                <div class="code-header">
+                    <span class="dot"></span>Main.java
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="function">sound</span>() {
+        System.out.println(<span class="string">"Animal makes a sound"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+
+    <span class="keyword">@Override</span>
+    <span class="keyword">void</span> <span class="function">sound</span>() {
+        System.out.println(<span class="string">"Dog barks"</span>);
+    }
+}
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span> <span class="function">main</span>(String[] args) {
+
+        <span class="type">Dog</span> dog = <span class="keyword">new</span> <span class="type">Dog</span>();
+
+        dog.sound();
+    }
+}</pre>
+
+            </div>
+
+            <div class="output">Dog barks</div>
+
+        </article>
+
+        <!-- WHY -->
+        <article class="card">
+
+            <h2>Why Do We Override Methods?</h2>
+
+            <ul>
+                <li>To change inherited behavior.</li>
+                <li>To provide a specialized implementation.</li>
+                <li>To support runtime polymorphism.</li>
+                <li>To make parent classes more reusable.</li>
+                <li>To allow different child classes to behave differently.</li>
+            </ul>
+
+        </article>
+
+        <!-- RULES -->
+        <article class="card">
+
+            <h2>Rules of Method Overriding</h2>
+
+            <ul>
+                <li>The method must exist in the parent class.</li>
+                <li>The child method must have the same name.</li>
+                <li>The parameter list must be the same.</li>
+                <li>The return type must be the same or compatible.</li>
+                <li>The child method cannot reduce access visibility.</li>
+                <li>Static methods are not overridden.</li>
+                <li>Private methods are not overridden.</li>
+                <li>Final methods cannot be overridden.</li>
+            </ul>
+
+        </article>
+
+        <!-- ACCESS -->
+        <article class="card full">
+
+            <h2>Access Modifiers and Overriding</h2>
+
+            <p>
+                A child class can increase the visibility of an overridden
+                method, but it cannot reduce the visibility.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+                    <span class="dot"></span>AccessExample.java
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Parent</span> {
+
+    <span class="keyword">protected void</span> <span class="function">show</span>() {
+        System.out.println(<span class="string">"Parent"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Child</span> <span class="keyword">extends</span> <span class="type">Parent</span> {
+
+    <span class="keyword">@Override</span>
+    <span class="keyword">public void</span> <span class="function">show</span>() {
+        System.out.println(<span class="string">"Child"</span>);
+    }
+}</pre>
+
+            </div>
+
+            <div class="info">
+                <strong>protected → public</strong> is allowed because
+                visibility becomes wider.
+            </div>
+
+        </article>
+
+        <!-- SUPER -->
+        <article class="card">
+
+            <h2>Overriding with super</h2>
+
+            <p>
+                Sometimes the child class wants to use the parent version
+                and then add its own behavior.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+                    <span class="dot"></span>SuperExample.java
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="function">sound</span>() {
+        System.out.println(<span class="string">"Animal sound"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+
+    <span class="keyword">@Override</span>
+    <span class="keyword">void</span> <span class="function">sound</span>() {
+
+        <span class="keyword">super</span>.sound();
+
+        System.out.println(<span class="string">"Dog barks"</span>);
+    }
+}</pre>
+
+            </div>
+
+            <div class="output">Animal sound
+Dog barks</div>
+
+        </article>
+
+        <!-- DIFFERENCE -->
+        <article class="card">
+
+            <h2>Overriding vs Overloading</h2>
+
+            <table class="comparison">
+
+                <tr>
+                    <th>Overriding</th>
+                    <th>Overloading</th>
+                </tr>
+
+                <tr>
+                    <td>Occurs between parent and child classes.</td>
+                    <td>Usually occurs within the same class.</td>
+                </tr>
+
+                <tr>
+                    <td>Same method name and parameters.</td>
+                    <td>Same method name but different parameters.</td>
+                </tr>
+
+                <tr>
+                    <td>Supports runtime polymorphism.</td>
+                    <td>Supports compile-time polymorphism.</td>
+                </tr>
+
+                <tr>
+                    <td>Inheritance is required.</td>
+                    <td>Inheritance is not required.</td>
+                </tr>
+
+            </table>
+
+        </article>
+
+        <!-- REAL WORLD -->
+        <article class="card full">
+
+            <h2>Real-World Example</h2>
+
+            <p>
+                Consider a payment application. A general Payment class
+                can have a <strong>pay()</strong> method. Different payment
+                types can override this method.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+                    <span class="dot"></span>PaymentExample.java
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Payment</span> {
+
+    <span class="keyword">void</span> <span class="function">pay</span>() {
+        System.out.println(<span class="string">"Making payment"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">UPIPayment</span> <span class="keyword">extends</span> <span class="type">Payment</span> {
+
+    <span class="keyword">@Override</span>
+    <span class="keyword">void</span> <span class="function">pay</span>() {
+        System.out.println(<span class="string">"Payment using UPI"</span>);
+    }
+}
+
+<span class="keyword">class</span> <span class="type">CardPayment</span> <span class="keyword">extends</span> <span class="type">Payment</span> {
+
+    <span class="keyword">@Override</span>
+    <span class="keyword">void</span> <span class="function">pay</span>() {
+        System.out.println(<span class="string">"Payment using Card"</span>);
+    }
+}</pre>
+
+            </div>
+
+            <div class="info">
+                Each child class provides its own implementation of
+                <strong>pay()</strong>. This makes the application easier
+                to extend with new payment methods.
+            </div>
+
+        </article>
+
+        <!-- PRACTICE -->
+        <article class="card">
+
+            <h2>Practice Questions</h2>
+
+            <div class="question">
+                <strong>1.</strong> What is method overriding?
+            </div>
+
+            <div class="question">
+                <strong>2.</strong> Why is the @Override annotation used?
+            </div>
+
+            <div class="question">
+                <strong>3.</strong> What are the rules of method overriding?
+            </div>
+
+            <div class="question">
+                <strong>4.</strong> Can a final method be overridden?
+            </div>
+
+            <div class="question">
+                <strong>5.</strong> What is the difference between overriding and overloading?
+            </div>
+
+        </article>
+
+        <!-- CHALLENGE -->
+        <article class="card challenge">
+
+            <h2>Mini Challenge</h2>
+
+            <p>
+                Create a program using a parent class called
+                <strong>Vehicle</strong>.
+            </p>
+
+            <h3>Requirements</h3>
+
+            <ul>
+                <li>Create a method called <strong>start()</strong>.</li>
+                <li>Create a child class called <strong>Car</strong>.</li>
+                <li>Override the <strong>start()</strong> method.</li>
+                <li>Create another child class called <strong>Bike</strong>.</li>
+                <li>Override the <strong>start()</strong> method again.</li>
+                <li>Print different messages for Car and Bike.</li>
+            </ul>
+
+        </article>
+
+        <!-- SUMMARY -->
+        <article class="card full">
+
+            <h2>Lesson Summary</h2>
+
+            <p>
+                Method overriding allows a child class to change the
+                implementation of a method inherited from its parent.
+                The <strong>@Override</strong> annotation helps the compiler
+                verify that the method is correctly overridden.
+            </p>
+
+            <div class="info">
+                <strong>Remember:</strong><br><br>
+
+                Parent method → Child provides a new implementation<br>
+                Same method name → Same parameters<br>
+                <strong>@Override</strong> → Helps verify overriding<br>
+                Overriding → Runtime polymorphism
+            </div>
+
+        </article>
+
+    </section>
+
+    <!-- NAVIGATION -->
+    <div class="navigation">
+
+        <a href="lesson9.html" class="btn secondary">
+            ← Previous Lesson
+        </a>
+
+        <a href="lesson11.html" class="btn">
+            Next Lesson →
+        </a>
+
+    </div>
+
+</main>
+
+<footer>
+    ☕ JavaLearn • Java OOP Masterclass
+</footer>
+
+</body>
+</html>
+```

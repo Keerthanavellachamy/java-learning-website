@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaLearn - File Handling</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 6%;
+            background: rgba(8, 11, 20, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo .java {
+            color: #ff8a3d;
+        }
+
+        .logo .learn {
+            color: white;
+        }
+
+        .lesson-pill {
+            padding: 8px 16px;
+            border-radius: 30px;
+            background: rgba(255,138,61,0.12);
+            border: 1px solid rgba(255,138,61,0.4);
+            color: #ffb27d;
+            font-size: 14px;
+        }
+
+        /* MAIN */
+        main {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 55px 0;
+        }
+
+        /* HERO */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 30px;
+            background: rgba(255,138,61,0.12);
+            color: #ff9d5c;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 70px);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #c5cada;
+            max-width: 650px;
+        }
+
+        .hero-visual {
+            width: 220px;
+            height: 220px;
+            margin: auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 21px;
+            font-weight: bold;
+            line-height: 1.8;
+            box-shadow:
+                0 0 40px rgba(255,138,61,0.35),
+                0 0 80px rgba(255,77,109,0.2);
+        }
+
+        /* PROGRESS */
+        .progress-box {
+            margin-bottom: 45px;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #cbd0df;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            height: 9px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff8a3d, #ff4d6d);
+            border-radius: 20px;
+        }
+
+        /* SECTIONS */
+        section {
+            margin-bottom: 55px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        h2::before {
+            content: "// ";
+            color: #ff8a3d;
+        }
+
+        h3 {
+            color: #ffb27d;
+            margin-bottom: 12px;
+            font-size: 21px;
+        }
+
+        p {
+            color: #c5cada;
+            line-height: 1.7;
+        }
+
+        /* CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            padding: 24px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.055);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,138,61,0.4);
+        }
+
+        .card-icon {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 14px;
+        }
+
+        /* CONTENT BOX */
+        .content-box {
+            padding: 28px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 25px;
+        }
+
+        .info {
+            padding: 18px 20px;
+            margin: 20px 0;
+            border-left: 4px solid #ff8a3d;
+            background: rgba(255,138,61,0.08);
+            border-radius: 8px;
+            color: #dce0ec;
+            line-height: 1.7;
+        }
+
+        /* CODE EDITOR */
+        .code-editor {
+            margin: 20px 0;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #0d1117;
+            border: 1px solid #252b35;
+        }
+
+        .editor-header {
+            height: 42px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0 15px;
+            background: #161b22;
+            border-bottom: 1px solid #252b35;
+        }
+
+        .dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #ff6b6b;
+        }
+
+        .dot:nth-child(2) {
+            background: #ffd166;
+        }
+
+        .dot:nth-child(3) {
+            background: #06d6a0;
+        }
+
+        pre {
+            padding: 22px;
+            overflow-x: auto;
+            color: #e6edf3;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .variable {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .number {
+            color: #ffa657;
+        }
+
+        .operator {
+            color: #ff9d5c;
+            font-weight: bold;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+        /* OUTPUT */
+        .output {
+            background: #090d14;
+            border-left: 4px solid #ff4d6d;
+            padding: 15px 20px;
+            margin: 18px 0;
+            border-radius: 7px;
+            color: #b9f6ca;
+            font-family: Consolas, monospace;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.04);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        th {
+            color: #ff9d5c;
+            background: rgba(255,138,61,0.08);
+        }
+
+        td {
+            color: #cbd0df;
+        }
+
+        /* LIST */
+        ul, ol {
+            padding-left: 25px;
+            color: #c5cada;
+            line-height: 2;
+        }
+
+        li::marker {
+            color: #ff8a3d;
+        }
+
+        /* FLOW */
+        .flow {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 18px;
+            font-size: 20px;
+            line-height: 2;
+            color: #ffb27d;
+        }
+
+        /* BUTTONS */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 60px;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: rgba(255,138,61,0.15);
+            border-color: #ff8a3d;
+        }
+
+        .btn.next {
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            border: none;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 35px 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            color: #8e95a8;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 800px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                width: 180px;
+                height: 180px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                padding: 15px 4%;
+            }
+
+            .lesson-pill {
+                font-size: 11px;
+            }
+
+            main {
+                width: 92%;
+                padding: 40px 0;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">
+            <span class="java">Java</span><span class="learn">Learn</span>
+        </div>
+
+        <div class="lesson-pill">
+            Advanced Java • Lesson 02 / 05
+        </div>
+    </nav>
+
+
+    <main>
+
+        <!-- HERO -->
+        <div class="hero">
+
+            <div>
+                <div class="tag">☕ ADVANCED JAVA</div>
+
+                <h1>
+                    File <span>Handling</span>
+                </h1>
+
+                <p>
+                    Learn how Java creates, reads, writes, updates
+                    and manages files using simple Java programs.
+                </p>
+            </div>
+
+            <div class="hero-visual">
+                File<br>
+                ↓<br>
+                Read / Write<br>
+                ↓<br>
+                Store
+            </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+        <div class="progress-box">
+
+            <div class="progress-text">
+                <span>Advanced Java Progress</span>
+                <span>2 / 05 Lessons • 40%</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+
+        </div>
+
+
+        <!-- WHAT YOU WILL LEARN -->
+        <section>
+
+            <h2>What You'll Learn</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-icon">📁</div>
+                    <h3>File Handling</h3>
+                    <p>
+                        Understand why Java programs need to work with files.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📄</div>
+                    <h3>File Class</h3>
+                    <p>
+                        Learn how to create and manage files using File.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">➕</div>
+                    <h3>Create File</h3>
+                    <p>
+                        Create new files using Java programs.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">✍️</div>
+                    <h3>Write File</h3>
+                    <p>
+                        Store information inside a file.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📖</div>
+                    <h3>Read File</h3>
+                    <p>
+                        Read stored information from a file.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🗑️</div>
+                    <h3>Delete File</h3>
+                    <p>
+                        Delete files when they are no longer needed.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- WHAT IS FILE HANDLING -->
+        <section>
+
+            <h2>What is File Handling?</h2>
+
+            <div class="content-box">
+
+                <p>
+                    <strong>File Handling</strong> means performing operations
+                    on files using a programming language.
+                </p>
+
+                <br>
+
+                <p>
+                    In Java, file handling allows us to create files,
+                    write data, read data, update data and delete files.
+                </p>
+
+                <div class="info">
+                    💡 <strong>Simple idea:</strong>
+                    A file is used to permanently store information.
+                    Java provides classes to work with those files.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FILE HANDLING FLOW -->
+        <section>
+
+            <h2>File Handling Flow</h2>
+
+            <div class="flow">
+                Create
+                <br>↓<br>
+                Write
+                <br>↓<br>
+                Read
+                <br>↓<br>
+                Update
+                <br>↓<br>
+                Delete
+            </div>
+
+        </section>
+
+
+        <!-- FILE CLASS -->
+        <section>
+
+            <h2>File Class</h2>
+
+            <div class="content-box">
+
+                <p>
+                    Java provides the <strong>File</strong> class inside
+                    the <strong>java.io</strong> package.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="keyword">import</span> java.io.File;</pre>
+
+                </div>
+
+                <p>
+                    The File class is used to represent a file or directory
+                    in the computer.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- CREATE FILE -->
+        <section>
+
+            <h2>Creating a File</h2>
+
+            <div class="content-box">
+
+                <p>
+                    We can create a new file using the
+                    <strong>createNewFile()</strong> method.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="keyword">import</span> java.io.File;
+<span class="keyword">import</span> java.io.IOException;
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span> main(String[] args) {
+
+        <span class="type">File</span> file <span class="operator">=</span>
+            <span class="keyword">new</span> <span class="type">File</span>(<span class="string">"example.txt"</span>);
+
+        <span class="keyword">try</span> {
+
+            <span class="keyword">if</span> (file.createNewFile()) {
+
+                System.out.println(
+                    <span class="string">"File created successfully"</span>
+                );
+
+            } <span class="keyword">else</span> {
+
+                System.out.println(
+                    <span class="string">"File already exists"</span>
+                );
+            }
+
+        } <span class="keyword">catch</span> (IOException e) {
+
+            System.out.println(
+                <span class="string">"An error occurred"</span>
+            );
+        }
+    }
+}</pre>
+
+                </div>
+
+                <div class="output">
+                    File created successfully
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- WRITING -->
+        <section>
+
+            <h2>Writing to a File</h2>
+
+            <div class="content-box">
+
+                <p>
+                    The <strong>FileWriter</strong> class is used to write
+                    text into a file.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="keyword">import</span> java.io.FileWriter;
+<span class="keyword">import</span> java.io.IOException;
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span> main(String[] args) {
+
+        <span class="keyword">try</span> {
+
+            <span class="type">FileWriter</span> writer <span class="operator">=</span>
+                <span class="keyword">new</span> <span class="type">FileWriter</span>(
+                    <span class="string">"example.txt"</span>
+                );
+
+            writer.write(
+                <span class="string">"Welcome to JavaLearn!"</span>
+            );
+
+            writer.close();
+
+            System.out.println(
+                <span class="string">"Data written successfully"</span>
+            );
+
+        } <span class="keyword">catch</span> (IOException e) {
+
+            System.out.println(
+                <span class="string">"An error occurred"</span>
+            );
+        }
+    }
+}</pre>
+
+                </div>
+
+                <div class="output">
+                    Data written successfully
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- READING -->
+        <section>
+
+            <h2>Reading a File</h2>
+
+            <div class="content-box">
+
+                <p>
+                    We can read a file using
+                    <strong>BufferedReader</strong> and
+                    <strong>FileReader</strong>.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="keyword">import</span> java.io.BufferedReader;
+<span class="keyword">import</span> java.io.FileReader;
+<span class="keyword">import</span> java.io.IOException;
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span> main(String[] args) {
+
+        <span class="keyword">try</span> {
+
+            <span class="type">BufferedReader</span> reader <span class="operator">=</span>
+                <span class="keyword">new</span> <span class="type">BufferedReader</span>(
+                    <span class="keyword">new</span> <span class="type">FileReader</span>(
+                        <span class="string">"example.txt"</span>
+                    )
+                );
+
+            <span class="type">String</span> line;
+
+            <span class="keyword">while</span> (
+                (line <span class="operator">=</span> reader.readLine()) <span class="operator">!=</span> <span class="keyword">null</span>
+            ) {
+
+                System.out.println(line);
+            }
+
+            reader.close();
+
+        } <span class="keyword">catch</span> (IOException e) {
+
+            System.out.println(
+                <span class="string">"An error occurred"</span>
+            );
+        }
+    }
+}</pre>
+
+                </div>
+
+                <div class="output">
+                    Welcome to JavaLearn!
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SCANNER -->
+        <section>
+
+            <h2>Reading Using Scanner</h2>
+
+            <div class="content-box">
+
+                <p>
+                    For beginners, <strong>Scanner</strong> is another
+                    simple way to read data from a file.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="keyword">import</span> java.io.File;
+<span class="keyword">import</span> java.io.FileNotFoundException;
+<span class="keyword">import</span> java.util.Scanner;
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span> main(String[] args) {
+
+        <span class="keyword">try</span> {
+
+            <span class="type">File</span> file <span class="operator">=</span>
+                <span class="keyword">new</span> <span class="type">File</span>(
+                    <span class="string">"example.txt"</span>
+                );
+
+            <span class="type">Scanner</span> scanner <span class="operator">=</span>
+                <span class="keyword">new</span> <span class="type">Scanner</span>(file);
+
+            <span class="keyword">while</span> (scanner.hasNextLine()) {
+
+                System.out.println(
+                    scanner.nextLine()
+                );
+            }
+
+            scanner.close();
+
+        } <span class="keyword">catch</span> (
+            FileNotFoundException e
+        ) {
+
+            System.out.println(
+                <span class="string">"File not found"</span>
+            );
+        }
+    }
+}</pre>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FILE METHODS -->
+        <section>
+
+            <h2>Important File Methods</h2>
+
+            <div class="content-box">
+
+                <table>
+
+                    <tr>
+                        <th>Method</th>
+                        <th>Purpose</th>
+                    </tr>
+
+                    <tr>
+                        <td>createNewFile()</td>
+                        <td>Creates a new file</td>
+                    </tr>
+
+                    <tr>
+                        <td>exists()</td>
+                        <td>Checks whether the file exists</td>
+                    </tr>
+
+                    <tr>
+                        <td>getName()</td>
+                        <td>Returns the file name</td>
+                    </tr>
+
+                    <tr>
+                        <td>getAbsolutePath()</td>
+                        <td>Returns the complete file path</td>
+                    </tr>
+
+                    <tr>
+                        <td>length()</td>
+                        <td>Returns file size</td>
+                    </tr>
+
+                    <tr>
+                        <td>delete()</td>
+                        <td>Deletes the file</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- EXISTS -->
+        <section>
+
+            <h2>Checking if File Exists</h2>
+
+            <div class="content-box">
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="type">File</span> file <span class="operator">=</span>
+    <span class="keyword">new</span> <span class="type">File</span>(<span class="string">"example.txt"</span>);
+
+<span class="keyword">if</span> (file.exists()) {
+
+    System.out.println(
+        <span class="string">"File exists"</span>
+    );
+
+} <span class="keyword">else</span> {
+
+    System.out.println(
+        <span class="string">"File does not exist"</span>
+    );
+}</pre>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FILE INFORMATION -->
+        <section>
+
+            <h2>Getting File Information</h2>
+
+            <div class="content-box">
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="type">File</span> file <span class="operator">=</span>
+    <span class="keyword">new</span> <span class="type">File</span>(<span class="string">"example.txt"</span>);
+
+System.out.println(file.getName());
+
+System.out.println(
+    file.getAbsolutePath()
+);
+
+System.out.println(
+    file.length()
+);</pre>
+
+                </div>
+
+                <div class="info">
+                    💡 <strong>Remember:</strong>
+                    <code>getName()</code> gives the file name,
+                    while <code>getAbsolutePath()</code> gives the
+                    complete location of the file.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- APPEND -->
+        <section>
+
+            <h2>Appending Data</h2>
+
+            <div class="content-box">
+
+                <p>
+                    Normally, FileWriter replaces the existing content.
+                    To add new content at the end, use
+                    <strong>true</strong>.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="type">FileWriter</span> writer <span class="operator">=</span>
+    <span class="keyword">new</span> <span class="type">FileWriter</span>(
+        <span class="string">"example.txt"</span>,
+        <span class="keyword">true</span>
+    );
+
+writer.write(
+    <span class="string">"\nLearning Advanced Java"</span>
+);
+
+writer.close();</pre>
+
+                </div>
+
+                <div class="info">
+                    💡 <strong>true</strong> means append the new data
+                    instead of replacing the existing data.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DELETE -->
+        <section>
+
+            <h2>Deleting a File</h2>
+
+            <div class="content-box">
+
+                <p>
+                    The <strong>delete()</strong> method removes a file.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="keyword">import</span> java.io.File;
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span> main(String[] args) {
+
+        <span class="type">File</span> file <span class="operator">=</span>
+            <span class="keyword">new</span> <span class="type">File</span>(
+                <span class="string">"example.txt"</span>
+            );
+
+        <span class="keyword">if</span> (file.delete()) {
+
+            System.out.println(
+                <span class="string">"File deleted successfully"</span>
+            );
+
+        } <span class="keyword">else</span> {
+
+            System.out.println(
+                <span class="string">"File could not be deleted"</span>
+            );
+        }
+    }
+}</pre>
+
+                </div>
+
+                <div class="output">
+                    File deleted successfully
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- EXCEPTIONS -->
+        <section>
+
+            <h2>Exceptions in File Handling</h2>
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <h3>IOException</h3>
+
+                    <p>
+                        Occurs when an input or output operation
+                        has a problem.
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>FileNotFoundException</h3>
+
+                    <p>
+                        Occurs when Java cannot find the required file.
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <h3>try-catch</h3>
+
+                    <p>
+                        Used to handle exceptions and prevent
+                        the program from stopping unexpectedly.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- TRY CATCH -->
+        <section>
+
+            <h2>Why try-catch?</h2>
+
+            <div class="content-box">
+
+                <p>
+                    File operations can produce errors.
+                    For example, the file may not exist or
+                    the program may not have permission to access it.
+                </p>
+
+                <div class="info">
+                    💡 <strong>Simple idea:</strong>
+                    try = "Try to perform the operation."<br>
+                    catch = "If something goes wrong, handle the error."
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- REAL WORLD -->
+        <section>
+
+            <h2>Real-World Examples</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <h3>Text Files</h3>
+                    <p>
+                        Store notes, student information and documents.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>Reports</h3>
+                    <p>
+                        Generate and store reports using Java.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📋</div>
+                    <h3>Logs</h3>
+                    <p>
+                        Store application activity and error logs.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h3>Configuration</h3>
+                    <p>
+                        Store application settings in files.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- IMPORTANT RULES -->
+        <section>
+
+            <h2>Important Rules</h2>
+
+            <div class="content-box">
+
+                <ol>
+
+                    <li>
+                        Import the required Java classes.
+                    </li>
+
+                    <li>
+                        Use try-catch for operations that may throw exceptions.
+                    </li>
+
+                    <li>
+                        Close readers and writers after use.
+                    </li>
+
+                    <li>
+                        Check whether the file exists when necessary.
+                    </li>
+
+                    <li>
+                        Use the correct file path.
+                    </li>
+
+                    <li>
+                        Use append mode when you want to keep old data.
+                    </li>
+
+                </ol>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRACTICE -->
+        <section>
+
+            <h2>Practice Questions</h2>
+
+            <div class="content-box">
+
+                <ol>
+
+                    <li>What is File Handling in Java?</li>
+
+                    <li>What is the File class?</li>
+
+                    <li>How do you create a file in Java?</li>
+
+                    <li>What is FileWriter?</li>
+
+                    <li>What is BufferedReader?</li>
+
+                    <li>What is IOException?</li>
+
+                    <li>What is FileNotFoundException?</li>
+
+                    <li>How do you delete a file?</li>
+
+                    <li>How do you append data to a file?</li>
+
+                    <li>Why is try-catch used in file handling?</li>
+
+                </ol>
+
+            </div>
+
+        </section>
+
+
+        <!-- MINI CHALLENGE -->
+        <section>
+
+            <h2>Mini Challenge 🚀</h2>
+
+            <div class="content-box">
+
+                <h3>Student Information File</h3>
+
+                <p>
+                    Create a Java program that creates a file named
+                    <strong>student.txt</strong>.
+                </p>
+
+                <br>
+
+                <p>The file should contain:</p>
+
+                <ul>
+
+                    <li>Student Name</li>
+
+                    <li>Course Name</li>
+
+                    <li>College Name</li>
+
+                </ul>
+
+                <br>
+
+                <p>
+                    Then read the file and display the information
+                    on the console.
+                </p>
+
+                <br>
+
+                <p>
+                    <strong>Bonus:</strong>
+                    Append the student's phone number to the same file.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+        <section>
+
+            <h2>Lesson Summary</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>File</h3>
+                    <p>
+                        Represents a file or directory.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>FileWriter</h3>
+                    <p>
+                        Writes data into a file.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>FileReader</h3>
+                    <p>
+                        Reads characters from a file.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>BufferedReader</h3>
+                    <p>
+                        Efficiently reads text from a file.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Scanner</h3>
+                    <p>
+                        Provides a simple way to read file content.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>delete()</h3>
+                    <p>
+                        Deletes a file.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- COMPLETION -->
+        <section>
+
+            <div class="content-box" style="text-align:center;">
+
+                <h2>Lesson 02 Complete! 🎉</h2>
+
+                <p>
+                    You have learned how Java creates, writes,
+                    reads, updates and deletes files.
+                </p>
+
+                <br>
+
+                <p>
+                    Next, you will learn how Java can run
+                    multiple tasks at the same time.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+        <div class="navigation">
+
+            <a href="lesson1.html" class="btn">
+                ← Previous Lesson
+            </a>
+
+            <a href="lesson3.html" class="btn next">
+                Next Lesson →
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+        ☕ JavaLearn • Learn Java Step by Step
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaLearn | Core Java - Lesson 4</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8, 11, 20, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-container {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ff8a3d;
+        }
+
+        .lesson-pill {
+            background: rgba(255, 138, 61, 0.12);
+            border: 1px solid rgba(255, 138, 61, 0.4);
+            color: #ffb17d;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .container {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 55px 0;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 55px;
+        }
+
+        .tag {
+            display: inline-block;
+            color: #ff8a3d;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            color: #b8bfd3;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .hero-visual {
+            width: 220px;
+            height: 220px;
+            margin: auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow:
+                0 0 40px rgba(255, 138, 61, 0.3),
+                0 0 80px rgba(255, 77, 109, 0.15);
+            font-size: 19px;
+            font-weight: bold;
+        }
+
+        .hero-visual div {
+            background: rgba(8, 11, 20, 0.88);
+            width: 175px;
+            height: 175px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.8;
+        }
+
+        .progress-box {
+            margin-bottom: 45px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #c8ccda;
+        }
+
+        .progress-bar {
+            height: 9px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff8a3d, #ff4d6d);
+            border-radius: 20px;
+        }
+
+        section {
+            margin-bottom: 55px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        h2::before {
+            content: "// ";
+            color: #ff8a3d;
+        }
+
+        h3 {
+            font-size: 21px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .text {
+            color: #b8bfd3;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,138,61,0.4);
+        }
+
+        .card-number {
+            color: #ff8a3d;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #aeb5ca;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: rgba(255,255,255,0.05);
+            border-left: 4px solid #ff8a3d;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #c4c9d8;
+            line-height: 1.7;
+        }
+
+        .code-editor {
+            background: #0d1117;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .editor-header {
+            height: 40px;
+            background: #161b22;
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #555;
+        }
+
+        pre {
+            padding: 22px;
+            overflow-x: auto;
+            color: #e6edf3;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .variable {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .number {
+            color: #ffa657;
+        }
+
+        .operator {
+            color: #ff9d5c;
+            font-weight: bold;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        th {
+            background: rgba(255,138,61,0.12);
+            color: #ffb17d;
+        }
+
+        td {
+            color: #c0c6d7;
+        }
+
+        .practice {
+            display: grid;
+            gap: 15px;
+        }
+
+        .question {
+            padding: 18px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .question strong {
+            color: #ff8a3d;
+        }
+
+        .output {
+            background: #111827;
+            border-left: 4px solid #ff4d6d;
+            padding: 18px 20px;
+            border-radius: 8px;
+            color: #a5d6ff;
+            font-family: Consolas, monospace;
+            margin-top: 15px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            border-color: #ff8a3d;
+            color: #ff8a3d;
+        }
+
+        .btn.next {
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            border: none;
+        }
+
+        .btn.next:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777f94;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        @media (max-width: 800px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                width: 190px;
+                height: 190px;
+            }
+
+            .hero-visual div {
+                width: 150px;
+                height: 150px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-container">
+
+            <div class="logo">
+                <span>Java</span>Learn
+            </div>
+
+            <div class="lesson-pill">
+                Core Java • Lesson 04 / 08
+            </div>
+
+        </div>
+    </nav>
+
+
+    <main class="container">
+
+        <!-- HERO -->
+        <div class="hero">
+
+            <div>
+
+                <div class="tag">☕ CORE JAVA</div>
+
+                <h1>
+                    <span>Inheritance</span>
+                </h1>
+
+                <p>
+                    Learn how one Java class can inherit properties
+                    and methods from another class for code reuse.
+                </p>
+
+            </div>
+
+            <div class="hero-visual">
+
+                <div>
+                    Parent
+                    <br>
+                    ↓
+                    <br>
+                    Child
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+        <div class="progress-box">
+
+            <div class="progress-info">
+                <span>Core Java Progress</span>
+                <span>4 / 8 Lessons • 50%</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+
+        </div>
+
+
+        <!-- WHAT YOU WILL LEARN -->
+        <section>
+
+            <h2>What You'll Learn</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-number">01</div>
+                    <h3>What is Inheritance?</h3>
+                    <p>
+                        Understand the basic idea of inheritance
+                        in Java.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">02</div>
+                    <h3>Parent & Child</h3>
+                    <p>
+                        Learn how parent and child classes
+                        are related.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">03</div>
+                    <h3>extends Keyword</h3>
+                    <p>
+                        Learn how to inherit a class using
+                        the extends keyword.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">04</div>
+                    <h3>Method Inheritance</h3>
+                    <p>
+                        Understand how child classes use
+                        parent methods.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">05</div>
+                    <h3>Types</h3>
+                    <p>
+                        Learn common types of inheritance
+                        used in Java.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">06</div>
+                    <h3>Practice</h3>
+                    <p>
+                        Practice creating parent and child
+                        classes.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- WHAT IS INHERITANCE -->
+        <section>
+
+            <h2>What is Inheritance?</h2>
+
+            <p class="text">
+                Inheritance is an OOP feature where one class
+                can acquire properties and methods from another class.
+            </p>
+
+            <div class="info-box">
+
+                <strong>Simple Meaning:</strong><br><br>
+
+                A child class can reuse code that already exists
+                in a parent class.
+
+            </div>
+
+            <p class="text">
+                Inheritance helps reduce duplicate code and makes
+                programs easier to organize.
+            </p>
+
+        </section>
+
+
+        <!-- REAL WORLD -->
+        <section>
+
+            <h2>Real-World Example</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>🚗 Vehicle</h3>
+                    <p>
+                        A vehicle can have common features
+                        such as speed and fuel.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🚗 Car</h3>
+                    <p>
+                        A car can inherit common features
+                        from Vehicle.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🏍️ Bike</h3>
+                    <p>
+                        A bike can also inherit common features
+                        from Vehicle.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="info-box">
+                Vehicle → Parent Class<br>
+                Car → Child Class<br>
+                Bike → Child Class
+            </div>
+
+        </section>
+
+
+        <!-- BASIC INHERITANCE -->
+        <section>
+
+            <h2>Basic Inheritance</h2>
+
+            <p class="text">
+                Java uses the <strong>extends</strong> keyword
+                to create inheritance between classes.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Vehicle</span> {
+
+    <span class="keyword">void</span> <span class="variable">start</span>() {
+        System.out.println(<span class="string">"Vehicle is starting"</span>);
+    }
+
+}
+
+<span class="keyword">class</span> <span class="type">Car</span> <span class="keyword">extends</span> <span class="type">Vehicle</span> {
+
+    <span class="keyword">void</span> <span class="variable">drive</span>() {
+        System.out.println(<span class="string">"Car is driving"</span>);
+    }
+
+}</pre>
+
+            </div>
+
+            <div class="info-box">
+                <strong>Car</strong> inherits the <strong>start()</strong>
+                method from <strong>Vehicle</strong>.
+            </div>
+
+        </section>
+
+
+        <!-- USING INHERITED METHOD -->
+        <section>
+
+            <h2>Using an Inherited Method</h2>
+
+            <p class="text">
+                A child class object can use methods inherited
+                from its parent class.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="type">Car</span> <span class="variable">car1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="type">Car</span>();
+
+<span class="variable">car1</span>.start();
+<span class="variable">car1</span>.drive();</pre>
+
+            </div>
+
+            <div class="output">
+                Vehicle is starting<br>
+                Car is driving
+            </div>
+
+        </section>
+
+
+        <!-- PARENT AND CHILD -->
+        <section>
+
+            <h2>Parent Class and Child Class</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+                        <th>Parent Class</th>
+                        <th>Child Class</th>
+                    </tr>
+
+                    <tr>
+                        <td>Also called superclass</td>
+                        <td>Also called subclass</td>
+                    </tr>
+
+                    <tr>
+                        <td>Provides common properties and methods</td>
+                        <td>Inherits properties and methods</td>
+                    </tr>
+
+                    <tr>
+                        <td>Example: Vehicle</td>
+                        <td>Example: Car</td>
+                    </tr>
+
+                    <tr>
+                        <td>Can be inherited by multiple classes</td>
+                        <td>Can add its own features</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ADDING CHILD METHOD -->
+        <section>
+
+            <h2>Adding New Features</h2>
+
+            <p class="text">
+                A child class can use inherited methods and can
+                also define its own methods.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Vehicle</span> {
+
+    <span class="keyword">void</span> <span class="variable">start</span>() {
+        System.out.println(<span class="string">"Vehicle starts"</span>);
+    }
+
+}
+
+<span class="keyword">class</span> <span class="type">Car</span> <span class="keyword">extends</span> <span class="type">Vehicle</span> {
+
+    <span class="keyword">void</span> <span class="variable">openDoor</span>() {
+        System.out.println(<span class="string">"Car door opened"</span>);
+    }
+
+}</pre>
+
+            </div>
+
+            <p class="text">
+                The Car class now has both the inherited
+                <strong>start()</strong> method and its own
+                <strong>openDoor()</strong> method.
+            </p>
+
+        </section>
+
+
+        <!-- SINGLE INHERITANCE -->
+        <section>
+
+            <h2>Single Inheritance</h2>
+
+            <p class="text">
+                Single inheritance means one child class inherits
+                from one parent class.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="variable">eat</span>() {
+        System.out.println(<span class="string">"Animal eats"</span>);
+    }
+
+}
+
+<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="variable">bark</span>() {
+        System.out.println(<span class="string">"Dog barks"</span>);
+    }
+
+}</pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- MULTILEVEL -->
+        <section>
+
+            <h2>Multilevel Inheritance</h2>
+
+            <p class="text">
+                Multilevel inheritance occurs when a class inherits
+                from another child class.
+            </p>
+
+            <div class="info-box">
+                Animal → Dog → Puppy
+            </div>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">class</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="variable">eat</span>() {
+        System.out.println(<span class="string">"Eating"</span>);
+    }
+
+}
+
+<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="variable">bark</span>() {
+        System.out.println(<span class="string">"Barking"</span>);
+    }
+
+}
+
+<span class="keyword">class</span> <span class="type">Puppy</span> <span class="keyword">extends</span> <span class="type">Dog</span> {
+
+    <span class="keyword">void</span> <span class="variable">play</span>() {
+        System.out.println(<span class="string">"Playing"</span>);
+    }
+
+}</pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- HIERARCHICAL -->
+        <section>
+
+            <h2>Hierarchical Inheritance</h2>
+
+            <p class="text">
+                Hierarchical inheritance occurs when multiple
+                child classes inherit from the same parent class.
+            </p>
+
+            <div class="info-box">
+                <strong>Vehicle</strong><br>
+                ↙ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↘<br>
+                Car &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bike
+            </div>
+
+        </section>
+
+
+        <!-- TYPES -->
+        <section>
+
+            <h2>Inheritance Types in Java</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+                        <th>Type</th>
+                        <th>Meaning</th>
+                    </tr>
+
+                    <tr>
+                        <td>Single</td>
+                        <td>One parent and one child</td>
+                    </tr>
+
+                    <tr>
+                        <td>Multilevel</td>
+                        <td>Inheritance through multiple levels</td>
+                    </tr>
+
+                    <tr>
+                        <td>Hierarchical</td>
+                        <td>Multiple children from one parent</td>
+                    </tr>
+
+                    <tr>
+                        <td>Multiple</td>
+                        <td>One class inheriting from multiple classes</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+            <div class="info-box">
+                Java does not support multiple inheritance
+                through classes. Multiple inheritance can be
+                achieved using interfaces.
+            </div>
+
+        </section>
+
+
+        <!-- BENEFITS -->
+        <section>
+
+            <h2>Benefits of Inheritance</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>♻️ Code Reuse</h3>
+                    <p>
+                        Reuse existing methods and properties
+                        from a parent class.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>📦 Organization</h3>
+                    <p>
+                        Related classes can be organized
+                        into a clear hierarchy.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🛠️ Maintenance</h3>
+                    <p>
+                        Common functionality can be maintained
+                        in one parent class.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>📈 Extensibility</h3>
+                    <p>
+                        Child classes can add their own
+                        special features.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRACTICE -->
+        <section>
+
+            <h2>Practice Questions</h2>
+
+            <div class="practice">
+
+                <div class="question">
+                    <strong>Q1.</strong>
+                    What is inheritance in Java?
+                </div>
+
+                <div class="question">
+                    <strong>Q2.</strong>
+                    Which keyword is used for inheritance?
+                </div>
+
+                <div class="question">
+                    <strong>Q3.</strong>
+                    What is a parent class?
+                </div>
+
+                <div class="question">
+                    <strong>Q4.</strong>
+                    What is a child class?
+                </div>
+
+                <div class="question">
+                    <strong>Q5.</strong>
+                    Create a Vehicle class and inherit it into Car.
+                </div>
+
+                <div class="question">
+                    <strong>Q6.</strong>
+                    Name three types of inheritance supported
+                    through Java class structures.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MINI CHALLENGE -->
+        <section>
+
+            <h2>Mini Challenge</h2>
+
+            <div class="info-box">
+
+                Create a <strong>Person</strong> class with:
+
+                <br><br>
+
+                • name<br>
+                • age<br>
+                • displayPerson()
+
+                <br><br>
+
+                Then create a <strong>Student</strong> class that
+                extends Person and adds:
+
+                <br><br>
+
+                • department<br>
+                • displayStudent()
+
+                <br><br>
+
+                Create a Student object and display all details.
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+        <section>
+
+            <h2>Lesson Summary</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Inheritance</h3>
+                    <p>
+                        Allows a child class to reuse features
+                        of a parent class.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>extends</h3>
+                    <p>
+                        Keyword used to inherit a class.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Parent</h3>
+                    <p>
+                        Class that provides properties and methods.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Child</h3>
+                    <p>
+                        Class that inherits from another class.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+        <div class="navigation">
+
+            <a href="lesson3.html" class="btn">
+                ← Previous Lesson
+            </a>
+
+            <a href="lesson5.html" class="btn next">
+                Next Lesson →
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+        ☕ JavaLearn • Learn Java Step by Step
+    </footer>
+
+</body>
+</html>

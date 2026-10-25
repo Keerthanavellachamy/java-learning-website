@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaLearn - Advanced Java Lesson 5</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+            color: #f5f7ff;
+            min-height: 100vh;
+            line-height: 1.7;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8, 11, 20, 0.88);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ff8a3d;
+        }
+
+        .lesson-pill {
+            background: rgba(255,138,61,0.12);
+            border: 1px solid rgba(255,138,61,0.4);
+            color: #ffb27a;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+        }
+
+        main {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 55px 0;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 55px;
+        }
+
+        .tag {
+            display: inline-block;
+            color: #ff8a3d;
+            font-weight: bold;
+            font-size: 14px;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 48px;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            color: #b8bfd2;
+            font-size: 18px;
+            max-width: 700px;
+        }
+
+        .progress {
+            margin-top: 25px;
+            color: #9ca5bd;
+            font-size: 14px;
+        }
+
+        .hero-visual {
+            width: 230px;
+            height: 230px;
+            margin: auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 70px rgba(255,77,109,0.35);
+        }
+
+        .hero-visual-inner {
+            width: 195px;
+            height: 195px;
+            border-radius: 50%;
+            background: #101421;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 2;
+        }
+
+        section {
+            margin-bottom: 45px;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        h2::before {
+            content: "// ";
+            color: #ff8a3d;
+        }
+
+        h3 {
+            color: #ffb27a;
+            margin-bottom: 12px;
+        }
+
+        p {
+            color: #c1c7d6;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.055);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            padding: 25px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.18);
+        }
+
+        .card p {
+            font-size: 15px;
+        }
+
+        .card ul {
+            padding-left: 20px;
+            color: #c1c7d6;
+        }
+
+        .card li {
+            margin-bottom: 8px;
+        }
+
+        .architecture {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            padding: 30px;
+            text-align: center;
+            font-size: 20px;
+            color: #ffb27a;
+            line-height: 2.2;
+        }
+
+        .arrow {
+            color: #ff4d6d;
+            font-size: 25px;
+        }
+
+        .code-box {
+            background: #0d1117;
+            border: 1px solid #252b36;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .code-header {
+            background: #161b22;
+            padding: 10px 15px;
+            color: #8b949e;
+            font-size: 13px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #555;
+            margin-right: 5px;
+        }
+
+        pre {
+            padding: 22px;
+            overflow-x: auto;
+            color: #d2d8e5;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .variable {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .number {
+            color: #ffa657;
+        }
+
+        .operator {
+            color: #ff9d5c;
+            font-weight: bold;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+        .info {
+            background: rgba(255,138,61,0.08);
+            border-left: 4px solid #ff8a3d;
+            padding: 18px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #d7dbea;
+        }
+
+        .output {
+            background: #0b0f16;
+            border-left: 4px solid #ff4d6d;
+            padding: 18px;
+            border-radius: 8px;
+            font-family: Consolas, monospace;
+            color: #d9deea;
+            white-space: pre-wrap;
+        }
+
+        .checklist {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .check {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 14px 18px;
+            border-radius: 10px;
+            color: #cbd1df;
+        }
+
+        .check::before {
+            content: "✓ ";
+            color: #ff8a3d;
+            font-weight: bold;
+        }
+
+        .completion {
+            text-align: center;
+            background: linear-gradient(
+                135deg,
+                rgba(255,138,61,0.12),
+                rgba(255,77,109,0.12)
+            );
+            border: 1px solid rgba(255,138,61,0.25);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .completion h2::before {
+            content: "";
+        }
+
+        .completion h2 {
+            color: #ffb27a;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: white;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 12px 22px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #ff8a3d;
+            color: #080b14;
+        }
+
+        .next {
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            border: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px;
+            color: #737b91;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        @media (max-width: 800px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 38px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .checklist {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">
+        <span>Java</span>Learn
+    </div>
+
+    <div class="lesson-pill">
+        Advanced Java • Lesson 05 / 05
+    </div>
+</nav>
+
+<main>
+
+    <!-- HERO -->
+    <div class="hero">
+
+        <div>
+            <div class="tag">☕ ADVANCED JAVA</div>
+
+            <h1>
+                Java + MySQL<br>
+                <span>Database Project</span>
+            </h1>
+
+            <p>
+                Build a simple Student Management System using Java,
+                JDBC and MySQL. You will learn how a Java application
+                connects with a real database and performs CRUD operations.
+            </p>
+
+            <div class="progress">
+                Progress: 5 / 05 Lessons • 100%
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="hero-visual-inner">
+                Java<br>
+                ↓<br>
+                JDBC<br>
+                ↓<br>
+                MySQL
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- WHAT YOU BUILD -->
+    <section>
+
+        <h2>What You'll Build</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>➕ Add Student</h3>
+                <p>
+                    Add student information such as name,
+                    department, year and email.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>👀 View Students</h3>
+                <p>
+                    Read student records from MySQL and
+                    display them in the console.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>✏️ Update Student</h3>
+                <p>
+                    Change the department or year of
+                    an existing student.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🗑️ Delete Student</h3>
+                <p>
+                    Remove a student record from
+                    the database.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🔗 JDBC</h3>
+                <p>
+                    Connect the Java program with
+                    the MySQL database.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🗄️ MySQL</h3>
+                <p>
+                    Store and manage all student
+                    information inside a database.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ARCHITECTURE -->
+    <section>
+
+        <h2>Project Architecture</h2>
+
+        <div class="architecture">
+            Java Application
+            <div class="arrow">↓</div>
+
+            JDBC
+            <div class="arrow">↓</div>
+
+            MySQL Database
+            <div class="arrow">↓</div>
+
+            students Table
+        </div>
+
+    </section>
+
+
+    <!-- TOOLS -->
+    <section>
+
+        <h2>Tools Required</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>☕ JDK</h3>
+                <p>
+                    Java Development Kit is required
+                    to compile and run Java programs.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>💻 VS Code</h3>
+                <p>
+                    You can use VS Code to write
+                    and run the Java project.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🗄️ MySQL</h3>
+                <p>
+                    MySQL stores the student
+                    information.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🔌 MySQL Connector/J</h3>
+                <p>
+                    JDBC driver that allows Java
+                    to communicate with MySQL.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🛠️ MySQL Workbench</h3>
+                <p>
+                    Optional tool for creating and
+                    managing the MySQL database.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DATABASE -->
+    <section>
+
+        <h2>Create Database</h2>
+
+        <p>
+            First create a database called
+            <strong>college_db</strong>.
+        </p>
+
+        <div class="code-box">
+
+            <div class="code-header">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                MySQL
+            </div>
+
+<pre><span class="keyword">CREATE DATABASE</span> college_db;
+
+<span class="keyword">USE</span> college_db;
+
+<span class="keyword">CREATE TABLE</span> students (
+    id <span class="type">INT</span> <span class="keyword">PRIMARY KEY AUTO_INCREMENT</span>,
+    name <span class="type">VARCHAR</span>(100),
+    department <span class="type">VARCHAR</span>(50),
+    year <span class="type">INT</span>,
+    email <span class="type">VARCHAR</span>(100)
+);</pre>
+
+        </div>
+
+    </section>
+
+
+    <!-- INSERT SAMPLE DATA -->
+    <section>
+
+        <h2>Insert Sample Records</h2>
+
+        <div class="code-box">
+
+            <div class="code-header">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                Sample Data
+            </div>
+
+<pre><span class="keyword">INSERT INTO</span> students
+(name, department, year, email)
+<span class="keyword">VALUES</span>
+(<span class="string">'Keerthana'</span>, <span class="string">'ECE'</span>, <span class="number">3</span>, <span class="string">'keerthana@example.com'</span>),
+(<span class="string">'Amirtha'</span>, <span class="string">'CSE'</span>, <span class="number">3</span>, <span class="string">'amirtha@example.com'</span>);</pre>
+
+        </div>
+
+    </section>
+
+
+    <!-- PROJECT STRUCTURE -->
+    <section>
+
+        <h2>Project Structure</h2>
+
+        <div class="code-box">
+
+            <div class="code-header">
+                Project Folder
+            </div>
+
+<pre>StudentManagement/
+│
+├── src/
+│   ├── DBConnection.java
+│   └── StudentManagement.java
+│
+└── pom.xml</pre>
+
+        </div>
+
+        <div class="info">
+            💡 If you are a beginner, you can first create the
+            project using one Java file. After understanding the
+            project, you can separate the code into multiple classes.
+        </div>
+
+    </section>
+
+
+    <!-- JDBC CONNECTION -->
+    <section>
+
+        <h2>Connect Java with MySQL</h2>
+
+        <p>
+            The following class creates a connection between
+            Java and the MySQL database.
+        </p>
+
+        <div class="code-box">
+
+            <div class="code-header">
+                DBConnection.java
+            </div>
+
+<pre><span class="keyword">import</span> java.sql.Connection;
+<span class="keyword">import</span> java.sql.DriverManager;
+<span class="keyword">import</span> java.sql.SQLException;
+
+<span class="keyword">public class</span> <span class="type">DBConnection</span> {
+
+    <span class="keyword">private static final</span> <span class="type">String</span> URL =
+        <span class="string">"jdbc:mysql://localhost:3306/college_db"</span>;
+
+    <span class="keyword">private static final</span> <span class="type">String</span> USER = <span class="string">"root"</span>;
+
+    <span class="keyword">private static final</span> <span class="type">String</span> PASSWORD =
+        <span class="string">"your_password"</span>;
+
+    <span class="keyword">public static</span> <span class="type">Connection</span> getConnection()
+            <span class="keyword">throws</span> SQLException {
+
+        <span class="keyword">return</span> DriverManager.getConnection(
+            URL,
+            USER,
+            PASSWORD
+        );
+    }
+}</pre>
+
+        </div>
+
+        <div class="info">
+            ⚠️ Replace <strong>your_password</strong> with the
+            password you created for your MySQL root user.
+        </div>
+
+    </section>
+
+
+    <!-- ADD STUDENT -->
+    <section>
+
+        <h2>Add Student</h2>
+
+        <p>
+            Use <strong>PreparedStatement</strong> to safely insert
+            student information into the database.
+        </p>
+
+        <div class="code-box">
+
+            <div class="code-header">
+                Add Student
+            </div>
+
+<pre><span class="type">String</span> sql =
+    <span class="string">"INSERT INTO students (name, department, year, email) "</span> +
+    <span class="string">"VALUES (?, ?, ?, ?)"</span>;
+
+<span class="type">PreparedStatement</span> ps =
+    connection.prepareStatement(sql);
+
+ps.setString(<span class="number">1</span>, name);
+ps.setString(<span class="number">2</span>, department);
+ps.setInt(<span class="number">3</span>, year);
+ps.setString(<span class="number">4</span>, email);
+
+ps.executeUpdate();</pre>
+
+        </div>
+
+        <div class="info">
+            The <strong>?</strong> symbols are placeholders.
+            Values are added using <strong>setString()</strong>
+            and <strong>setInt()</strong>.
+        </div>
+
+    </section>
+
+
+    <!-- VIEW -->
+    <section>
+
+        <h2>View Students</h2>
+
+        <div class="code-box">
+
+            <div class="code-header">
+                View Students
+            </div>
+
+<pre><span class="type">String</span> sql = <span class="string">"SELECT * FROM students"</span>;
+
+<span class="type">Statement</span> statement =
+    connection.createStatement();
+
+<span class="type">ResultSet</span> result =
+    statement.executeQuery(sql);
+
+<span class="keyword">while</span> (result.next()) {
+
+    System.out.println(
+        result.getInt(<span class="string">"id"</span>) + <span class="string">" | "</span> +
+        result.getString(<span class="string">"name"</span>) + <span class="string">" | "</span> +
+        result.getString(<span class="string">"department"</span>) + <span class="string">" | "</span> +
+        result.getInt(<span class="string">"year"</span>) + <span class="string">" | "</span> +
+        result.getString(<span class="string">"email"</span>)
+    );
+}</pre>
+
+        </div>
+
+        <div class="output">ID | Name | Department | Year | Email
+1 | Keerthana | ECE | 3 | keerthana@example.com
+2 | Amirtha | CSE | 3 | amirtha@example.com</div>
+
+    </section>
+
+
+    <!-- UPDATE -->
+    <section>
+
+        <h2>Update Student</h2>
+
+        <div class="code-box">
+
+            <div class="code-header">
+                Update Student
+            </div>
+
+<pre><span class="type">String</span> sql =
+    <span class="string">"UPDATE students SET department = ?, year = ? "</span> +
+    <span class="string">"WHERE id = ?"</span>;
+
+<span class="type">PreparedStatement</span> ps =
+    connection.prepareStatement(sql);
+
+ps.setString(<span class="number">1</span>, department);
+ps.setInt(<span class="number">2</span>, year);
+ps.setInt(<span class="number">3</span>, id);
+
+ps.executeUpdate();</pre>
+
+        </div>
+
+    </section>
+
+
+    <!-- DELETE -->
+    <section>
+
+        <h2>Delete Student</h2>
+
+        <div class="code-box">
+
+            <div class="code-header">
+                Delete Student
+            </div>
+
+<pre><span class="type">String</span> sql =
+    <span class="string">"DELETE FROM students WHERE id = ?"</span>;
+
+<span class="type">PreparedStatement</span> ps =
+    connection.prepareStatement(sql);
+
+ps.setInt(<span class="number">1</span>, id);
+
+ps.executeUpdate();</pre>
+
+        </div>
+
+    </section>
+
+
+    <!-- COMPLETE PROJECT -->
+    <section>
+
+        <h2>Complete Student Management System</h2>
+
+        <p>
+            Now combine the database connection, CRUD operations
+            and menu into one complete Java application.
+        </p>
+
+        <div class="code-box">
+
+            <div class="code-header">
+                StudentManagement.java
+            </div>
+
+<pre><span class="keyword">import</span> java.sql.*;
+<span class="keyword">import</span> java.util.Scanner;
+
+<span class="keyword">public class</span> <span class="type">StudentManagement</span> {
+
+    <span class="keyword">static final</span> <span class="type">String</span> URL =
+        <span class="string">"jdbc:mysql://localhost:3306/college_db"</span>;
+
+    <span class="keyword">static final</span> <span class="type">String</span> USER = <span class="string">"root"</span>;
+
+    <span class="keyword">static final</span> <span class="type">String</span> PASSWORD =
+        <span class="string">"your_password"</span>;
+
+    <span class="keyword">static</span> Scanner scanner =
+        <span class="keyword">new</span> Scanner(System.in);
+
+    <span class="keyword">public static void</span> main(String[] args) {
+
+        <span class="keyword">while</span> (<span class="keyword">true</span>) {
+
+            System.out.println(
+                <span class="string">"\n--- Student Management System ---"</span>
+            );
+
+            System.out.println(<span class="string">"1. Add Student"</span>);
+            System.out.println(<span class="string">"2. View Students"</span>);
+            System.out.println(<span class="string">"3. Update Student"</span>);
+            System.out.println(<span class="string">"4. Delete Student"</span>);
+            System.out.println(<span class="string">"5. Exit"</span>);
+
+            System.out.print(<span class="string">"Enter choice: "</span>);
+
+            <span class="type">int</span> choice = scanner.nextInt();
+            scanner.nextLine();
+
+            <span class="keyword">switch</span> (choice) {
+
+                <span class="keyword">case</span> <span class="number">1</span>:
+                    addStudent();
+                    <span class="keyword">break</span>;
+
+                <span class="keyword">case</span> <span class="number">2</span>:
+                    viewStudents();
+                    <span class="keyword">break</span>;
+
+                <span class="keyword">case</span> <span class="number">3</span>:
+                    updateStudent();
+                    <span class="keyword">break</span>;
+
+                <span class="keyword">case</span> <span class="number">4</span>:
+                    deleteStudent();
+                    <span class="keyword">break</span>;
+
+                <span class="keyword">case</span> <span class="number">5</span>:
+                    System.out.println(<span class="string">"Thank you!"</span>);
+                    <span class="keyword">return</span>;
+
+                <span class="keyword">default</span>:
+                    System.out.println(<span class="string">"Invalid choice"</span>);
+            }
+        }
+    }
+
+    <span class="keyword">static</span> Connection connect()
+            <span class="keyword">throws</span> SQLException {
+
+        <span class="keyword">return</span> DriverManager.getConnection(
+            URL,
+            USER,
+            PASSWORD
+        );
+    }
+
+    <span class="keyword">static void</span> addStudent() {
+
+        <span class="keyword">try</span> (Connection connection = connect()) {
+
+            <span class="type">String</span> sql =
+                <span class="string">"INSERT INTO students "</span> +
+                <span class="string">"(name, department, year, email) "</span> +
+                <span class="string">"VALUES (?, ?, ?, ?)"</span>;
+
+            PreparedStatement ps =
+                connection.prepareStatement(sql);
+
+            System.out.print(<span class="string">"Enter name: "</span>);
+            String name = scanner.nextLine();
+
+            System.out.print(<span class="string">"Enter department: "</span>);
+            String department = scanner.nextLine();
+
+            System.out.print(<span class="string">"Enter year: "</span>);
+            <span class="type">int</span> year = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print(<span class="string">"Enter email: "</span>);
+            String email = scanner.nextLine();
+
+            ps.setString(<span class="number">1</span>, name);
+            ps.setString(<span class="number">2</span>, department);
+            ps.setInt(<span class="number">3</span>, year);
+            ps.setString(<span class="number">4</span>, email);
+
+            ps.executeUpdate();
+
+            System.out.println(
+                <span class="string">"Student added successfully!"</span>
+            );
+
+        } <span class="keyword">catch</span> (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    <span class="keyword">static void</span> viewStudents() {
+
+        <span class="keyword">try</span> (Connection connection = connect()) {
+
+            <span class="type">String</span> sql =
+                <span class="string">"SELECT * FROM students"</span>;
+
+            Statement statement =
+                connection.createStatement();
+
+            ResultSet result =
+                statement.executeQuery(sql);
+
+            System.out.println(
+                <span class="string">"\nID | Name | Department | Year | Email"</span>
+            );
+
+            <span class="keyword">while</span> (result.next()) {
+
+                System.out.println(
+                    result.getInt(<span class="string">"id"</span>) + <span class="string">" | "</span> +
+                    result.getString(<span class="string">"name"</span>) + <span class="string">" | "</span> +
+                    result.getString(<span class="string">"department"</span>) + <span class="string">" | "</span> +
+                    result.getInt(<span class="string">"year"</span>) + <span class="string">" | "</span> +
+                    result.getString(<span class="string">"email"</span>)
+                );
+            }
+
+        } <span class="keyword">catch</span> (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    <span class="keyword">static void</span> updateStudent() {
+
+        <span class="keyword">try</span> (Connection connection = connect()) {
+
+            System.out.print(<span class="string">"Enter student ID: "</span>);
+            <span class="type">int</span> id = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print(
+                <span class="string">"Enter new department: "</span>
+            );
+
+            String department = scanner.nextLine();
+
+            System.out.print(<span class="string">"Enter new year: "</span>);
+            <span class="type">int</span> year = scanner.nextInt();
+
+            <span class="type">String</span> sql =
+                <span class="string">"UPDATE students "</span> +
+                <span class="string">"SET department = ?, year = ? "</span> +
+                <span class="string">"WHERE id = ?"</span>;
+
+            PreparedStatement ps =
+                connection.prepareStatement(sql);
+
+            ps.setString(<span class="number">1</span>, department);
+            ps.setInt(<span class="number">2</span>, year);
+            ps.setInt(<span class="number">3</span>, id);
+
+            <span class="type">int</span> rows =
+                ps.executeUpdate();
+
+            <span class="keyword">if</span> (rows > <span class="number">0</span>) {
+                System.out.println(
+                    <span class="string">"Student updated!"</span>
+                );
+            } <span class="keyword">else</span> {
+                System.out.println(
+                    <span class="string">"Student not found."</span>
+                );
+            }
+
+        } <span class="keyword">catch</span> (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    <span class="keyword">static void</span> deleteStudent() {
+
+        <span class="keyword">try</span> (Connection connection = connect()) {
+
+            System.out.print(<span class="string">"Enter student ID: "</span>);
+            <span class="type">int</span> id = scanner.nextInt();
+
+            <span class="type">String</span> sql =
+                <span class="string">"DELETE FROM students WHERE id = ?"</span>;
+
+            PreparedStatement ps =
+                connection.prepareStatement(sql);
+
+            ps.setInt(<span class="number">1</span>, id);
+
+            <span class="type">int</span> rows =
+                ps.executeUpdate();
+
+            <span class="keyword">if</span> (rows > <span class="number">0</span>) {
+                System.out.println(
+                    <span class="string">"Student deleted!"</span>
+                );
+            } <span class="keyword">else</span> {
+                System.out.println(
+                    <span class="string">"Student not found."</span>
+                );
+            }
+
+        } <span class="keyword">catch</span> (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}</pre>
+
+        </div>
+
+    </section>
+
+
+    <!-- TRY WITH RESOURCES -->
+    <section>
+
+        <h2>Try-With-Resources</h2>
+
+        <div class="code-box">
+
+            <div class="code-header">
+                Java
+            </div>
+
+<pre><span class="keyword">try</span> (Connection connection = connect()) {
+
+    <span class="comment">// Database operations</span>
+
+}</pre>
+
+        </div>
+
+        <div class="info">
+            💡 Try-with-resources automatically closes the
+            database connection after the block finishes.
+            This helps prevent resource leaks.
+        </div>
+
+    </section>
+
+
+    <!-- MENU OUTPUT -->
+    <section>
+
+        <h2>Expected Output</h2>
+
+        <div class="output">--- Student Management System ---
+1. Add Student
+2. View Students
+3. Update Student
+4. Delete Student
+5. Exit
+
+Enter choice: 1
+
+Enter name: Keerthana
+Enter department: ECE
+Enter year: 3
+Enter email: keerthana@example.com
+
+Student added successfully!</div>
+
+    </section>
+
+
+    <!-- FLOW -->
+    <section>
+
+        <h2>Project Flow</h2>
+
+        <div class="architecture">
+            Start
+            <div class="arrow">↓</div>
+
+            Show Menu
+            <div class="arrow">↓</div>
+
+            Choose Operation
+            <div class="arrow">↓</div>
+
+            Add / View / Update / Delete
+            <div class="arrow">↓</div>
+
+            JDBC
+            <div class="arrow">↓</div>
+
+            MySQL
+            <div class="arrow">↓</div>
+
+            Display Result
+        </div>
+
+    </section>
+
+
+    <!-- TESTING -->
+    <section>
+
+        <h2>Testing Checklist</h2>
+
+        <div class="checklist">
+
+            <div class="check">Database created</div>
+            <div class="check">Students table created</div>
+            <div class="check">MySQL Connector added</div>
+            <div class="check">MySQL password updated</div>
+            <div class="check">Database connection works</div>
+            <div class="check">Add operation works</div>
+            <div class="check">View operation works</div>
+            <div class="check">Update operation works</div>
+            <div class="check">Delete operation works</div>
+            <div class="check">Exit option works</div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ERRORS -->
+    <section>
+
+        <h2>Common Errors</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Unknown Database</h3>
+                <p>
+                    Check whether <strong>college_db</strong>
+                    has been created in MySQL.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Access Denied</h3>
+                <p>
+                    Check your MySQL username and password.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>No Suitable Driver</h3>
+                <p>
+                    Make sure MySQL Connector/J is added
+                    to your Java project.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Table Doesn't Exist</h3>
+                <p>
+                    Make sure the <strong>students</strong>
+                    table was created.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Connection Failure</h3>
+                <p>
+                    Check that MySQL Server is running
+                    and the port is correct.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- EXTENSIONS -->
+    <section>
+
+        <h2>Project Extension Ideas</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>🔎 Search</h3>
+                <p>
+                    Search students using ID,
+                    name or department.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🔐 Login</h3>
+                <p>
+                    Add username and password
+                    authentication.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🖥️ GUI</h3>
+                <p>
+                    Create a graphical interface
+                    using Java Swing or JavaFX.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🌐 Spring Boot</h3>
+                <p>
+                    Convert the project into a
+                    web-based backend application.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PRACTICE -->
+    <section>
+
+        <h2>Practice Questions</h2>
+
+        <div class="card">
+
+            <h3>Question 1</h3>
+            <p>What is JDBC?</p>
+
+            <br>
+
+            <h3>Question 2</h3>
+            <p>Why do we use PreparedStatement?</p>
+
+            <br>
+
+            <h3>Question 3</h3>
+            <p>What is ResultSet?</p>
+
+            <br>
+
+            <h3>Question 4</h3>
+            <p>What is the difference between executeQuery() and executeUpdate()?</p>
+
+            <br>
+
+            <h3>Question 5</h3>
+            <p>Why is try-with-resources useful in JDBC?</p>
+
+            <br>
+
+            <h3>Question 6</h3>
+            <p>What is CRUD?</p>
+
+        </div>
+
+    </section>
+
+
+    <!-- CRUD -->
+    <section>
+
+        <h2>Remember CRUD</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <h3>Create</h3>
+                <p>Add a new student record.</p>
+            </div>
+
+            <div class="card">
+                <h3>Read</h3>
+                <p>View student records.</p>
+            </div>
+
+            <div class="card">
+                <h3>Update</h3>
+                <p>Modify an existing record.</p>
+            </div>
+
+            <div class="card">
+                <h3>Delete</h3>
+                <p>Remove a record.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- COMPLETION -->
+    <section>
+
+        <div class="completion">
+
+            <h2>Advanced Java Complete 🎉</h2>
+
+            <p>
+                Congratulations! You have completed all
+                5 Advanced Java lessons.
+            </p>
+
+            <br>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>01</h3>
+                    <p>Collections Framework</p>
+                </div>
+
+                <div class="card">
+                    <h3>02</h3>
+                    <p>File Handling</p>
+                </div>
+
+                <div class="card">
+                    <h3>03</h3>
+                    <p>Multithreading</p>
+                </div>
+
+                <div class="card">
+                    <h3>04</h3>
+                    <p>JDBC & MySQL</p>
+                </div>
+
+                <div class="card">
+                    <h3>05</h3>
+                    <p>Java + Database Project</p>
+                </div>
+
+            </div>
+
+            <br>
+
+            <p>
+                You now understand how Java can work with
+                collections, files, threads and databases.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- NAVIGATION -->
+    <div class="buttons">
+
+        <a href="lesson4.html" class="btn">
+            ← Previous Lesson
+        </a>
+
+        <a href="/index.html" class="btn">
+            Finish Course
+        </a>
+
+    </div>
+
+</main>
+
+
+<footer>
+    ☕ JavaLearn • Learn Java Step by Step
+</footer>
+
+</body>
+</html>

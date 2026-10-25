@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaLearn | Core Java - Lesson 6</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8, 11, 20, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-container {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ff8a3d;
+        }
+
+        .lesson-pill {
+            background: rgba(255, 138, 61, 0.12);
+            border: 1px solid rgba(255, 138, 61, 0.4);
+            color: #ffb17d;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .container {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 55px 0;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 55px;
+        }
+
+        .tag {
+            display: inline-block;
+            color: #ff8a3d;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            color: #b8bfd3;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .hero-visual {
+            width: 220px;
+            height: 220px;
+            margin: auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow:
+                0 0 40px rgba(255, 138, 61, 0.3),
+                0 0 80px rgba(255, 77, 109, 0.15);
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .hero-visual div {
+            background: rgba(8, 11, 20, 0.88);
+            width: 175px;
+            height: 175px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.8;
+        }
+
+        .progress-box {
+            margin-bottom: 45px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #c8ccda;
+        }
+
+        .progress-bar {
+            height: 9px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff8a3d, #ff4d6d);
+            border-radius: 20px;
+        }
+
+        section {
+            margin-bottom: 55px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        h2::before {
+            content: "// ";
+            color: #ff8a3d;
+        }
+
+        h3 {
+            font-size: 21px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .text {
+            color: #b8bfd3;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,138,61,0.4);
+        }
+
+        .card-number {
+            color: #ff8a3d;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #aeb5ca;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: rgba(255,255,255,0.05);
+            border-left: 4px solid #ff8a3d;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #c4c9d8;
+            line-height: 1.7;
+        }
+
+        .code-editor {
+            background: #0d1117;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .editor-header {
+            height: 40px;
+            background: #161b22;
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #555;
+        }
+
+        pre {
+            padding: 22px;
+            overflow-x: auto;
+            color: #e6edf3;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .variable {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .number {
+            color: #ffa657;
+        }
+
+        .operator {
+            color: #ff9d5c;
+            font-weight: bold;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+        .output {
+            background: #111827;
+            border-left: 4px solid #ff4d6d;
+            padding: 18px 20px;
+            border-radius: 8px;
+            color: #a5d6ff;
+            font-family: Consolas, monospace;
+            margin-top: 15px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        th {
+            background: rgba(255,138,61,0.12);
+            color: #ffb17d;
+        }
+
+        td {
+            color: #c0c6d7;
+        }
+
+        .practice {
+            display: grid;
+            gap: 15px;
+        }
+
+        .question {
+            padding: 18px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .question strong {
+            color: #ff8a3d;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            border-color: #ff8a3d;
+            color: #ff8a3d;
+        }
+
+        .btn.next {
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            border: none;
+        }
+
+        .btn.next:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777f94;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        @media (max-width: 800px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                width: 190px;
+                height: 190px;
+            }
+
+            .hero-visual div {
+                width: 150px;
+                height: 150px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-container">
+
+            <div class="logo">
+                <span>Java</span>Learn
+            </div>
+
+            <div class="lesson-pill">
+                Core Java • Lesson 06 / 08
+            </div>
+
+        </div>
+    </nav>
+
+
+    <main class="container">
+
+        <!-- HERO -->
+        <div class="hero">
+
+            <div>
+
+                <div class="tag">☕ CORE JAVA</div>
+
+                <h1>
+                    <span>Abstraction</span>
+                </h1>
+
+                <p>
+                    Learn how abstraction hides unnecessary implementation
+                    details and shows only the essential features to the user.
+                </p>
+
+            </div>
+
+            <div class="hero-visual">
+
+                <div>
+                    Hide Details
+                    <br>
+                    ↓
+                    <br>
+                    Show Essentials
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+        <div class="progress-box">
+
+            <div class="progress-info">
+                <span>Core Java Progress</span>
+                <span>6 / 8 Lessons • 75%</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+
+        </div>
+
+
+        <!-- WHAT YOU WILL LEARN -->
+        <section>
+
+            <h2>What You'll Learn</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-number">01</div>
+                    <h3>What is Abstraction?</h3>
+                    <p>
+                        Understand abstraction in simple and
+                        practical terms.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">02</div>
+                    <h3>Abstract Classes</h3>
+                    <p>
+                        Learn how to create and use abstract classes.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">03</div>
+                    <h3>Abstract Methods</h3>
+                    <p>
+                        Learn methods without implementation.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">04</div>
+                    <h3>Concrete Methods</h3>
+                    <p>
+                        Understand normal methods inside
+                        abstract classes.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">05</div>
+                    <h3>Real-World Example</h3>
+                    <p>
+                        Connect abstraction with everyday
+                        examples.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">06</div>
+                    <h3>Practice</h3>
+                    <p>
+                        Practice abstraction using simple
+                        Java programs.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- WHAT IS ABSTRACTION -->
+        <section>
+
+            <h2>What is Abstraction?</h2>
+
+            <p class="text">
+                Abstraction is the process of hiding internal
+                implementation details and showing only the
+                necessary information.
+            </p>
+
+            <div class="info-box">
+
+                <strong>Simple Meaning:</strong><br><br>
+
+                Abstraction means
+                <strong>"show what is necessary and hide what is not necessary."</strong>
+
+            </div>
+
+            <p class="text">
+                For example, when you use an ATM, you select
+                options such as Withdraw or Deposit. You do not
+                need to know how the ATM internally communicates
+                with the bank server.
+            </p>
+
+        </section>
+
+
+        <!-- REAL WORLD EXAMPLE -->
+        <section>
+
+            <h2>Real-World Example</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>🚗 Car</h3>
+                    <p>
+                        You use the steering wheel and pedals.
+                        You do not need to know the internal
+                        engine mechanism.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🏧 ATM</h3>
+                    <p>
+                        You enter your PIN and choose an option.
+                        The internal banking process is hidden.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>📱 Mobile</h3>
+                    <p>
+                        You tap an app icon without knowing
+                        the internal code running the application.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABSTRACTION IN JAVA -->
+        <section>
+
+            <h2>Abstraction in Java</h2>
+
+            <p class="text">
+                Java mainly provides abstraction using:
+            </p>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Abstract Class</h3>
+                    <p>
+                        A class declared using the
+                        <strong>abstract</strong> keyword.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Interface</h3>
+                    <p>
+                        An interface can define a contract
+                        that classes implement.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABSTRACT CLASS -->
+        <section>
+
+            <h2>Abstract Class</h2>
+
+            <p class="text">
+                An abstract class is a class that cannot be
+                directly used to create an object.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">abstract class</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="variable">eat</span>() {
+        System.out.println(<span class="string">"Animal eats"</span>);
+    }
+
+}</pre>
+
+            </div>
+
+            <div class="info-box">
+                The keyword <strong>abstract</strong> is used
+                before the class name.
+            </div>
+
+        </section>
+
+
+        <!-- ABSTRACT METHOD -->
+        <section>
+
+            <h2>Abstract Method</h2>
+
+            <p class="text">
+                An abstract method is a method that has a
+                declaration but does not have a body.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">abstract class</span> <span class="type">Animal</span> {
+
+    <span class="keyword">abstract void</span> <span class="variable">sound</span>();
+
+}</pre>
+
+            </div>
+
+            <div class="info-box">
+
+                Notice the semicolon after
+                <strong>sound()</strong>.
+
+                <br><br>
+
+                There is no method body because the child class
+                will provide the implementation.
+
+            </div>
+
+        </section>
+
+
+        <!-- ABSTRACT CLASS EXAMPLE -->
+        <section>
+
+            <h2>Abstract Class Example</h2>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">abstract class</span> <span class="type">Animal</span> {
+
+    <span class="keyword">abstract void</span> <span class="variable">sound</span>();
+
+    <span class="keyword">void</span> <span class="variable">eat</span>() {
+        System.out.println(<span class="string">"Animal eats"</span>);
+    }
+
+}
+
+
+<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="variable">sound</span>() {
+        System.out.println(<span class="string">"Dog barks"</span>);
+    }
+
+}</pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- USING ABSTRACT CLASS -->
+        <section>
+
+            <h2>Using an Abstract Class</h2>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="type">Dog</span> <span class="variable">dog</span> <span class="operator">=</span>
+    <span class="keyword">new</span> <span class="type">Dog</span>();
+
+<span class="variable">dog</span>.sound();
+<span class="variable">dog</span>.eat();</pre>
+
+            </div>
+
+            <div class="output">
+                Dog barks<br>
+                Animal eats
+            </div>
+
+        </section>
+
+
+        <!-- WHY ABSTRACT CLASS -->
+        <section>
+
+            <h2>Why Use Abstract Classes?</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>🔒 Hide Details</h3>
+                    <p>
+                        Internal implementation can be hidden
+                        from the user.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>📋 Common Structure</h3>
+                    <p>
+                        A parent class can define common
+                        methods and behavior.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🧩 Child Implementation</h3>
+                    <p>
+                        Child classes can provide their own
+                        implementation.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RULES -->
+        <section>
+
+            <h2>Important Rules</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+                        <th>Rule</th>
+                        <th>Explanation</th>
+                    </tr>
+
+                    <tr>
+                        <td>Abstract class</td>
+                        <td>
+                            Cannot be directly instantiated.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Abstract method</td>
+                        <td>
+                            Does not have a method body.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Child class</td>
+                        <td>
+                            Must implement abstract methods.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Normal method</td>
+                        <td>
+                            Can have a complete implementation.
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Keyword</td>
+                        <td>
+                            The keyword is <strong>abstract</strong>.
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABSTRACTION VS ENCAPSULATION -->
+        <section>
+
+            <h2>Abstraction vs Encapsulation</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+                        <th>Abstraction</th>
+                        <th>Encapsulation</th>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Hides implementation details
+                        </td>
+
+                        <td>
+                            Protects data and controls access
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Focuses on what an object does
+                        </td>
+
+                        <td>
+                            Focuses on how data is accessed
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            Uses abstract classes and interfaces
+                        </td>
+
+                        <td>
+                            Uses private fields and methods
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- INTERFACE PREVIEW -->
+        <section>
+
+            <h2>Interface Preview</h2>
+
+            <p class="text">
+                Interfaces are another important way to achieve
+                abstraction in Java. You will learn interfaces
+                in detail in Lesson 8.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+<pre><span class="keyword">interface</span> <span class="type">Animal</span> {
+
+    <span class="keyword">void</span> <span class="variable">sound</span>();
+
+}</pre>
+
+            </div>
+
+            <div class="info-box">
+                Interfaces define what a class should do.
+                The implementing class provides the actual behavior.
+            </div>
+
+        </section>
+
+
+        <!-- PRACTICE -->
+        <section>
+
+            <h2>Practice Questions</h2>
+
+            <div class="practice">
+
+                <div class="question">
+                    <strong>Q1.</strong>
+                    What is abstraction?
+                </div>
+
+                <div class="question">
+                    <strong>Q2.</strong>
+                    What is an abstract class?
+                </div>
+
+                <div class="question">
+                    <strong>Q3.</strong>
+                    What is an abstract method?
+                </div>
+
+                <div class="question">
+                    <strong>Q4.</strong>
+                    Can we create an object of an abstract class?
+                </div>
+
+                <div class="question">
+                    <strong>Q5.</strong>
+                    Why do we use abstraction?
+                </div>
+
+                <div class="question">
+                    <strong>Q6.</strong>
+                    What is the difference between abstraction
+                    and encapsulation?
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MINI CHALLENGE -->
+        <section>
+
+            <h2>Mini Challenge</h2>
+
+            <div class="info-box">
+
+                Create an abstract class called
+                <strong>Vehicle</strong>.
+
+                <br><br>
+
+                Add an abstract method:
+
+                <br><br>
+
+                <strong>start()</strong>
+
+                <br><br>
+
+                Create two child classes:
+
+                <br><br>
+
+                • Car<br>
+                • Bike
+
+                <br><br>
+
+                Override the <strong>start()</strong> method
+                in both classes and print different messages.
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+        <section>
+
+            <h2>Lesson Summary</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Abstraction</h3>
+                    <p>
+                        Hides unnecessary implementation details.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Abstract Class</h3>
+                    <p>
+                        A class declared using the abstract keyword.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Abstract Method</h3>
+                    <p>
+                        A method declaration without implementation.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Interface</h3>
+                    <p>
+                        Another way to achieve abstraction in Java.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+        <div class="navigation">
+
+            <a href="lesson5.html" class="btn">
+                ← Previous Lesson
+            </a>
+
+            <a href="lesson7.html" class="btn next">
+                Next Lesson →
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+        ☕ JavaLearn • Learn Java Step by Step
+    </footer>
+
+</body>
+</html>

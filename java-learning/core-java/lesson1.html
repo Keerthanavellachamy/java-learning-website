@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaLearn | Core Java - Lesson 1</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8, 11, 20, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-container {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ff8a3d;
+        }
+
+        .lesson-pill {
+            background: rgba(255, 138, 61, 0.12);
+            border: 1px solid rgba(255, 138, 61, 0.4);
+            color: #ffb17d;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        /* MAIN */
+        .container {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 55px 0;
+        }
+
+        /* HERO */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 55px;
+        }
+
+        .tag {
+            display: inline-block;
+            color: #ff8a3d;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            color: #b8bfd3;
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 650px;
+        }
+
+        .hero-visual {
+            width: 220px;
+            height: 220px;
+            margin: auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow:
+                0 0 40px rgba(255, 138, 61, 0.3),
+                0 0 80px rgba(255, 77, 109, 0.15);
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .hero-visual div {
+            background: rgba(8, 11, 20, 0.85);
+            width: 175px;
+            height: 175px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.8;
+        }
+
+        /* PROGRESS */
+        .progress-box {
+            margin-bottom: 45px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #c8ccda;
+        }
+
+        .progress-bar {
+            height: 9px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 12.5%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff8a3d, #ff4d6d);
+            border-radius: 20px;
+        }
+
+        /* SECTION */
+        section {
+            margin-bottom: 55px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        h2::before {
+            content: "// ";
+            color: #ff8a3d;
+        }
+
+        h3 {
+            font-size: 21px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .text {
+            color: #b8bfd3;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        /* CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,138,61,0.4);
+        }
+
+        .card-number {
+            color: #ff8a3d;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #aeb5ca;
+            line-height: 1.6;
+        }
+
+        /* INFO BOX */
+        .info-box {
+            background: rgba(255,255,255,0.05);
+            border-left: 4px solid #ff8a3d;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #c4c9d8;
+            line-height: 1.7;
+        }
+
+        /* CODE EDITOR */
+        .code-editor {
+            background: #0d1117;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .editor-header {
+            height: 40px;
+            background: #161b22;
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            gap: 7px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #555;
+        }
+
+        pre {
+            padding: 22px;
+            overflow-x: auto;
+            color: #e6edf3;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .variable {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .number {
+            color: #ffa657;
+        }
+
+        .operator {
+            color: #ff9d5c;
+            font-weight: bold;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+        /* TABLE */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.04);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        th {
+            background: rgba(255,138,61,0.12);
+            color: #ffb17d;
+        }
+
+        td {
+            color: #c0c6d7;
+        }
+
+        /* PRACTICE */
+        .practice {
+            display: grid;
+            gap: 15px;
+        }
+
+        .question {
+            padding: 18px 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .question strong {
+            color: #ff8a3d;
+        }
+
+        /* NAVIGATION */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            border-color: #ff8a3d;
+            color: #ff8a3d;
+        }
+
+        .btn.next {
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            border: none;
+        }
+
+        .btn.next:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777f94;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 800px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                width: 190px;
+                height: 190px;
+            }
+
+            .hero-visual div {
+                width: 150px;
+                height: 150px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-container">
+
+            <div class="logo">
+                <span>Java</span>Learn
+            </div>
+
+            <div class="lesson-pill">
+                Core Java • Lesson 01 / 08
+            </div>
+
+        </div>
+    </nav>
+
+
+    <main class="container">
+
+        <!-- HERO -->
+        <div class="hero">
+
+            <div>
+
+                <div class="tag">☕ CORE JAVA</div>
+
+                <h1>
+                    OOP <span>Introduction</span>
+                </h1>
+
+                <p>
+                    Object-Oriented Programming organizes Java programs
+                    using classes and objects. Learn how Java represents
+                    real-world entities in code.
+                </p>
+
+            </div>
+
+            <div class="hero-visual">
+
+                <div>
+                    class="<br>
+                    ↓<br>
+                    object
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+        <div class="progress-box">
+
+            <div class="progress-info">
+                <span>Core Java Progress</span>
+                <span>1 / 8 Lessons • 12.5%</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+
+        </div>
+
+
+        <!-- WHAT YOU WILL LEARN -->
+        <section>
+
+            <h2>What You'll Learn</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-number">01</div>
+                    <h3>What is OOP?</h3>
+                    <p>
+                        Understand Object-Oriented Programming
+                        in simple terms.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">02</div>
+                    <h3>Classes</h3>
+                    <p>
+                        Learn how classes act as blueprints
+                        for objects.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">03</div>
+                    <h3>Objects</h3>
+                    <p>
+                        Learn how to create and use objects
+                        in Java.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">04</div>
+                    <h3>OOP Features</h3>
+                    <p>
+                        Understand the four important pillars
+                        of OOP.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">05</div>
+                    <h3>Real-World Examples</h3>
+                    <p>
+                        Connect programming concepts with
+                        real-world examples.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">06</div>
+                    <h3>Benefits of OOP</h3>
+                    <p>
+                        Understand why OOP is widely used
+                        in software development.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- WHAT IS OOP -->
+        <section>
+
+            <h2>What is OOP?</h2>
+
+            <p class="text">
+                OOP stands for <strong>Object-Oriented Programming</strong>.
+                It is a programming approach where we organize a program
+                using objects and classes.
+            </p>
+
+            <div class="info-box">
+                <strong>Simple Meaning:</strong>
+                OOP allows us to represent real-world things such as
+                students, cars, mobile phones and bank accounts
+                as objects in a program.
+            </div>
+
+            <p class="text">
+                Java is mainly an object-oriented programming language.
+                Most Java applications use classes and objects to
+                organize their code.
+            </p>
+
+        </section>
+
+
+        <!-- REAL WORLD EXAMPLE -->
+        <section>
+
+            <h2>Real-World Examples</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>🚗 Car</h3>
+                    <p>
+                        A car can have properties such as brand,
+                        color and speed.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🎓 Student</h3>
+                    <p>
+                        A student can have a name, age, register
+                        number and marks.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🏦 Bank Account</h3>
+                    <p>
+                        A bank account can have an account number,
+                        holder name and balance.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>📱 Mobile</h3>
+                    <p>
+                        A mobile can have a brand, model,
+                        price and storage.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CLASS AND OBJECT -->
+        <section>
+
+            <h2>Class and Object</h2>
+
+            <h3>What is a Class?</h3>
+
+            <p class="text">
+                A class is like a <strong>blueprint</strong>.
+                It defines what data and behavior an object can have.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+                <pre><span class="keyword">class</span> <span class="type">Student</span> {
+
+    <span class="type">String</span> name;
+    <span class="type">int</span> age;
+
+}</pre>
+
+            </div>
+
+
+            <h3>Creating an Object</h3>
+
+            <p class="text">
+                An object is an actual instance of a class.
+                We use the <strong>new</strong> keyword to create an object.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+                <pre><span class="type">Student</span> <span class="variable">student1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="type">Student</span>();
+
+<span class="variable">student1</span>.name <span class="operator">=</span> <span class="string">"Keerthana"</span>;
+<span class="variable">student1</span>.age <span class="operator">=</span> <span class="number">20</span>;
+
+System.out.println(<span class="variable">student1</span>.name);
+System.out.println(<span class="variable">student1</span>.age);</pre>
+
+            </div>
+
+
+            <div class="info-box">
+                <strong>Remember:</strong><br>
+                Class = Blueprint<br>
+                Object = Real instance created from the blueprint
+            </div>
+
+        </section>
+
+
+        <!-- CLASS EXPLANATION -->
+        <section>
+
+            <h2>Understanding the Code</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>class</h3>
+                    <p>
+                        Defines a new class in Java.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Student</h3>
+                    <p>
+                        Name of the class.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>new</h3>
+                    <p>
+                        Creates a new object in memory.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>student1</h3>
+                    <p>
+                        Reference variable that refers to the object.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MULTIPLE OBJECTS -->
+        <section>
+
+            <h2>Multiple Objects</h2>
+
+            <p class="text">
+                We can create multiple objects from the same class.
+                Each object can contain different values.
+            </p>
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+
+                <pre><span class="type">Student</span> <span class="variable">student1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="type">Student</span>();
+<span class="type">Student</span> <span class="variable">student2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="type">Student</span>();
+
+<span class="variable">student1</span>.name <span class="operator">=</span> <span class="string">"Keerthana"</span>;
+<span class="variable">student2</span>.name <span class="operator">=</span> <span class="string">"Amirtha"</span>;
+
+System.out.println(<span class="variable">student1</span>.name);
+System.out.println(<span class="variable">student2</span>.name);</pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- CLASS VS OBJECT -->
+        <section>
+
+            <h2>Class vs Object</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+                        <th>Class</th>
+                        <th>Object</th>
+                    </tr>
+
+                    <tr>
+                        <td>Blueprint or template</td>
+                        <td>Real instance of a class</td>
+                    </tr>
+
+                    <tr>
+                        <td>Defines properties and behavior</td>
+                        <td>Contains actual values</td>
+                    </tr>
+
+                    <tr>
+                        <td>Example: Student</td>
+                        <td>Example: student1</td>
+                    </tr>
+
+                    <tr>
+                        <td>Used to create objects</td>
+                        <td>Created using the new keyword</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOUR PILLARS -->
+        <section>
+
+            <h2>Four Pillars of OOP</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-number">01</div>
+                    <h3>Encapsulation</h3>
+                    <p>
+                        Wrapping data and methods together
+                        inside a class.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">02</div>
+                    <h3>Inheritance</h3>
+                    <p>
+                        Allows one class to get properties
+                        and behavior from another class.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">03</div>
+                    <h3>Polymorphism</h3>
+                    <p>
+                        Allows the same method or interface
+                        to behave differently.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-number">04</div>
+                    <h3>Abstraction</h3>
+                    <p>
+                        Hides unnecessary implementation details
+                        and shows only essential information.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- OOP TABLE -->
+        <section>
+
+            <h2>OOP Concepts in Simple Words</h2>
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+                        <th>Concept</th>
+                        <th>Simple Meaning</th>
+                        <th>Example</th>
+                    </tr>
+
+                    <tr>
+                        <td>Encapsulation</td>
+                        <td>Protect and organize data</td>
+                        <td>Bank Account</td>
+                    </tr>
+
+                    <tr>
+                        <td>Inheritance</td>
+                        <td>Reuse properties from another class</td>
+                        <td>Car → Vehicle</td>
+                    </tr>
+
+                    <tr>
+                        <td>Polymorphism</td>
+                        <td>Same method, different behavior</td>
+                        <td>Animal sounds</td>
+                    </tr>
+
+                    <tr>
+                        <td>Abstraction</td>
+                        <td>Hide complex implementation</td>
+                        <td>ATM</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- BENEFITS -->
+        <section>
+
+            <h2>Benefits of OOP</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>♻️ Code Reusability</h3>
+                    <p>
+                        Existing code can be reused using
+                        classes and inheritance.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🔧 Easy Maintenance</h3>
+                    <p>
+                        Code can be organized into separate
+                        classes, making changes easier.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🔐 Data Security</h3>
+                    <p>
+                        Encapsulation helps protect data
+                        from unwanted access.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>📦 Organization</h3>
+                    <p>
+                        Large programs can be divided into
+                        smaller and manageable components.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>📈 Scalability</h3>
+                    <p>
+                        OOP makes it easier to extend
+                        applications as they grow.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>🛠️ Easy Debugging</h3>
+                    <p>
+                        Problems can be isolated within
+                        individual classes and methods.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRACTICE -->
+        <section>
+
+            <h2>Practice Questions</h2>
+
+            <div class="practice">
+
+                <div class="question">
+                    <strong>Q1.</strong>
+                    Create a <strong>Car</strong> class with
+                    brand and model.
+                </div>
+
+                <div class="question">
+                    <strong>Q2.</strong>
+                    Create two <strong>Student</strong> objects
+                    with different names.
+                </div>
+
+                <div class="question">
+                    <strong>Q3.</strong>
+                    Create a <strong>Mobile</strong> class with
+                    brand and price.
+                </div>
+
+                <div class="question">
+                    <strong>Q4.</strong>
+                    Explain the difference between a class
+                    and an object.
+                </div>
+
+                <div class="question">
+                    <strong>Q5.</strong>
+                    Name the four pillars of OOP.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CHALLENGE -->
+        <section>
+
+            <h2>Mini Challenge</h2>
+
+            <div class="info-box">
+
+                Create an <strong>Employee</strong> class with:
+
+                <br><br>
+
+                • name<br>
+                • id<br>
+                • salary
+
+                <br><br>
+
+                Then create two Employee objects and assign
+                different values to each object.
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+        <section>
+
+            <h2>Lesson Summary</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>OOP</h3>
+                    <p>
+                        Programming approach based on objects
+                        and classes.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Class</h3>
+                    <p>
+                        A blueprint used to create objects.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Object</h3>
+                    <p>
+                        An actual instance of a class.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Four Pillars</h3>
+                    <p>
+                        Encapsulation, Inheritance,
+                        Polymorphism and Abstraction.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+        <div class="navigation">
+
+            <a href="../java-basics/lesson10.html" class="btn">
+                ← Java Basics
+            </a>
+
+            <a href="lesson2.html" class="btn next">
+                Next Lesson →
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+        ☕ JavaLearn • Learn Java Step by Step
+    </footer>
+
+</body>
+</html>

@@ -161,26 +161,25 @@ document.addEventListener('click', e => {
     const c = COURSES[b.dataset.course];
 
     if (c.course === 'core-java') {
-  window.location.href = '/java-learning/core-java/lesson1.html';
+  window.location.href = './java-learning/core-java/lesson1.html';
   return;
 }
 if (c.course === 'advanced-java') {
-  window.location.href = '/java-learning/core-java/advanced-java/lesson1.html';
+  window.location.href = './java-learning/core-java/advanced-java/lesson1.html';
   return;
 }
 if (c.course === 'oop-masterclass') {
-  window.location.href = '/java-learning/core-java/advanced-java/java-oop-masterclass/lesson1.html';
-  return;
+  window.location.href = './java-learning/core-java/advanced-java/java-oop-masterclass/lesson1.html';
 }
 if (c.course === 'java-projects') {
-  window.location.href = '/java-learning/core-java/advanced-java/java-oop-masterclass/java-projects/project1.html';
+  window.location.href = './java-learning/core-java/advanced-java/java-oop-masterclass/java-projects/project1.html';
   return;
 }
 if (c.course === 'interview-preparation') {
   window.location.href = '/java-learning/java-interview.html';
   return;
 }
-    openModal(`<h3>${c.t}</h3><p class="muted">${c.desc}</p><div class="mgrid"><div><b>Level</b>${c.l}</div><div><b>Duration</b>${c.d}</div><div><b>Lessons</b>${c.n}</div><div><b>Modules</b>${c.m}</div><div><b>Instructor</b>${c.i}</div><div><b>Rating</b>⭐ ${c.r} / 5</div></div><a href="/java-learning/lesson/java-basics/lesson1.html" class="btn">Start Learning</a>`);
+    openModal(`<h3>${c.t}</h3><p class="muted">${c.desc}</p><div class="mgrid"><div><b>Level</b>${c.l}</div><div><b>Duration</b>${c.d}</div><div><b>Lessons</b>${c.n}</div><div><b>Modules</b>${c.m}</div><div><b>Instructor</b>${c.i}</div><div><b>Rating</b>⭐ ${c.r} / 5</div></div><a href="./java-learning/lesson/java-basics/lesson1.html" class="btn">Start Learning</a>`);
   }  else if (b.dataset.proj) {
 
     if (b.dataset.proj === '0') {

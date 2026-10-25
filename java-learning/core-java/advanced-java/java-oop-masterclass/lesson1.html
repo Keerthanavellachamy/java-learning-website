@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Java OOP Masterclass - Lesson 1</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #32145f 0%,
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    #0b4f6c 0%,
+                    transparent 35%
+                ),
+                #080b14;
+
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background: rgba(8, 11, 20, 0.85);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .java {
+            color: #ff8a3d;
+        }
+
+        .learn {
+            color: white;
+        }
+
+        .lesson-number {
+            padding: 8px 16px;
+
+            border-radius: 20px;
+
+            background: rgba(255,138,61,0.12);
+
+            border: 1px solid rgba(255,138,61,0.3);
+
+            color: #ff9d5c;
+
+            font-size: 13px;
+        }
+
+
+        /* MAIN */
+
+        main {
+            width: 88%;
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 55px 0 70px;
+        }
+
+
+        /* HERO */
+
+        .hero {
+            display: grid;
+
+            grid-template-columns: 1.3fr 0.7fr;
+
+            gap: 40px;
+
+            align-items: center;
+
+            margin-bottom: 50px;
+        }
+
+        .tag {
+            display: inline-block;
+
+            padding: 7px 15px;
+
+            border-radius: 20px;
+
+            background: rgba(255,77,109,0.12);
+
+            border: 1px solid rgba(255,77,109,0.25);
+
+            color: #ff8098;
+
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: 46px;
+
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+        }
+
+        h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            color: #aeb5ca;
+
+            line-height: 1.7;
+
+            font-size: 17px;
+        }
+
+
+        /* CIRCLE */
+
+        .visual {
+            width: 220px;
+            height: 220px;
+
+            margin: auto;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff8a3d,
+                    #ff4d6d
+                );
+
+            box-shadow:
+                0 0 70px rgba(255,77,109,0.35);
+        }
+
+        .visual span {
+            font-size: 70px;
+            font-weight: 800;
+        }
+
+
+        /* PROGRESS */
+
+        .progress-box {
+            margin-bottom: 40px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+
+            color: #aeb5ca;
+
+            font-size: 14px;
+        }
+
+        .progress {
+            height: 8px;
+
+            background: rgba(255,255,255,0.08);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 3.33%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ff8a3d,
+                    #ff4d6d
+                );
+        }
+
+
+        /* CARDS */
+
+        .card {
+            padding: 28px;
+
+            margin-bottom: 25px;
+
+            border-radius: 18px;
+
+            background: rgba(255,255,255,0.06);
+
+            border: 1px solid rgba(255,255,255,0.11);
+
+            backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            font-size: 27px;
+
+            margin-bottom: 18px;
+        }
+
+        h2::before {
+            content: "// ";
+
+            color: #ff8a3d;
+        }
+
+        h3 {
+            margin-top: 20px;
+            margin-bottom: 10px;
+
+            color: #ff9d5c;
+        }
+
+        .card p {
+            color: #b8bfd2;
+
+            line-height: 1.8;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* FEATURES */
+
+        .features {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+
+            margin-top: 20px;
+        }
+
+        .feature {
+            padding: 18px;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,0.04);
+
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .feature strong {
+            color: #ff8a3d;
+
+            display: block;
+
+            margin-bottom: 7px;
+        }
+
+        .feature p {
+            font-size: 14px;
+
+            margin: 0;
+        }
+
+
+        /* CODE */
+
+        .code-box {
+            margin-top: 20px;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            background: #0d1117;
+
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .code-header {
+            padding: 10px 15px;
+
+            background: #161b22;
+
+            color: #8b949e;
+
+            font-size: 13px;
+        }
+
+        .dot {
+            display: inline-block;
+
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            background: #ff4d6d;
+
+            margin-right: 5px;
+        }
+
+        pre {
+            padding: 22px;
+
+            overflow-x: auto;
+
+            color: #c9d1d9;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .function {
+            color: #d2a8ff;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+
+        /* OUTPUT */
+
+        .output {
+            margin-top: 18px;
+
+            padding: 18px;
+
+            border-left: 4px solid #ff4d6d;
+
+            background: rgba(255,77,109,0.07);
+
+            border-radius: 8px;
+
+            font-family: monospace;
+
+            color: #e6edf3;
+        }
+
+
+        /* INFO */
+
+        .info {
+            padding: 20px;
+
+            margin-top: 20px;
+
+            border-left: 4px solid #ff8a3d;
+
+            background: rgba(255,138,61,0.07);
+
+            border-radius: 10px;
+
+            color: #cbd2e1;
+
+            line-height: 1.7;
+        }
+
+
+        /* LIST */
+
+        ul {
+            margin-left: 22px;
+
+            color: #b8bfd2;
+
+            line-height: 2;
+        }
+
+
+        /* NAVIGATION */
+
+        .navigation {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: white;
+
+            font-weight: 600;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff8a3d,
+                    #ff4d6d
+                );
+
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 25px rgba(255,77,109,0.25);
+        }
+
+        .btn.secondary {
+            background: rgba(255,255,255,0.07);
+
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+
+            padding: 25px;
+
+            color: #777f96;
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+
+        /* RESPONSIVE */
+
+        @media(max-width:800px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .visual {
+                width: 180px;
+                height: 180px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            <span class="java">Java</span><span class="learn">Learn</span>
+        </div>
+
+        <div class="lesson-number">
+            Java OOP Masterclass • Lesson 01 / 30
+        </div>
+
+    </nav>
+
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div>
+
+                <div class="tag">
+                    JAVA OOP MASTERCLASS
+                </div>
+
+                <h1>
+                    Introduction to
+                    <span>Object-Oriented Programming</span>
+                </h1>
+
+                <p>
+                    Learn the basic ideas behind Object-Oriented
+                    Programming and understand how Java uses objects
+                    and classes to build applications.
+                </p>
+
+            </div>
+
+
+            <div class="visual">
+                <span>OOP</span>
+            </div>
+
+        </section>
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress-box">
+
+            <div class="progress-info">
+
+                <span>
+                    Lesson 1 of 30
+                </span>
+
+                <span>
+                    3.33% Complete
+                </span>
+
+            </div>
+
+            <div class="progress">
+
+                <div class="progress-bar"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WHAT IS OOP -->
+
+        <section class="card">
+
+            <h2>What is Object-Oriented Programming?</h2>
+
+            <p>
+                Object-Oriented Programming, commonly called OOP,
+                is a programming approach where programs are designed
+                using objects and classes.
+            </p>
+
+            <p>
+                An object represents something that contains
+                <strong>data</strong> and
+                <strong>behavior</strong>.
+            </p>
+
+            <div class="info">
+
+                <strong>Simple Example:</strong>
+
+                A Car can be considered an object.
+
+                <br><br>
+
+                Data → color, model, speed
+
+                <br>
+
+                Behavior → start(), stop(), accelerate()
+
+            </div>
+
+        </section>
+
+
+        <!-- WHY OOP -->
+
+        <section class="card">
+
+            <h2>Why Do We Use OOP?</h2>
+
+            <p>
+                OOP helps developers organize large programs into
+                smaller and reusable components.
+            </p>
+
+            <div class="features">
+
+                <div class="feature">
+
+                    <strong>1. Reusability</strong>
+
+                    <p>
+                        Code can be reused using classes,
+                        inheritance and other OOP concepts.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <strong>2. Maintainability</strong>
+
+                    <p>
+                        Large applications become easier to
+                        understand and maintain.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <strong>3. Security</strong>
+
+                    <p>
+                        Encapsulation helps protect important
+                        data from direct access.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <strong>4. Flexibility</strong>
+
+                    <p>
+                        Polymorphism allows the same interface
+                        to behave differently.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOUR PILLARS -->
+
+        <section class="card">
+
+            <h2>The Four Pillars of OOP</h2>
+
+            <p>
+                Java OOP is mainly based on four important concepts.
+            </p>
+
+            <div class="features">
+
+                <div class="feature">
+
+                    <strong>Encapsulation</strong>
+
+                    <p>
+                        Wrapping data and methods together inside
+                        a class.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <strong>Inheritance</strong>
+
+                    <p>
+                        Creating a new class from an existing class.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <strong>Polymorphism</strong>
+
+                    <p>
+                        One interface or method can have
+                        different behaviors.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <strong>Abstraction</strong>
+
+                    <p>
+                        Hiding unnecessary implementation details
+                        and showing only essential features.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FIRST JAVA OOP PROGRAM -->
+
+        <section class="card">
+
+            <h2>Your First OOP Example</h2>
+
+            <p>
+                Let's create a simple Java class representing a car.
+            </p>
+
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Main.java
+
+                </div>
+
+<pre>
+<span class="keyword">class</span> <span class="type">Car</span> {
+
+    String color = <span class="string">"Red"</span>;
+
+    <span class="keyword">void</span> <span class="function">drive</span>() {
+
+        System.out.println(
+            <span class="string">"The car is driving"</span>
+        );
+    }
+}
+
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span>
+    <span class="function">main</span>(String[] args) {
+
+        Car car = <span class="keyword">new</span> Car();
+
+        System.out.println(car.color);
+
+        car.drive();
+    }
+}
+</pre>
+
+            </div>
+
+
+            <div class="output">
+
+                Output:
+
+                <br><br>
+
+                Red
+                <br>
+                The car is driving
+
+            </div>
+
+        </section>
+
+
+        <!-- IMPORTANT TERMS -->
+
+        <section class="card">
+
+            <h2>Important OOP Terms</h2>
+
+            <ul>
+
+                <li>
+                    <strong>Class:</strong>
+                    A blueprint for creating objects.
+                </li>
+
+                <li>
+                    <strong>Object:</strong>
+                    An instance of a class.
+                </li>
+
+                <li>
+                    <strong>Method:</strong>
+                    A block of code that performs an action.
+                </li>
+
+                <li>
+                    <strong>Field:</strong>
+                    A variable defined inside a class.
+                </li>
+
+                <li>
+                    <strong>Constructor:</strong>
+                    A special method used when creating an object.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- PRACTICE -->
+
+        <section class="card">
+
+            <h2>Practice Questions</h2>
+
+            <ol style="margin-left:22px; line-height:2; color:#b8bfd2;">
+
+                <li>What is Object-Oriented Programming?</li>
+
+                <li>What is a class?</li>
+
+                <li>What is an object?</li>
+
+                <li>What are the four pillars of OOP?</li>
+
+                <li>Why is OOP useful?</li>
+
+            </ol>
+
+        </section>
+
+
+        <!-- MINI CHALLENGE -->
+
+        <section class="card">
+
+            <h2>Mini Challenge</h2>
+
+            <p>
+                Create a Java class called
+                <strong>Student</strong>.
+            </p>
+
+            <p>
+                Add the following:
+            </p>
+
+            <ul>
+
+                <li>Name</li>
+
+                <li>Age</li>
+
+                <li>College</li>
+
+                <li>A method called displayDetails()</li>
+
+            </ul>
+
+            <div class="info">
+
+                💡 Try writing the program yourself before
+                looking at other examples.
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+
+        <section class="card">
+
+            <h2>Lesson Summary</h2>
+
+            <p>
+                In this lesson, you learned the basic idea of
+                Object-Oriented Programming.
+            </p>
+
+            <ul>
+
+                <li>OOP organizes programs using objects and classes.</li>
+
+                <li>Objects contain data and behavior.</li>
+
+                <li>Java is an object-oriented programming language.</li>
+
+                <li>The four pillars are Encapsulation, Inheritance,
+                    Polymorphism and Abstraction.</li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+
+        <div class="navigation">
+
+            <a href="../courses.html" class="btn secondary">
+                ← Course
+            </a>
+
+            <a href="lesson2.html" class="btn">
+                Next Lesson →
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        ☕ JavaLearn • Java OOP Masterclass
+
+    </footer>
+
+</body>
+
+</html>

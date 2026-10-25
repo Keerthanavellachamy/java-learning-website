@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaLearn - Multithreading</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 6%;
+            background: rgba(8, 11, 20, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .java {
+            color: #ff8a3d;
+        }
+
+        .learn {
+            color: white;
+        }
+
+        .lesson-pill {
+            padding: 8px 16px;
+            border-radius: 30px;
+            background: rgba(255,138,61,0.12);
+            border: 1px solid rgba(255,138,61,0.4);
+            color: #ffb27d;
+            font-size: 14px;
+        }
+
+        main {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 55px 0;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 30px;
+            background: rgba(255,138,61,0.12);
+            color: #ff9d5c;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 70px);
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #c5cada;
+            max-width: 650px;
+        }
+
+        .hero-visual {
+            width: 220px;
+            height: 220px;
+            margin: auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.7;
+            box-shadow:
+                0 0 40px rgba(255,138,61,0.35),
+                0 0 80px rgba(255,77,109,0.2);
+        }
+
+        .progress-box {
+            margin-bottom: 45px;
+            padding: 20px;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #cbd0df;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            height: 9px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, #ff8a3d, #ff4d6d);
+            border-radius: 20px;
+        }
+
+        section {
+            margin-bottom: 55px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        h2::before {
+            content: "// ";
+            color: #ff8a3d;
+        }
+
+        h3 {
+            color: #ffb27d;
+            margin-bottom: 12px;
+            font-size: 21px;
+        }
+
+        p {
+            color: #c5cada;
+            line-height: 1.7;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            padding: 24px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.055);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,138,61,0.4);
+        }
+
+        .card-icon {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            font-size: 14px;
+        }
+
+        .content-box {
+            padding: 28px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 25px;
+        }
+
+        .info {
+            padding: 18px 20px;
+            margin: 20px 0;
+            border-left: 4px solid #ff8a3d;
+            background: rgba(255,138,61,0.08);
+            border-radius: 8px;
+            color: #dce0ec;
+            line-height: 1.7;
+        }
+
+        .code-editor {
+            margin: 20px 0;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #0d1117;
+            border: 1px solid #252b35;
+        }
+
+        .editor-header {
+            height: 42px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 0 15px;
+            background: #161b22;
+            border-bottom: 1px solid #252b35;
+        }
+
+        .dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #ff6b6b;
+        }
+
+        .dot:nth-child(2) {
+            background: #ffd166;
+        }
+
+        .dot:nth-child(3) {
+            background: #06d6a0;
+        }
+
+        pre {
+            padding: 22px;
+            overflow-x: auto;
+            color: #e6edf3;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .variable {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .number {
+            color: #ffa657;
+        }
+
+        .operator {
+            color: #ff9d5c;
+            font-weight: bold;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+        .output {
+            background: #090d14;
+            border-left: 4px solid #ff4d6d;
+            padding: 15px 20px;
+            margin: 18px 0;
+            border-radius: 7px;
+            color: #b9f6ca;
+            font-family: Consolas, monospace;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow: hidden;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.04);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        th {
+            color: #ff9d5c;
+            background: rgba(255,138,61,0.08);
+        }
+
+        td {
+            color: #cbd0df;
+        }
+
+        ul, ol {
+            padding-left: 25px;
+            color: #c5cada;
+            line-height: 2;
+        }
+
+        li::marker {
+            color: #ff8a3d;
+        }
+
+        .flow {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 18px;
+            font-size: 20px;
+            line-height: 2;
+            color: #ffb27d;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 60px;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: rgba(255,138,61,0.15);
+            border-color: #ff8a3d;
+        }
+
+        .btn.next {
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+            border: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 35px 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            color: #8e95a8;
+        }
+
+        @media (max-width: 800px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                width: 180px;
+                height: 180px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                padding: 15px 4%;
+            }
+
+            .lesson-pill {
+                font-size: 11px;
+            }
+
+            main {
+                width: 92%;
+                padding: 40px 0;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+
+        <div class="logo">
+            <span class="java">Java</span><span class="learn">Learn</span>
+        </div>
+
+        <div class="lesson-pill">
+            Advanced Java • Lesson 03 / 05
+        </div>
+
+    </nav>
+
+
+    <main>
+
+        <!-- HERO -->
+        <div class="hero">
+
+            <div>
+
+                <div class="tag">
+                    ☕ ADVANCED JAVA
+                </div>
+
+                <h1>
+                    <span>Multithreading</span>
+                </h1>
+
+                <p>
+                    Learn how Java can perform multiple tasks at the same
+                    time using threads.
+                </p>
+
+            </div>
+
+
+            <div class="hero-visual">
+                Task 1
+                <br>
+                +
+                <br>
+                Task 2
+                <br>
+                ↓
+                <br>
+                Parallel
+            </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+        <div class="progress-box">
+
+            <div class="progress-text">
+                <span>Advanced Java Progress</span>
+                <span>3 / 05 Lessons • 60%</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+
+        </div>
+
+
+        <!-- WHAT YOU WILL LEARN -->
+        <section>
+
+            <h2>What You'll Learn</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-icon">🧵</div>
+                    <h3>Thread</h3>
+                    <p>
+                        Understand what a thread is and why it is useful.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Multithreading</h3>
+                    <p>
+                        Learn how multiple tasks can execute concurrently.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">▶️</div>
+                    <h3>start()</h3>
+                    <p>
+                        Start a new thread using the start method.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔄</div>
+                    <h3>run()</h3>
+                    <p>
+                        Define the task that a thread performs.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">⏱️</div>
+                    <h3>sleep()</h3>
+                    <p>
+                        Pause a thread temporarily.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔗</div>
+                    <h3>Runnable</h3>
+                    <p>
+                        Create threads using the Runnable interface.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- WHAT IS THREAD -->
+        <section>
+
+            <h2>What is a Thread?</h2>
+
+            <div class="content-box">
+
+                <p>
+                    A <strong>thread</strong> is a small unit of execution
+                    inside a program.
+                </p>
+
+                <br>
+
+                <p>
+                    It represents a task that a program can perform.
+                </p>
+
+                <div class="info">
+                    💡 <strong>Simple example:</strong>
+                    Imagine you are using a music application.
+                    One task can play music while another task downloads
+                    a song. These tasks can work using different threads.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- WHAT IS MULTITHREADING -->
+        <section>
+
+            <h2>What is Multithreading?</h2>
+
+            <div class="content-box">
+
+                <p>
+                    <strong>Multithreading</strong> means executing
+                    multiple threads within a program.
+                </p>
+
+                <br>
+
+                <p>
+                    Instead of waiting for one task to completely finish,
+                    different tasks can make progress concurrently.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- FLOW -->
+        <section>
+
+            <h2>Multithreading Flow</h2>
+
+            <div class="flow">
+
+                Program
+                <br>
+                ↓
+                <br>
+                Thread 1 → Task A
+                <br>
+                Thread 2 → Task B
+                <br>
+                Thread 3 → Task C
+                <br>
+                ↓
+                <br>
+                Multiple Tasks
+
+            </div>
+
+        </section>
+
+
+        <!-- THREAD CLASS -->
+        <section>
+
+            <h2>Creating a Thread</h2>
+
+            <div class="content-box">
+
+                <p>
+                    One way to create a thread is by extending the
+                    <strong>Thread</strong> class.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="keyword">class</span> <span class="type">MyThread</span> <span class="keyword">extends</span> <span class="type">Thread</span> {
+
+    <span class="keyword">public void</span> run() {
+
+        System.out.println(
+            <span class="string">"Thread is running"</span>
+        );
+    }
+}
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span> main(String[] args) {
+
+        <span class="type">MyThread</span> thread <span class="operator">=</span>
+            <span class="keyword">new</span> <span class="type">MyThread</span>();
+
+        thread.start();
+    }
+}</pre>
+
+                </div>
+
+                <div class="output">
+                    Thread is running
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RUN METHOD -->
+        <section>
+
+            <h2>run() Method</h2>
+
+            <div class="content-box">
+
+                <p>
+                    The <strong>run()</strong> method contains the code
+                    that the thread should execute.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="keyword">class</span> <span class="type">MyThread</span> <span class="keyword">extends</span> <span class="type">Thread</span> {
+
+    <span class="keyword">public void</span> run() {
+
+        System.out.println(
+            <span class="string">"Hello from thread"</span>
+        );
+    }
+}</pre>
+
+                </div>
+
+                <div class="info">
+                    💡 Think of <strong>run()</strong> as the work
+                    performed by the thread.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- START -->
+        <section>
+
+            <h2>start() Method</h2>
+
+            <div class="content-box">
+
+                <p>
+                    The <strong>start()</strong> method starts a new thread.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="type">MyThread</span> thread <span class="operator">=</span>
+    <span class="keyword">new</span> <span class="type">MyThread</span>();
+
+thread.start();</pre>
+
+                </div>
+
+                <div class="info">
+                    ⚠️ <strong>Important:</strong>
+                    Calling <code>start()</code> creates a new thread
+                    and then Java executes <code>run()</code>.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- START VS RUN -->
+        <section>
+
+            <h2>start() vs run()</h2>
+
+            <div class="content-box">
+
+                <table>
+
+                    <tr>
+                        <th>start()</th>
+                        <th>run()</th>
+                    </tr>
+
+                    <tr>
+                        <td>Starts a new thread</td>
+                        <td>Contains the task code</td>
+                    </tr>
+
+                    <tr>
+                        <td>Called to begin execution</td>
+                        <td>Called by the thread mechanism</td>
+                    </tr>
+
+                    <tr>
+                        <td>Supports multithreading</td>
+                        <td>Defines what the thread does</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- MULTIPLE THREADS -->
+        <section>
+
+            <h2>Multiple Threads</h2>
+
+            <div class="content-box">
+
+                <p>
+                    We can create more than one thread in a Java program.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="keyword">class</span> <span class="type">Task</span> <span class="keyword">extends</span> <span class="type">Thread</span> {
+
+    <span class="keyword">private</span> <span class="type">String</span> name;
+
+    <span class="type">Task</span>(<span class="type">String</span> name) {
+
+        <span class="keyword">this</span>.name <span class="operator">=</span> name;
+    }
+
+    <span class="keyword">public void</span> run() {
+
+        System.out.println(
+            name + <span class="string">" is running"</span>
+        );
+    }
+}
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span> main(String[] args) {
+
+        <span class="type">Task</span> task1 <span class="operator">=</span>
+            <span class="keyword">new</span> <span class="type">Task</span>(<span class="string">"Task 1"</span>);
+
+        <span class="type">Task</span> task2 <span class="operator">=</span>
+            <span class="keyword">new</span> <span class="type">Task</span>(<span class="string">"Task 2"</span>);
+
+        task1.start();
+        task2.start();
+    }
+}</pre>
+
+                </div>
+
+                <div class="output">
+                    Task 1 is running<br>
+                    Task 2 is running
+                </div>
+
+                <div class="info">
+                    💡 The exact order of thread output can vary because
+                    the operating system decides when each thread runs.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SLEEP -->
+        <section>
+
+            <h2>sleep() Method</h2>
+
+            <div class="content-box">
+
+                <p>
+                    The <strong>sleep()</strong> method temporarily pauses
+                    the current thread.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="keyword">class</span> <span class="type">MyThread</span> <span class="keyword">extends</span> <span class="type">Thread</span> {
+
+    <span class="keyword">public void</span> run() {
+
+        <span class="keyword">try</span> {
+
+            System.out.println(
+                <span class="string">"Thread started"</span>
+            );
+
+            Thread.sleep(<span class="number">2000</span>);
+
+            System.out.println(
+                <span class="string">"Thread continued"</span>
+            );
+
+        } <span class="keyword">catch</span> (
+            InterruptedException e
+        ) {
+
+            System.out.println(
+                <span class="string">"Thread interrupted"</span>
+            );
+        }
+    }
+}</pre>
+
+                </div>
+
+                <div class="info">
+                    ⏱️ <strong>2000 milliseconds = 2 seconds</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RUNNABLE -->
+        <section>
+
+            <h2>Runnable Interface</h2>
+
+            <div class="content-box">
+
+                <p>
+                    Another way to create a thread is by implementing
+                    the <strong>Runnable</strong> interface.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="keyword">class</span> <span class="type">MyTask</span>
+        <span class="keyword">implements</span> <span class="type">Runnable</span> {
+
+    <span class="keyword">public void</span> run() {
+
+        System.out.println(
+            <span class="string">"Runnable thread is running"</span>
+        );
+    }
+}
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span> main(String[] args) {
+
+        <span class="type">MyTask</span> task <span class="operator">=</span>
+            <span class="keyword">new</span> <span class="type">MyTask</span>();
+
+        <span class="type">Thread</span> thread <span class="operator">=</span>
+            <span class="keyword">new</span> <span class="type">Thread</span>(task);
+
+        thread.start();
+    }
+}</pre>
+
+                </div>
+
+                <div class="output">
+                    Runnable thread is running
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- THREAD METHODS -->
+        <section>
+
+            <h2>Important Thread Methods</h2>
+
+            <div class="content-box">
+
+                <table>
+
+                    <tr>
+                        <th>Method</th>
+                        <th>Purpose</th>
+                    </tr>
+
+                    <tr>
+                        <td>start()</td>
+                        <td>Starts a new thread</td>
+                    </tr>
+
+                    <tr>
+                        <td>run()</td>
+                        <td>Contains the task performed by a thread</td>
+                    </tr>
+
+                    <tr>
+                        <td>sleep()</td>
+                        <td>Pauses the current thread</td>
+                    </tr>
+
+                    <tr>
+                        <td>getName()</td>
+                        <td>Gets the thread name</td>
+                    </tr>
+
+                    <tr>
+                        <td>setName()</td>
+                        <td>Changes the thread name</td>
+                    </tr>
+
+                    <tr>
+                        <td>isAlive()</td>
+                        <td>Checks whether a thread is running</td>
+                    </tr>
+
+                    <tr>
+                        <td>join()</td>
+                        <td>Waits for another thread to finish</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- THREAD NAME -->
+        <section>
+
+            <h2>Thread Name</h2>
+
+            <div class="content-box">
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="type">Thread</span> thread <span class="operator">=</span>
+    <span class="keyword">new</span> <span class="type">Thread</span>();
+
+thread.setName(<span class="string">"My Thread"</span>);
+
+System.out.println(
+    thread.getName()
+);</pre>
+
+                </div>
+
+                <div class="output">
+                    My Thread
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- JOIN -->
+        <section>
+
+            <h2>join() Method</h2>
+
+            <div class="content-box">
+
+                <p>
+                    The <strong>join()</strong> method makes one thread
+                    wait until another thread finishes.
+                </p>
+
+                <div class="code-editor">
+
+                    <div class="editor-header">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+
+<pre><span class="type">Thread</span> thread1 <span class="operator">=</span>
+    <span class="keyword">new</span> <span class="type">Thread</span>(() -> {
+
+        System.out.println(
+            <span class="string">"Task 1"</span>
+        );
+    });
+
+thread1.start();
+
+<span class="keyword">try</span> {
+
+    thread1.join();
+
+} <span class="keyword">catch</span> (
+    InterruptedException e
+) {
+
+    System.out.println(
+        <span class="string">"Interrupted"</span>
+    );
+}
+
+System.out.println(
+    <span class="string">"Main continues"</span>
+);</pre>
+
+                </div>
+
+                <div class="info">
+                    💡 <strong>join()</strong> is useful when one task
+                    must finish before another task continues.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- THREAD VS NORMAL -->
+        <section>
+
+            <h2>Normal Program vs Multithreading</h2>
+
+            <div class="content-box">
+
+                <table>
+
+                    <tr>
+                        <th>Normal Execution</th>
+                        <th>Multithreading</th>
+                    </tr>
+
+                    <tr>
+                        <td>Tasks are handled sequentially</td>
+                        <td>Multiple threads can make progress concurrently</td>
+                    </tr>
+
+                    <tr>
+                        <td>One task may wait for another</td>
+                        <td>Independent tasks can overlap</td>
+                    </tr>
+
+                    <tr>
+                        <td>Simple to understand</td>
+                        <td>Useful for responsive applications</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- REAL WORLD -->
+        <section>
+
+            <h2>Real-World Examples</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <div class="card-icon">🎵</div>
+                    <h3>Music App</h3>
+                    <p>
+                        Play music while downloading another song.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🌐</div>
+                    <h3>Web Server</h3>
+                    <p>
+                        Handle multiple client requests concurrently.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">⬇️</div>
+                    <h3>Downloads</h3>
+                    <p>
+                        Perform downloads while other application
+                        tasks continue.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎮</div>
+                    <h3>Games</h3>
+                    <p>
+                        Handle game logic, animation and sound tasks.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💬</div>
+                    <h3>Chat Apps</h3>
+                    <p>
+                        Receive messages while performing other tasks.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>Data Processing</h3>
+                    <p>
+                        Process independent tasks concurrently.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- IMPORTANT RULES -->
+        <section>
+
+            <h2>Important Points</h2>
+
+            <div class="content-box">
+
+                <ol>
+
+                    <li>
+                        A thread represents a unit of execution.
+                    </li>
+
+                    <li>
+                        Multithreading allows multiple threads in a program.
+                    </li>
+
+                    <li>
+                        The run() method contains the thread's task.
+                    </li>
+
+                    <li>
+                        The start() method starts a new thread.
+                    </li>
+
+                    <li>
+                        sleep() temporarily pauses a thread.
+                    </li>
+
+                    <li>
+                        Runnable is another way to create a thread task.
+                    </li>
+
+                    <li>
+                        Thread execution order is not always predictable.
+                    </li>
+
+                    <li>
+                        Shared data between threads may require synchronization.
+                    </li>
+
+                </ol>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRACTICE -->
+        <section>
+
+            <h2>Practice Questions</h2>
+
+            <div class="content-box">
+
+                <ol>
+
+                    <li>What is a thread?</li>
+
+                    <li>What is multithreading?</li>
+
+                    <li>What is the difference between start() and run()?</li>
+
+                    <li>How do you create a thread in Java?</li>
+
+                    <li>What is the purpose of sleep()?</li>
+
+                    <li>What is the Runnable interface?</li>
+
+                    <li>What is the use of join()?</li>
+
+                    <li>What does isAlive() do?</li>
+
+                    <li>How can you change a thread's name?</li>
+
+                    <li>Give two real-world examples of multithreading.</li>
+
+                </ol>
+
+            </div>
+
+        </section>
+
+
+        <!-- MINI CHALLENGE -->
+        <section>
+
+            <h2>Mini Challenge 🚀</h2>
+
+            <div class="content-box">
+
+                <h3>Three Task Program</h3>
+
+                <p>
+                    Create three threads:
+                </p>
+
+                <br>
+
+                <ul>
+
+                    <li>Thread 1 → Print "Downloading..."</li>
+
+                    <li>Thread 2 → Print "Processing..."</li>
+
+                    <li>Thread 3 → Print "Saving..."</li>
+
+                </ul>
+
+                <br>
+
+                <p>
+                    Start all three threads and observe the output.
+                </p>
+
+                <br>
+
+                <p>
+                    <strong>Bonus:</strong>
+                    Use <code>sleep()</code> to add a small delay
+                    between messages.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+        <section>
+
+            <h2>Lesson Summary</h2>
+
+            <div class="cards">
+
+                <div class="card">
+                    <h3>Thread</h3>
+                    <p>
+                        A unit of execution inside a program.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Multithreading</h3>
+                    <p>
+                        Running multiple threads within a program.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>start()</h3>
+                    <p>
+                        Starts a new thread.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>run()</h3>
+                    <p>
+                        Contains the thread's task.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>sleep()</h3>
+                    <p>
+                        Temporarily pauses a thread.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3>Runnable</h3>
+                    <p>
+                        Interface used to define a thread task.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- COMPLETION -->
+        <section>
+
+            <div class="content-box" style="text-align:center;">
+
+                <h2>Lesson 03 Complete! 🎉</h2>
+
+                <p>
+                    You have learned the basics of threads,
+                    multithreading, Thread, Runnable, start(),
+                    run(), sleep() and join().
+                </p>
+
+                <br>
+
+                <p>
+                    Next, you will learn how Java connects
+                    with a MySQL database using JDBC.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+        <div class="navigation">
+
+            <a href="lesson2.html" class="btn">
+                ← Previous Lesson
+            </a>
+
+            <a href="lesson4.html" class="btn next">
+                Next Lesson →
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+        ☕ JavaLearn • Learn Java Step by Step
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Java OOP Masterclass - Lesson 3</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background: rgba(8, 11, 20, 0.85);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+        }
+
+        .java {
+            color: #ff8a3d;
+        }
+
+        .learn {
+            color: white;
+        }
+
+        .lesson-number {
+            padding: 8px 16px;
+
+            border-radius: 20px;
+
+            background: rgba(255,138,61,0.12);
+
+            border: 1px solid rgba(255,138,61,0.3);
+
+            color: #ff9d5c;
+
+            font-size: 13px;
+        }
+
+
+        /* MAIN */
+
+        main {
+            width: 88%;
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 55px 0 70px;
+        }
+
+
+        /* HERO */
+
+        .hero {
+            display: grid;
+
+            grid-template-columns: 1.3fr 0.7fr;
+
+            gap: 40px;
+
+            align-items: center;
+
+            margin-bottom: 50px;
+        }
+
+        .tag {
+            display: inline-block;
+
+            padding: 7px 15px;
+
+            border-radius: 20px;
+
+            background: rgba(255,77,109,0.12);
+
+            border: 1px solid rgba(255,77,109,0.25);
+
+            color: #ff8098;
+
+            font-size: 13px;
+
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            font-size: 46px;
+
+            line-height: 1.15;
+
+            margin-bottom: 18px;
+        }
+
+        h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            color: #aeb5ca;
+
+            line-height: 1.7;
+
+            font-size: 17px;
+        }
+
+
+        /* VISUAL */
+
+        .visual {
+            width: 220px;
+            height: 220px;
+
+            margin: auto;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(135deg, #ff8a3d, #ff4d6d);
+
+            box-shadow:
+                0 0 70px rgba(255,77,109,0.35);
+
+            text-align: center;
+        }
+
+        .visual span {
+            font-size: 42px;
+            font-weight: 800;
+        }
+
+
+        /* PROGRESS */
+
+        .progress-box {
+            margin-bottom: 40px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+
+            color: #aeb5ca;
+
+            font-size: 14px;
+        }
+
+        .progress {
+            height: 8px;
+
+            background: rgba(255,255,255,0.08);
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            width: 10%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(90deg, #ff8a3d, #ff4d6d);
+        }
+
+
+        /* CARDS */
+
+        .card {
+            padding: 28px;
+
+            margin-bottom: 25px;
+
+            border-radius: 18px;
+
+            background: rgba(255,255,255,0.06);
+
+            border: 1px solid rgba(255,255,255,0.11);
+
+            backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            font-size: 27px;
+
+            margin-bottom: 18px;
+        }
+
+        h2::before {
+            content: "// ";
+
+            color: #ff8a3d;
+        }
+
+        h3 {
+            color: #ff9d5c;
+
+            margin-top: 20px;
+
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #b8bfd2;
+
+            line-height: 1.8;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* GRID */
+
+        .grid {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 18px;
+
+            margin-top: 20px;
+        }
+
+        .box {
+            padding: 20px;
+
+            border-radius: 14px;
+
+            background: rgba(255,255,255,0.04);
+
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .box strong {
+            display: block;
+
+            color: #ff8a3d;
+
+            margin-bottom: 8px;
+        }
+
+        .box p {
+            font-size: 14px;
+
+            margin: 0;
+        }
+
+
+        /* CODE */
+
+        .code-box {
+            margin-top: 20px;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            background: #0d1117;
+
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .code-header {
+            padding: 10px 15px;
+
+            background: #161b22;
+
+            color: #8b949e;
+
+            font-size: 13px;
+        }
+
+        .dot {
+            display: inline-block;
+
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            background: #ff4d6d;
+
+            margin-right: 5px;
+        }
+
+        pre {
+            padding: 22px;
+
+            overflow-x: auto;
+
+            color: #c9d1d9;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .variable {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .number {
+            color: #ffa657;
+        }
+
+        .function {
+            color: #d2a8ff;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+
+        /* OUTPUT */
+
+        .output {
+            margin-top: 18px;
+
+            padding: 18px;
+
+            border-left: 4px solid #ff4d6d;
+
+            background: rgba(255,77,109,0.07);
+
+            border-radius: 8px;
+
+            font-family: monospace;
+
+            color: #e6edf3;
+        }
+
+
+        /* INFO */
+
+        .info {
+            padding: 20px;
+
+            margin-top: 20px;
+
+            border-left: 4px solid #ff8a3d;
+
+            background: rgba(255,138,61,0.07);
+
+            border-radius: 10px;
+
+            color: #cbd2e1;
+
+            line-height: 1.7;
+        }
+
+
+        /* TABLE */
+
+        .table-wrapper {
+            overflow-x: auto;
+
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 600px;
+        }
+
+        th,
+        td {
+            padding: 14px;
+
+            text-align: left;
+
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        th {
+            color: #ff9d5c;
+
+            background: rgba(255,138,61,0.07);
+        }
+
+        td {
+            color: #b8bfd2;
+        }
+
+
+        /* LIST */
+
+        ul,
+        ol {
+            margin-left: 22px;
+
+            color: #b8bfd2;
+
+            line-height: 2;
+        }
+
+
+        /* NAVIGATION */
+
+        .navigation {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: white;
+
+            font-weight: 600;
+
+            background:
+                linear-gradient(135deg, #ff8a3d, #ff4d6d);
+
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 10px 25px rgba(255,77,109,0.25);
+        }
+
+        .btn.secondary {
+            background: rgba(255,255,255,0.07);
+
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+
+            padding: 25px;
+
+            color: #777f96;
+
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+
+        /* RESPONSIVE */
+
+        @media(max-width:800px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .visual {
+                width: 180px;
+                height: 180px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav>
+
+        <div class="logo">
+            <span class="java">Java</span><span class="learn">Learn</span>
+        </div>
+
+        <div class="lesson-number">
+            Java OOP Masterclass • Lesson 03 / 30
+        </div>
+
+    </nav>
+
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div>
+
+                <div class="tag">
+                    JAVA OOP MASTERCLASS
+                </div>
+
+                <h1>
+                    Fields and
+                    <span>Methods</span>
+                </h1>
+
+                <p>
+                    Learn how fields store the data of an object
+                    and how methods define the actions or behavior
+                    that an object can perform.
+                </p>
+
+            </div>
+
+
+            <div class="visual">
+                <span>Data<br>+<br>Behavior</span>
+            </div>
+
+        </section>
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress-box">
+
+            <div class="progress-info">
+
+                <span>
+                    Lesson 3 of 30
+                </span>
+
+                <span>
+                    10% Complete
+                </span>
+
+            </div>
+
+            <div class="progress">
+
+                <div class="progress-bar"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- INTRODUCTION -->
+
+        <section class="card">
+
+            <h2>What are Fields and Methods?</h2>
+
+            <p>
+                A Java class normally contains data and behavior.
+            </p>
+
+            <p>
+                <strong>Fields</strong> represent the data or
+                properties of an object.
+            </p>
+
+            <p>
+                <strong>Methods</strong> represent the behavior
+                or actions that an object can perform.
+            </p>
+
+            <div class="info">
+
+                Think about a Student object.
+
+                <br><br>
+
+                <strong>Fields:</strong>
+                name, age, department
+
+                <br>
+
+                <strong>Methods:</strong>
+                study(), attendClass(), displayDetails()
+
+            </div>
+
+        </section>
+
+
+        <!-- FIELDS -->
+
+        <section class="card">
+
+            <h2>What is a Field?</h2>
+
+            <p>
+                A field is a variable declared inside a class.
+                It stores information about an object.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Student.java
+
+                </div>
+
+<pre>
+<span class="keyword">class</span> <span class="type">Student</span> {
+
+    String name;
+
+    <span class="keyword">int</span> age;
+
+    String department;
+
+}
+</pre>
+
+            </div>
+
+            <p style="margin-top:20px;">
+                In this example,
+                <strong>name</strong>,
+                <strong>age</strong>, and
+                <strong>department</strong>
+                are fields.
+            </p>
+
+        </section>
+
+
+        <!-- FIELD TYPES -->
+
+        <section class="card">
+
+            <h2>Common Field Data Types</h2>
+
+            <div class="grid">
+
+                <div class="box">
+
+                    <strong>String</strong>
+
+                    <p>
+                        Stores text values.
+                        Example: "Keerthana"
+                    </p>
+
+                </div>
+
+
+                <div class="box">
+
+                    <strong>int</strong>
+
+                    <p>
+                        Stores whole numbers.
+                        Example: 20
+                    </p>
+
+                </div>
+
+
+                <div class="box">
+
+                    <strong>double</strong>
+
+                    <p>
+                        Stores decimal values.
+                        Example: 8.15
+                    </p>
+
+                </div>
+
+
+                <div class="box">
+
+                    <strong>boolean</strong>
+
+                    <p>
+                        Stores true or false.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- METHODS -->
+
+        <section class="card">
+
+            <h2>What is a Method?</h2>
+
+            <p>
+                A method is a block of code that performs a
+                particular task.
+            </p>
+
+            <p>
+                Methods allow us to define the behavior of an object.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Student.java
+
+                </div>
+
+<pre>
+<span class="keyword">class</span> <span class="type">Student</span> {
+
+    <span class="keyword">void</span> <span class="function">study</span>() {
+
+        System.out.println(
+            <span class="string">"Student is studying"</span>
+        );
+    }
+}
+</pre>
+
+            </div>
+
+            <div class="output">
+
+                Output:
+
+                <br><br>
+
+                Student is studying
+
+            </div>
+
+        </section>
+
+
+        <!-- METHOD SYNTAX -->
+
+        <section class="card">
+
+            <h2>Method Syntax</h2>
+
+            <p>
+                A basic Java method follows this structure:
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Method Syntax
+
+                </div>
+
+<pre>
+<span class="keyword">returnType</span> methodName(parameters) {
+
+    <span class="comment">// code to execute</span>
+
+}
+</pre>
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+                        <th>Part</th>
+                        <th>Meaning</th>
+                    </tr>
+
+                    <tr>
+                        <td>returnType</td>
+                        <td>Type of value returned by the method</td>
+                    </tr>
+
+                    <tr>
+                        <td>methodName</td>
+                        <td>Name used to call the method</td>
+                    </tr>
+
+                    <tr>
+                        <td>parameters</td>
+                        <td>Input values given to the method</td>
+                    </tr>
+
+                    <tr>
+                        <td>method body</td>
+                        <td>Code executed by the method</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- VOID METHOD -->
+
+        <section class="card">
+
+            <h2>Void Methods</h2>
+
+            <p>
+                A method with the return type
+                <strong>void</strong> does not return a value.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Example
+
+                </div>
+
+<pre>
+<span class="keyword">void</span> <span class="function">greet</span>() {
+
+    System.out.println(
+        <span class="string">"Welcome to Java!"</span>
+    );
+}
+</pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- RETURN METHOD -->
+
+        <section class="card">
+
+            <h2>Methods That Return Values</h2>
+
+            <p>
+                A method can calculate something and return a value.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Calculator.java
+
+                </div>
+
+<pre>
+<span class="keyword">class</span> <span class="type">Calculator</span> {
+
+    <span class="keyword">int</span> <span class="function">add</span>(
+        <span class="keyword">int</span> a,
+        <span class="keyword">int</span> b
+    ) {
+
+        <span class="keyword">return</span> a + b;
+    }
+}
+</pre>
+
+            </div>
+
+            <p style="margin-top:20px;">
+                We can call the method and store its returned value.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Main.java
+
+                </div>
+
+<pre>
+<span class="type">Calculator</span> calculator =
+    <span class="keyword">new</span> Calculator();
+
+<span class="keyword">int</span> result =
+    calculator.add(10, 20);
+
+System.out.println(result);
+</pre>
+
+            </div>
+
+            <div class="output">
+
+                Output:
+
+                <br><br>
+
+                30
+
+            </div>
+
+        </section>
+
+
+        <!-- PARAMETERS -->
+
+        <section class="card">
+
+            <h2>Methods with Parameters</h2>
+
+            <p>
+                Parameters allow us to send data into a method.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Student.java
+
+                </div>
+
+<pre>
+<span class="keyword">class</span> <span class="type">Student</span> {
+
+    <span class="keyword">void</span> <span class="function">greet</span>(
+        String name
+    ) {
+
+        System.out.println(
+            <span class="string">"Hello "</span> + name
+        );
+    }
+}
+</pre>
+
+            </div>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Main.java
+
+                </div>
+
+<pre>
+Student student =
+    <span class="keyword">new</span> Student();
+
+student.greet(
+    <span class="string">"Keerthana"</span>
+);
+</pre>
+
+            </div>
+
+            <div class="output">
+
+                Output:
+
+                <br><br>
+
+                Hello Keerthana
+
+            </div>
+
+        </section>
+
+
+        <!-- FIELD + METHOD -->
+
+        <section class="card">
+
+            <h2>Fields and Methods Together</h2>
+
+            <p>
+                Fields and methods work together to describe the
+                state and behavior of an object.
+            </p>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Student.java
+
+                </div>
+
+<pre>
+<span class="keyword">class</span> <span class="type">Student</span> {
+
+    String name;
+
+    <span class="keyword">int</span> age;
+
+    <span class="keyword">void</span> <span class="function">displayDetails</span>() {
+
+        System.out.println(
+            <span class="string">"Name: "</span> + name
+        );
+
+        System.out.println(
+            <span class="string">"Age: "</span> + age
+        );
+    }
+}
+</pre>
+
+            </div>
+
+            <div class="code-box">
+
+                <div class="code-header">
+
+                    <span class="dot"></span>
+                    Main.java
+
+                </div>
+
+<pre>
+<span class="type">Student</span> student =
+    <span class="keyword">new</span> Student();
+
+student.name =
+    <span class="string">"Keerthana"</span>;
+
+student.age = <span class="number">20</span>;
+
+student.displayDetails();
+</pre>
+
+            </div>
+
+            <div class="output">
+
+                Output:
+
+                <br><br>
+
+                Name: Keerthana
+                <br>
+                Age: 20
+
+            </div>
+
+        </section>
+
+
+        <!-- FIELD VS METHOD -->
+
+        <section class="card">
+
+            <h2>Field vs Method</h2>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <tr>
+                        <th>Field</th>
+                        <th>Method</th>
+                    </tr>
+
+                    <tr>
+                        <td>Stores data</td>
+                        <td>Performs an action</td>
+                    </tr>
+
+                    <tr>
+                        <td>Represents state</td>
+                        <td>Represents behavior</td>
+                    </tr>
+
+                    <tr>
+                        <td>Example: name</td>
+                        <td>Example: displayName()</td>
+                    </tr>
+
+                    <tr>
+                        <td>Usually accessed using object</td>
+                        <td>Called using object</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRACTICE -->
+
+        <section class="card">
+
+            <h2>Practice Questions</h2>
+
+            <ol>
+
+                <li>What is a field in Java?</li>
+
+                <li>What is a method?</li>
+
+                <li>What is the difference between a field and a method?</li>
+
+                <li>What does the void keyword mean?</li>
+
+                <li>What is a return type?</li>
+
+                <li>What are parameters?</li>
+
+                <li>Can a method return a value?</li>
+
+            </ol>
+
+        </section>
+
+
+        <!-- MINI CHALLENGE -->
+
+        <section class="card">
+
+            <h2>Mini Challenge</h2>
+
+            <p>
+                Create a class called <strong>Employee</strong>.
+            </p>
+
+            <p>
+                Add these fields:
+            </p>
+
+            <ul>
+
+                <li>name</li>
+
+                <li>employeeId</li>
+
+                <li>salary</li>
+
+            </ul>
+
+            <p>
+                Then create a method called
+                <strong>displayEmployeeDetails()</strong>
+                that prints all three values.
+            </p>
+
+            <div class="info">
+
+                💡 Bonus:
+                Create another method called
+                <strong>calculateBonus()</strong>
+                that returns 10% of the employee's salary.
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+
+        <section class="card">
+
+            <h2>Lesson Summary</h2>
+
+            <ul>
+
+                <li>
+                    Fields store the data of an object.
+                </li>
+
+                <li>
+                    Methods define the behavior of an object.
+                </li>
+
+                <li>
+                    A method can accept parameters.
+                </li>
+
+                <li>
+                    A method can return a value.
+                </li>
+
+                <li>
+                    The void keyword means the method does not return a value.
+                </li>
+
+                <li>
+                    Fields and methods together define the state and behavior
+                    of an object.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+
+        <div class="navigation">
+
+            <a href="lesson2.html" class="btn secondary">
+                ← Previous Lesson
+            </a>
+
+            <a href="lesson4.html" class="btn">
+                Next Lesson →
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        ☕ JavaLearn • Java OOP Masterclass
+
+    </footer>
+
+</body>
+
+</html>

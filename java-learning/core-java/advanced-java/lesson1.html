@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JavaLearn | Advanced Java - Lesson 1</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background:
+                radial-gradient(circle at top left, #32145f 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #0b4f6c 0%, transparent 35%),
+                #080b14;
+            color: #f5f7ff;
+            min-height: 100vh;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8, 11, 20, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-container {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            height: 70px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ff8a3d;
+        }
+
+        .lesson-pill {
+            background: rgba(255, 138, 61, 0.12);
+            border: 1px solid rgba(255, 138, 61, 0.4);
+            color: #ffb17d;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .container {
+            width: 88%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 55px 0;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 55px;
+        }
+
+        .tag {
+            display: inline-block;
+            color: #ff8a3d;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #ff8a3d;
+        }
+
+        .hero p {
+            color: #b8bfd3;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .hero-visual {
+            width: 220px;
+            height: 220px;
+            margin: auto;
+            border-radius: 50%;
+
+            background: linear-gradient(135deg, #ff8a3d, #ff4d6d);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            box-shadow:
+                0 0 40px rgba(255, 138, 61, 0.3),
+                0 0 80px rgba(255, 77, 109, 0.15);
+
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .hero-visual div {
+            background: rgba(8, 11, 20, 0.88);
+
+            width: 175px;
+            height: 175px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            line-height: 1.8;
+        }
+
+        .progress-box {
+            margin-bottom: 45px;
+            padding: 20px;
+
+            background: rgba(255,255,255,0.05);
+
+            border: 1px solid rgba(255,255,255,0.1);
+
+            border-radius: 16px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+
+            color: #c8ccda;
+        }
+
+        .progress-bar {
+            height: 9px;
+
+            background: rgba(255,255,255,0.1);
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 20%;
+
+            height: 100%;
+
+            background:
+                linear-gradient(90deg, #ff8a3d, #ff4d6d);
+
+            border-radius: 20px;
+        }
+
+        section {
+            margin-bottom: 55px;
+        }
+
+        h2 {
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        h2::before {
+            content: "// ";
+            color: #ff8a3d;
+        }
+
+        h3 {
+            font-size: 21px;
+            margin-bottom: 12px;
+            color: #ffffff;
+        }
+
+        .text {
+            color: #b8bfd3;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.06);
+
+            border: 1px solid rgba(255,255,255,0.1);
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            backdrop-filter: blur(10px);
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(255,138,61,0.4);
+        }
+
+        .card-number {
+            color: #ff8a3d;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #aeb5ca;
+
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: rgba(255,255,255,0.05);
+
+            border-left: 4px solid #ff8a3d;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            margin: 20px 0;
+
+            color: #c4c9d8;
+
+            line-height: 1.7;
+        }
+
+        .code-editor {
+            background: #0d1117;
+
+            border:
+                1px solid rgba(255,255,255,0.1);
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            margin: 20px 0;
+        }
+
+        .editor-header {
+            height: 40px;
+
+            background: #161b22;
+
+            display: flex;
+
+            align-items: center;
+
+            padding-left: 15px;
+
+            gap: 7px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+
+            border-radius: 50%;
+
+            background: #555;
+        }
+
+        pre {
+            padding: 22px;
+
+            overflow-x: auto;
+
+            color: #e6edf3;
+
+            font-size: 15px;
+
+            line-height: 1.7;
+        }
+
+        .keyword {
+            color: #ff7b72;
+        }
+
+        .type {
+            color: #79c0ff;
+        }
+
+        .variable {
+            color: #d2a8ff;
+        }
+
+        .string {
+            color: #a5d6ff;
+        }
+
+        .number {
+            color: #ffa657;
+        }
+
+        .operator {
+            color: #ff9d5c;
+
+            font-weight: bold;
+        }
+
+        .comment {
+            color: #8b949e;
+        }
+
+        .output {
+            background: #111827;
+
+            border-left: 4px solid #ff4d6d;
+
+            padding: 18px 20px;
+
+            border-radius: 8px;
+
+            color: #a5d6ff;
+
+            font-family: Consolas, monospace;
+
+            margin-top: 15px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            background:
+                rgba(255,255,255,0.04);
+
+            border-radius: 12px;
+
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 16px;
+
+            text-align: left;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
+        }
+
+        th {
+            background:
+                rgba(255,138,61,0.12);
+
+            color: #ffb17d;
+        }
+
+        td {
+            color: #c0c6d7;
+        }
+
+        .practice {
+            display: grid;
+
+            gap: 15px;
+        }
+
+        .question {
+            padding: 18px 20px;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            border-radius: 12px;
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+        }
+
+        .question strong {
+            color: #ff8a3d;
+        }
+
+        .navigation {
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-top: 50px;
+        }
+
+        .btn {
+            text-decoration: none;
+
+            color: white;
+
+            padding: 13px 22px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid rgba(255,255,255,0.15);
+
+            background:
+                rgba(255,255,255,0.06);
+
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            border-color: #ff8a3d;
+
+            color: #ff8a3d;
+        }
+
+        .btn.next {
+            background:
+                linear-gradient(135deg, #ff8a3d, #ff4d6d);
+
+            border: none;
+        }
+
+        .btn.next:hover {
+            color: white;
+
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+
+            padding: 30px;
+
+            color: #777f94;
+
+            border-top:
+                1px solid rgba(255,255,255,0.08);
+        }
+
+        @media (max-width: 800px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                width: 190px;
+                height: 190px;
+            }
+
+            .hero-visual div {
+                width: 150px;
+                height: 150px;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+
+        <div class="nav-container">
+
+            <div class="logo">
+                <span>Java</span>Learn
+            </div>
+
+            <div class="lesson-pill">
+                Advanced Java • Lesson 01 / 05
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <main class="container">
+
+
+        <!-- HERO -->
+
+        <div class="hero">
+
+            <div>
+
+                <div class="tag">
+                    ☕ ADVANCED JAVA
+                </div>
+
+                <h1>
+                    <span>Collections</span>
+                    Framework
+                </h1>
+
+                <p>
+                    Learn how Java Collections help you store,
+                    organize and process groups of objects efficiently.
+                </p>
+
+            </div>
+
+
+            <div class="hero-visual">
+
+                <div>
+
+                    Collection
+                    <br>
+                    ↓
+                    <br>
+                    Store
+                    <br>
+                    ↓
+                    <br>
+                    Process
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROGRESS -->
+
+        <div class="progress-box">
+
+            <div class="progress-info">
+
+                <span>
+                    Advanced Java Progress
+                </span>
+
+                <span>
+                    1 / 05 Lessons • 20%
+                </span>
+
+            </div>
+
+
+            <div class="progress-bar">
+
+                <div class="progress"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WHAT YOU WILL LEARN -->
+
+        <section>
+
+            <h2>
+                What You'll Learn
+            </h2>
+
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <div class="card-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Collections
+                    </h3>
+
+                    <p>
+                        Understand the Java Collections Framework
+                        and why it is used.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-number">
+                        02
+                    </div>
+
+                    <h3>
+                        ArrayList
+                    </h3>
+
+                    <p>
+                        Learn how to store and access multiple
+                        objects using ArrayList.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-number">
+                        03
+                    </div>
+
+                    <h3>
+                        LinkedList
+                    </h3>
+
+                    <p>
+                        Learn the basics of LinkedList.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-number">
+                        04
+                    </div>
+
+                    <h3>
+                        HashSet
+                    </h3>
+
+                    <p>
+                        Learn how to store unique values.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-number">
+                        05
+                    </div>
+
+                    <h3>
+                        HashMap
+                    </h3>
+
+                    <p>
+                        Store data using key-value pairs.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-number">
+                        06
+                    </div>
+
+                    <h3>
+                        Iteration
+                    </h3>
+
+                    <p>
+                        Learn how to process collection elements.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- INTRODUCTION -->
+
+        <section>
+
+            <h2>
+                What is Collections Framework?
+            </h2>
+
+            <p class="text">
+
+                The Java Collections Framework is a set of
+                classes and interfaces used to store and
+                manipulate groups of objects.
+
+            </p>
+
+
+            <div class="info-box">
+
+                <strong>
+                    Simple Meaning:
+                </strong>
+
+                <br><br>
+
+                Instead of creating many separate variables,
+                collections allow us to store multiple values
+                together.
+
+            </div>
+
+        </section>
+
+
+        <!-- WHY COLLECTIONS -->
+
+        <section>
+
+            <h2>
+                Why Do We Need Collections?
+            </h2>
+
+
+            <p class="text">
+
+                Suppose we want to store the marks of 5 students.
+
+            </p>
+
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+
+                </div>
+
+
+<pre><span class="type">int</span> <span class="variable">mark1</span> <span class="operator">=</span> <span class="number">85</span>;
+<span class="type">int</span> <span class="variable">mark2</span> <span class="operator">=</span> <span class="number">90</span>;
+<span class="type">int</span> <span class="variable">mark3</span> <span class="operator">=</span> <span class="number">78</span>;
+<span class="type">int</span> <span class="variable">mark4</span> <span class="operator">=</span> <span class="number">88</span>;
+<span class="type">int</span> <span class="variable">mark5</span> <span class="operator">=</span> <span class="number">92</span>;</pre>
+
+            </div>
+
+
+            <p class="text">
+
+                This becomes difficult when we have hundreds
+                or thousands of values.
+
+                Collections make this easier.
+
+            </p>
+
+        </section>
+
+
+        <!-- COLLECTION TYPES -->
+
+        <section>
+
+            <h2>
+                Main Collection Types
+            </h2>
+
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <h3>
+                        📋 List
+                    </h3>
+
+                    <p>
+                        Stores elements in an ordered manner
+                        and allows duplicate values.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        🔵 Set
+                    </h3>
+
+                    <p>
+                        Stores unique elements and normally
+                        does not allow duplicates.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        🗺️ Map
+                    </h3>
+
+                    <p>
+                        Stores data using key-value pairs.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ARRAYLIST -->
+
+        <section>
+
+            <h2>
+                ArrayList
+            </h2>
+
+
+            <p class="text">
+
+                ArrayList is one of the most commonly used
+                collection classes in Java.
+
+                It stores elements in an ordered list.
+
+            </p>
+
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+
+                </div>
+
+
+<pre><span class="keyword">import</span> java.util.ArrayList;
+
+<span class="keyword">public class</span> <span class="type">Main</span> {
+
+    <span class="keyword">public static void</span> <span class="variable">main</span>(<span class="type">String</span>[] args) {
+
+        <span class="type">ArrayList</span>&lt;<span class="type">String</span>&gt; names
+            <span class="operator">=</span> <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;();
+
+        names.add(<span class="string">"Keerthana"</span>);
+        names.add(<span class="string">"Amirtha"</span>);
+        names.add(<span class="string">"Harshitha"</span>);
+
+        System.out.println(names);
+    }
+}</pre>
+
+            </div>
+
+
+            <div class="output">
+
+                [Keerthana, Amirtha, Harshitha]
+
+            </div>
+
+        </section>
+
+
+        <!-- ARRAYLIST METHODS -->
+
+        <section>
+
+            <h2>
+                ArrayList Methods
+            </h2>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+
+                        <th>
+                            Method
+                        </th>
+
+                        <th>
+                            Purpose
+                        </th>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            add()
+                        </td>
+
+                        <td>
+                            Adds an element.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            get()
+                        </td>
+
+                        <td>
+                            Gets an element.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            set()
+                        </td>
+
+                        <td>
+                            Updates an element.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            remove()
+                        </td>
+
+                        <td>
+                            Removes an element.
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            size()
+                        </td>
+
+                        <td>
+                            Returns the number of elements.
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ARRAYLIST ACCESS -->
+
+        <section>
+
+            <h2>
+                Accessing ArrayList Elements
+            </h2>
+
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+
+                </div>
+
+
+<pre><span class="type">ArrayList</span>&lt;<span class="type">String</span>&gt; names
+    <span class="operator">=</span> <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;();
+
+names.add(<span class="string">"Java"</span>);
+names.add(<span class="string">"Python"</span>);
+names.add(<span class="string">"HTML"</span>);
+
+System.out.println(names.get(<span class="number">0</span>));</pre>
+
+            </div>
+
+
+            <div class="output">
+
+                Java
+
+            </div>
+
+        </section>
+
+
+        <!-- LOOP -->
+
+        <section>
+
+            <h2>
+                Loop Through ArrayList
+            </h2>
+
+
+            <p class="text">
+
+                We can use a for-each loop to process
+                every element in an ArrayList.
+
+            </p>
+
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+
+                </div>
+
+
+<pre><span class="keyword">for</span> (<span class="type">String</span> name : names) {
+
+    System.out.println(name);
+
+}</pre>
+
+            </div>
+
+
+            <div class="output">
+
+                Java<br>
+                Python<br>
+                HTML
+
+            </div>
+
+        </section>
+
+
+        <!-- LINKEDLIST -->
+
+        <section>
+
+            <h2>
+                LinkedList
+            </h2>
+
+
+            <p class="text">
+
+                LinkedList is another List implementation.
+                It stores elements as connected nodes.
+
+            </p>
+
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+
+                </div>
+
+
+<pre><span class="keyword">import</span> java.util.LinkedList;
+
+<span class="type">LinkedList</span>&lt;<span class="type">String</span>&gt; cities
+    <span class="operator">=</span> <span class="keyword">new</span> <span class="type">LinkedList</span>&lt;&gt;();
+
+cities.add(<span class="string">"Chennai"</span>);
+cities.add(<span class="string">"Madurai"</span>);
+cities.add(<span class="string">"Coimbatore"</span>);
+
+System.out.println(cities);</pre>
+
+            </div>
+
+
+            <div class="output">
+
+                [Chennai, Madurai, Coimbatore]
+
+            </div>
+
+        </section>
+
+
+        <!-- HASHSET -->
+
+        <section>
+
+            <h2>
+                HashSet
+            </h2>
+
+
+            <p class="text">
+
+                HashSet stores unique elements.
+                Duplicate values are not stored.
+
+            </p>
+
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+
+                </div>
+
+
+<pre><span class="keyword">import</span> java.util.HashSet;
+
+<span class="type">HashSet</span>&lt;<span class="type">String</span>&gt; skills
+    <span class="operator">=</span> <span class="keyword">new</span> <span class="type">HashSet</span>&lt;&gt;();
+
+skills.add(<span class="string">"Java"</span>);
+skills.add(<span class="string">"Python"</span>);
+skills.add(<span class="string">"Java"</span>);
+
+System.out.println(skills);</pre>
+
+            </div>
+
+
+            <div class="info-box">
+
+                The second <strong>Java</strong> value is a
+                duplicate, so HashSet keeps only one copy.
+
+            </div>
+
+        </section>
+
+
+        <!-- HASHMAP -->
+
+        <section>
+
+            <h2>
+                HashMap
+            </h2>
+
+
+            <p class="text">
+
+                HashMap stores data using
+                <strong>key-value pairs</strong>.
+
+            </p>
+
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+
+                </div>
+
+
+<pre><span class="keyword">import</span> java.util.HashMap;
+
+<span class="type">HashMap</span>&lt;<span class="type">Integer</span>, <span class="type">String</span>&gt; students
+    <span class="operator">=</span> <span class="keyword">new</span> <span class="type">HashMap</span>&lt;&gt;();
+
+students.put(<span class="number">101</span>, <span class="string">"Keerthana"</span>);
+students.put(<span class="number">102</span>, <span class="string">"Amirtha"</span>);
+students.put(<span class="number">103</span>, <span class="string">"Harshitha"</span>);
+
+System.out.println(students);</pre>
+
+            </div>
+
+        </section>
+
+
+        <!-- GET FROM HASHMAP -->
+
+        <section>
+
+            <h2>
+                Getting HashMap Values
+            </h2>
+
+
+            <div class="code-editor">
+
+                <div class="editor-header">
+
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+
+                </div>
+
+
+<pre>System.out.println(
+    students.get(<span class="number">101</span>)
+);</pre>
+
+            </div>
+
+
+            <div class="output">
+
+                Keerthana
+
+            </div>
+
+        </section>
+
+
+        <!-- COMPARISON -->
+
+        <section>
+
+            <h2>
+                Collection Comparison
+            </h2>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <tr>
+
+                        <th>
+                            Collection
+                        </th>
+
+                        <th>
+                            Duplicate
+                        </th>
+
+                        <th>
+                            Key-Value
+                        </th>
+
+                        <th>
+                            Example
+                        </th>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            ArrayList
+                        </td>
+
+                        <td>
+                            Allowed
+                        </td>
+
+                        <td>
+                            No
+                        </td>
+
+                        <td>
+                            Student names
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            LinkedList
+                        </td>
+
+                        <td>
+                            Allowed
+                        </td>
+
+                        <td>
+                            No
+                        </td>
+
+                        <td>
+                            Queue-like data
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            HashSet
+                        </td>
+
+                        <td>
+                            Not allowed
+                        </td>
+
+                        <td>
+                            No
+                        </td>
+
+                        <td>
+                            Unique skills
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>
+                            HashMap
+                        </td>
+
+                        <td>
+                            Keys are unique
+                        </td>
+
+                        <td>
+                            Yes
+                        </td>
+
+                        <td>
+                            ID and Name
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- BENEFITS -->
+
+        <section>
+
+            <h2>
+                Benefits of Collections
+            </h2>
+
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <h3>
+                        📦 Easy Storage
+                    </h3>
+
+                    <p>
+                        Store many objects together.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        🔄 Easy Processing
+                    </h3>
+
+                    <p>
+                        Easily loop through and process
+                        multiple elements.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        🧩 Flexible
+                    </h3>
+
+                    <p>
+                        Different collection types are
+                        available for different requirements.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        ⚡ Useful Methods
+                    </h3>
+
+                    <p>
+                        Collections provide built-in methods
+                        for adding, removing and searching data.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        📊 Organized
+                    </h3>
+
+                    <p>
+                        Data can be organized according to
+                        the application's requirements.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        💻 Practical
+                    </h3>
+
+                    <p>
+                        Collections are widely used in
+                        real-world Java applications.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- IMPORTANT RULES -->
+
+        <section>
+
+            <h2>
+                Important Points
+            </h2>
+
+
+            <div class="info-box">
+
+                <strong>1.</strong>
+                ArrayList stores ordered elements and allows duplicates.
+
+                <br><br>
+
+                <strong>2.</strong>
+                LinkedList is another implementation of the List interface.
+
+                <br><br>
+
+                <strong>3.</strong>
+                HashSet stores unique elements.
+
+                <br><br>
+
+                <strong>4.</strong>
+                HashMap stores key-value pairs.
+
+                <br><br>
+
+                <strong>5.</strong>
+                Collections are used to manage groups of objects.
+
+            </div>
+
+        </section>
+
+
+        <!-- PRACTICE -->
+
+        <section>
+
+            <h2>
+                Practice Questions
+            </h2>
+
+
+            <div class="practice">
+
+                <div class="question">
+
+                    <strong>Q1.</strong>
+                    What is the Java Collections Framework?
+
+                </div>
+
+
+                <div class="question">
+
+                    <strong>Q2.</strong>
+                    What is an ArrayList?
+
+                </div>
+
+
+                <div class="question">
+
+                    <strong>Q3.</strong>
+                    What is the difference between ArrayList and LinkedList?
+
+                </div>
+
+
+                <div class="question">
+
+                    <strong>Q4.</strong>
+                    Why is HashSet used?
+
+                </div>
+
+
+                <div class="question">
+
+                    <strong>Q5.</strong>
+                    What is a HashMap?
+
+                </div>
+
+
+                <div class="question">
+
+                    <strong>Q6.</strong>
+                    What is the difference between List, Set and Map?
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MINI CHALLENGE -->
+
+        <section>
+
+            <h2>
+                Mini Challenge
+            </h2>
+
+
+            <div class="info-box">
+
+                Create an ArrayList called
+                <strong>courses</strong>.
+
+                <br><br>
+
+                Add these values:
+
+                <br><br>
+
+                • Java<br>
+                • Python<br>
+                • HTML<br>
+                • CSS<br>
+                • JavaScript
+
+                <br><br>
+
+                Then:
+
+                <br><br>
+
+                1. Print the complete list.<br>
+                2. Print the first course.<br>
+                3. Print the total number of courses.<br>
+                4. Remove CSS.<br>
+                5. Print the updated list.
+
+            </div>
+
+        </section>
+
+
+        <!-- SUMMARY -->
+
+        <section>
+
+            <h2>
+                Lesson Summary
+            </h2>
+
+
+            <div class="cards">
+
+                <div class="card">
+
+                    <h3>
+                        Collections
+                    </h3>
+
+                    <p>
+                        Used to store and manage groups of objects.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        ArrayList
+                    </h3>
+
+                    <p>
+                        Ordered collection that allows duplicates.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        LinkedList
+                    </h3>
+
+                    <p>
+                        List implementation based on linked nodes.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        HashSet
+                    </h3>
+
+                    <p>
+                        Stores unique elements.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        HashMap
+                    </h3>
+
+                    <p>
+                        Stores key-value pairs.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h3>
+                        Iteration
+                    </h3>
+
+                    <p>
+                        Used to process collection elements.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NAVIGATION -->
+
+        <div class="navigation">
+
+            <a href="../core-java/lesson8.html" class="btn">
+
+                ← Core Java
+
+            </a>
+
+
+            <a href="lesson2.html" class="btn next">
+
+                Next Lesson →
+
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        ☕ JavaLearn • Learn Java Step by Step
+
+    </footer>
+
+</body>
+</html>
